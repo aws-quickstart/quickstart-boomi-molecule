@@ -1,0 +1,9 @@
+global:
+  owner: andglenn@amazon.com
+  qsname: molecule-temp
+  regions:
+    - us-east-2
+tests:
+  basic:
+    parameter_input: params.json
+    template_file: molecule.yaml

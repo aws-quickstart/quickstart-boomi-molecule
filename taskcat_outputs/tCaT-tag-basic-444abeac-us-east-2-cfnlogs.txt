@@ -1,0 +1,132 @@
+-----------------------------------------------------------------------------
+Region: us-east-2
+StackName: tCaT-tag-basic-444abeac
+*****************************************************************************
+ResourceStatusReason:  
+The following resource(s) failed to create: [MasterMolecule].
+*****************************************************************************
+*****************************************************************************
+Events:  
+TimeStamp                         ResourceStatus      ResourceType                           LogicalResourceId                    ResourceStatusReason
+--------------------------------  ------------------  -------------------------------------  -----------------------------------  -------------------------------------------------------------
+2019-05-16 16:12:14.010000+00:00  CREATE_FAILED       AWS::CloudFormation::Stack             tCaT-tag-basic-444abeac              The following resource(s) failed to create: [MasterMolecule].
+2019-05-16 16:12:13.109000+00:00  CREATE_FAILED       AWS::EC2::Instance                     MasterMolecule                       Encountered unsupported property Timeout
+2019-05-16 16:11:57.359000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Instance                     MasterMolecule                       Resource creation Initiated
+2019-05-16 16:11:56.128000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Instance                     MasterMolecule
+2019-05-16 16:11:51.387000+00:00  CREATE_COMPLETE     AWS::EFS::MountTarget                  MountTarget2
+2019-05-16 16:11:51.355000+00:00  CREATE_COMPLETE     AWS::EFS::MountTarget                  MountTarget3
+2019-05-16 16:11:51.331000+00:00  CREATE_COMPLETE     AWS::EFS::MountTarget                  MountTarget1
+2019-05-16 16:11:20.184000+00:00  CREATE_COMPLETE     AWS::EC2::Route                        DefaultPrivateRoute1
+2019-05-16 16:11:04.637000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Route                        DefaultPrivateRoute1                 Resource creation Initiated
+2019-05-16 16:11:03.957000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Route                        DefaultPrivateRoute1
+2019-05-16 16:10:59.748000+00:00  CREATE_COMPLETE     AWS::EC2::NatGateway                   NatGateway1
+2019-05-16 16:10:27.024000+00:00  CREATE_COMPLETE     AWS::EC2::NatGateway                   NatGateway2
+2019-05-16 16:10:12.085000+00:00  CREATE_COMPLETE     AWS::EC2::NatGateway                   NatGateway3
+2019-05-16 16:09:17.928000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget1                         Resource creation Initiated
+2019-05-16 16:09:17.908000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget2                         Resource creation Initiated
+2019-05-16 16:09:17.591000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget3                         Resource creation Initiated
+2019-05-16 16:09:17.137000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget1
+2019-05-16 16:09:17.021000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget2
+2019-05-16 16:09:16.786000+00:00  CREATE_IN_PROGRESS  AWS::EFS::MountTarget                  MountTarget3
+2019-05-16 16:09:13.080000+00:00  CREATE_COMPLETE     AWS::EFS::FileSystem                   filesystem
+2019-05-16 16:08:42.505000+00:00  CREATE_IN_PROGRESS  AWS::EFS::FileSystem                   filesystem                           Resource creation Initiated
+2019-05-16 16:08:41.906000+00:00  CREATE_IN_PROGRESS  AWS::EFS::FileSystem                   filesystem
+2019-05-16 16:08:40.803000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway1                          Resource creation Initiated
+2019-05-16 16:08:40.314000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway1
+2019-05-16 16:08:39.891000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway2                          Resource creation Initiated
+2019-05-16 16:08:39.591000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway3                          Resource creation Initiated
+2019-05-16 16:08:39.490000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway2
+2019-05-16 16:08:39.170000+00:00  CREATE_IN_PROGRESS  AWS::EC2::NatGateway                   NatGateway3
+2019-05-16 16:08:37.173000+00:00  CREATE_COMPLETE     AWS::KMS::Key                          key
+2019-05-16 16:08:35.517000+00:00  CREATE_COMPLETE     AWS::EC2::Instance                     BastionInstance
+2019-05-16 16:08:35.450000+00:00  CREATE_COMPLETE     AWS::EC2::EIP                          NatGateway1EIP
+2019-05-16 16:08:35.328000+00:00  CREATE_COMPLETE     AWS::EC2::EIP                          NatGateway2EIP
+2019-05-16 16:08:35.148000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet2RouteTableAssociation
+2019-05-16 16:08:34.757000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PublicSubnet2RouteTableAssociation
+2019-05-16 16:08:34.751000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet3RouteTableAssociation
+2019-05-16 16:08:34.627000+00:00  CREATE_COMPLETE     AWS::EC2::EIP                          NatGateway3EIP
+2019-05-16 16:08:34.625000+00:00  CREATE_COMPLETE     AWS::EC2::Route                        DefaultPublicRoute
+2019-05-16 16:08:34.426000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet1RouteTableAssociation
+2019-05-16 16:08:34.368000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PublicSubnet1RouteTableAssociation
+2019-05-16 16:08:33.640000+00:00  CREATE_COMPLETE     AWS::EC2::SubnetRouteTableAssociation  PublicSubnet3RouteTableAssociation
+2019-05-16 16:08:23.496000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                BoomiUnicastSG
+2019-05-16 16:08:23.045000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                MoleculeSecurityGroup
+2019-05-16 16:08:22.420000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BoomiUnicastSG                       Resource creation Initiated
+2019-05-16 16:08:22.251000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                MoleculeSecurityGroup                Resource creation Initiated
+2019-05-16 16:08:19.993000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway1EIP                       Resource creation Initiated
+2019-05-16 16:08:19.824000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway2EIP                       Resource creation Initiated
+2019-05-16 16:08:19.668000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet2RouteTableAssociation  Resource creation Initiated
+2019-05-16 16:08:19.435000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway1EIP
+2019-05-16 16:08:19.410000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet2RouteTableAssociation   Resource creation Initiated
+2019-05-16 16:08:19.407000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Instance                     BastionInstance                      Resource creation Initiated
+2019-05-16 16:08:19.329000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet3RouteTableAssociation  Resource creation Initiated
+2019-05-16 16:08:19.246000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Route                        DefaultPublicRoute                   Resource creation Initiated
+2019-05-16 16:08:19.238000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway2EIP
+2019-05-16 16:08:19.143000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway3EIP                       Resource creation Initiated
+2019-05-16 16:08:19.045000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet1RouteTableAssociation  Resource creation Initiated
+2019-05-16 16:08:18.829000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet1RouteTableAssociation   Resource creation Initiated
+2019-05-16 16:08:18.727000+00:00  CREATE_IN_PROGRESS  AWS::EC2::EIP                          NatGateway3EIP
+2019-05-16 16:08:18.688000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet2RouteTableAssociation
+2019-05-16 16:08:18.667000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Route                        DefaultPublicRoute
+2019-05-16 16:08:18.482000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet2RouteTableAssociation
+2019-05-16 16:08:18.353000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet3RouteTableAssociation
+2019-05-16 16:08:18.251000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PrivateSubnet1RouteTableAssociation
+2019-05-16 16:08:18.157000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Instance                     BastionInstance
+2019-05-16 16:08:17.973000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet3RouteTableAssociation   Resource creation Initiated
+2019-05-16 16:08:17.862000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet1RouteTableAssociation
+2019-05-16 16:08:17.620000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BoomiUnicastSG
+2019-05-16 16:08:17.584000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                MoleculeSecurityGroup
+2019-05-16 16:08:16.988000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SubnetRouteTableAssociation  PublicSubnet3RouteTableAssociation
+2019-05-16 16:08:14.342000+00:00  CREATE_COMPLETE     AWS::EC2::VPCGatewayAttachment         InternetGatewayAttachment
+2019-05-16 16:08:14.011000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PublicSubnet2
+2019-05-16 16:08:13.929000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PrivateSubnet2
+2019-05-16 16:08:13.585000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                BoomiSecurityGroup
+2019-05-16 16:08:13.495000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PrivateSubnet1
+2019-05-16 16:08:13.434000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PublicSubnet1
+2019-05-16 16:08:13.409000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PrivateSubnet3
+2019-05-16 16:08:13.024000+00:00  CREATE_COMPLETE     AWS::EC2::Subnet                       PublicSubnet3
+2019-05-16 16:08:11.527000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BoomiSecurityGroup                   Resource creation Initiated
+2019-05-16 16:08:06.690000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BoomiSecurityGroup
+2019-05-16 16:08:05.739000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                MountTargetSecurityGroup
+2019-05-16 16:08:02.629000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                LoadBalancerSecurityGroup
+2019-05-16 16:08:02.578000+00:00  CREATE_COMPLETE     AWS::EC2::SecurityGroup                BastionSecurityGroup
+2019-05-16 16:08:02.277000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                MountTargetSecurityGroup             Resource creation Initiated
+2019-05-16 16:08:01.411000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                LoadBalancerSecurityGroup            Resource creation Initiated
+2019-05-16 16:08:01.140000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BastionSecurityGroup                 Resource creation Initiated
+2019-05-16 16:07:59.693000+00:00  CREATE_COMPLETE     AWS::EC2::RouteTable                   PublicRouteTable
+2019-05-16 16:07:58.887000+00:00  CREATE_IN_PROGRESS  AWS::EC2::VPCGatewayAttachment         InternetGatewayAttachment            Resource creation Initiated
+2019-05-16 16:07:58.826000+00:00  CREATE_IN_PROGRESS  AWS::EC2::RouteTable                   PublicRouteTable                     Resource creation Initiated
+2019-05-16 16:07:58.408000+00:00  CREATE_IN_PROGRESS  AWS::EC2::VPCGatewayAttachment         InternetGatewayAttachment
+2019-05-16 16:07:58.343000+00:00  CREATE_IN_PROGRESS  AWS::EC2::RouteTable                   PublicRouteTable
+2019-05-16 16:07:57.992000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet2                        Resource creation Initiated
+2019-05-16 16:07:57.840000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet2                       Resource creation Initiated
+2019-05-16 16:07:57.633000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet1                       Resource creation Initiated
+2019-05-16 16:07:57.587000+00:00  CREATE_COMPLETE     AWS::EC2::RouteTable                   PrivateRouteTable1
+2019-05-16 16:07:57.533000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                MountTargetSecurityGroup
+2019-05-16 16:07:57.519000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet2
+2019-05-16 16:07:57.482000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet3                       Resource creation Initiated
+2019-05-16 16:07:57.394000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet2
+2019-05-16 16:07:57.374000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet1                        Resource creation Initiated
+2019-05-16 16:07:57.178000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet1
+2019-05-16 16:07:57.177000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet3                        Resource creation Initiated
+2019-05-16 16:07:56.936000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PrivateSubnet3
+2019-05-16 16:07:56.843000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet1
+2019-05-16 16:07:56.776000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                LoadBalancerSecurityGroup
+2019-05-16 16:07:56.686000+00:00  CREATE_IN_PROGRESS  AWS::EC2::Subnet                       PublicSubnet3
+2019-05-16 16:07:56.671000+00:00  CREATE_IN_PROGRESS  AWS::EC2::RouteTable                   PrivateRouteTable1                   Resource creation Initiated
+2019-05-16 16:07:56.462000+00:00  CREATE_IN_PROGRESS  AWS::EC2::SecurityGroup                BastionSecurityGroup
+2019-05-16 16:07:56.267000+00:00  CREATE_IN_PROGRESS  AWS::EC2::RouteTable                   PrivateRouteTable1
+2019-05-16 16:07:52.563000+00:00  CREATE_COMPLETE     AWS::EC2::InternetGateway              InternetGateway
+2019-05-16 16:07:52.184000+00:00  CREATE_COMPLETE     AWS::EC2::VPC                          VPC
+2019-05-16 16:07:36.970000+00:00  CREATE_IN_PROGRESS  AWS::KMS::Key                          key                                  Resource creation Initiated
+2019-05-16 16:07:36.666000+00:00  CREATE_IN_PROGRESS  AWS::EC2::InternetGateway              InternetGateway                      Resource creation Initiated
+2019-05-16 16:07:36.492000+00:00  CREATE_IN_PROGRESS  AWS::KMS::Key                          key
+2019-05-16 16:07:36.290000+00:00  CREATE_IN_PROGRESS  AWS::EC2::InternetGateway              InternetGateway
+2019-05-16 16:07:36.155000+00:00  CREATE_IN_PROGRESS  AWS::EC2::VPC                          VPC                                  Resource creation Initiated
+2019-05-16 16:07:35.722000+00:00  CREATE_IN_PROGRESS  AWS::EC2::VPC                          VPC
+2019-05-16 16:07:30.058000+00:00  CREATE_IN_PROGRESS  AWS::CloudFormation::Stack             tCaT-tag-basic-444abeac              User Initiated
+*****************************************************************************
+-----------------------------------------------------------------------------
+Tested on: Thursday, 16. May 2019 11:12AM
+-----------------------------------------------------------------------------
+

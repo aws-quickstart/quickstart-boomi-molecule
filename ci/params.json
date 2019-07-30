@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey":"Vusername",
+        "ParameterValue":"seanwilliams2857@gmail.com"
+    },
+    {
+        "ParameterKey":"Vpassword",
+        "ParameterValue":"chesterbrook"
+    },
+    {
+        "ParameterKey":"KeyPairName",
+        "ParameterValue":"foobar"
+    }
+]
