@@ -1,0 +1,575 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Molecule.
+Parameters:
+  KeyPairName:
+    Description: Keyname for access to EC2 Instances
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: Must be the name of an existing Keyname
+  HeadMoleculeInstanceType:
+    Description: Boomi Host Instance Type
+    Type: String
+    Default: m5.xlarge
+    AllowedValues:
+      - m4.xlarge
+      - m5.xlarge
+      - r4.xlarge
+      - r5.xlarge
+  NodeInstanceType:
+    Description: Boomi Host Instance Type
+    Type: String
+    Default: m5.xlarge
+    AllowedValues:
+      - m4.xlarge
+      - m5.xlarge
+      - r4.xlarge
+      - r5.xlarge
+  MoleculeEBSVolume:
+     Description: Boomi Head Molecule Host EBS Volume Size (Can be 1GiB to 16TiB. Size listed in GiB)
+     Type: Number
+     Default: 100
+  MoleculeLocalTemp:
+    Description: Please enter a local Temp Path for your Molecule Install
+    Type: String
+    Default: /mnt/tmp
+  VPCID:
+    Type: AWS::EC2::VPC::Id
+  PublicSubnet1ID:
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnet2ID:
+    Type: AWS::EC2::Subnet::Id
+  PrivateSubnet1ID:
+    Type: AWS::EC2::Subnet::Id
+  PrivateSubnet2ID:
+    Type: AWS::EC2::Subnet::Id
+  BoomiUsername:
+    Description: Please enter your Boomi User Name
+    Type: String
+  BoomiPassword:
+    Description: Please enter your Boomi Account Password
+    Type: String
+    NoEcho: true
+  BoomiAccountID:
+    Description: Please enter your Boomi Account ID
+    Type: String
+    Default: aws-XKO5OZ
+  BastionSecurityGroupID:
+    Type: AWS::EC2::SecurityGroup::Id
+  MoleculeSharedDir:
+    Description: Please enter a shared Directory for Molecules
+    Type: String
+    Default: /mnt/molecule
+  MoleculeLocalPath:
+    Description: Please enter a local Path for the Molecule Install
+    Type: String
+    Default: /opt/molecule/local/
+  MoleculeInstanceName:
+    Description: Please enter a name for your Boomi Instance
+    Type: String
+    Default: molecule1
+  Encryption:
+    Description: EFS volumes can be encrypted. Please select either "yes" or "no"
+    Type: String
+    Default: yes
+    AllowedValues:
+      - yes
+      - no
+  PerformanceMode:
+    Description: Choose a performance mode for your EFS volume
+    Type: String
+    Default: generalPurpose
+    AllowedValues:
+      - generalPurpose
+      - maxIO
+  ProvisionedThroughput:
+    Description: Select the Provisioned Throughput value for your EFS volume
+    Type: Number
+    Default: 10
+  ThroughputMode:
+   Description: Select the throughput mode for your EFS Volume
+   Type: String
+   Default: provisioned
+   AllowedValues:
+     - provisioned
+     - bursting
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      -
+        Label:
+          default: "Network Configuration"
+        Parameters:
+          - VPCID
+          - PublicSubnet1ID
+          - PublicSubnet2ID
+          - PrivateSubnet1ID
+          - PrivateSubnet2ID
+      -
+        Label:
+          default: "Amazon EC2 Configuration"
+        Parameters:
+          - KeyPairName
+          - MoleculeEBSVolume
+      -
+        Label:
+          default: "Boomi Atom Node Sizing"
+        Parameters:
+          - HeadMoleculeInstanceType
+          - NodeInstanceType
+      -
+        Label:
+          default: "Dell Boomi Molecule Configuration"
+        Parameters:
+          - MoleculeInstanceName
+          - MoleculeLocalPath
+          - MoleculeLocalTemp
+          - BoomiAccountID
+          - BoomiUsername
+          - BoomiPassword
+          - MoleculeSharedDir
+
+      -
+        Label:
+          default: "Amazon EFS Configuration"
+        Parameters:
+          - Encryption
+          - PerformanceMode
+          - ThroughputMode
+          - ProvisionedThroughput
+Mappings:
+  AWSAMIRegionMap:
+    ap-northeast-1:
+      AMZNLINUXHVM: ami-00a5245b4816c38e6
+    ap-northeast-2:
+      AMZNLINUXHVM: ami-00dc207f8ba6dc919
+    ap-south-1:
+      AMZNLINUXHVM: ami-0ad42f4f66f6c1cc9
+    ap-southeast-1:
+      AMZNLINUXHVM: ami-05b3bcf7f311194b3
+    ap-southeast-2:
+      AMZNLINUXHVM: ami-02fd0b06f06d93dfc
+    ca-central-1:
+      AMZNLINUXHVM: ami-07423fb63ea0a0930
+    eu-central-1:
+      AMZNLINUXHVM: ami-0cfbf4f6db41068ac
+    eu-west-1:
+      AMZNLINUXHVM: ami-08935252a36e25f85
+    eu-west-2:
+      AMZNLINUXHVM: ami-01419b804382064e4
+    eu-west-3:
+      AMZNLINUXHVM: ami-0dd7e7ed60da8fb83
+    sa-east-1:
+      AMZNLINUXHVM: ami-05145e0b28ad8e0b2
+    us-east-1:
+      AMZNLINUXHVM: ami-0080e4c5bc078760e
+    us-east-2:
+      AMZNLINUXHVM: ami-0cd3dfa4e37921605
+    us-west-1:
+      AMZNLINUXHVM: ami-0ec6517f6edbf8044
+    us-west-2:
+      AMZNLINUXHVM: ami-01e24be29428c15b2
+    eu-north-1:
+      AMZNLINUXHVM: sklfjsjklf
+    ap-east-1:
+      AMZNLINUXHVM: slkjfslkdf
+    ap-northeast-3:
+      AMZNLINUXHVM: 239048sdlkfj
+Resources:
+  LoadBalancerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: boomi-elb
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: LoadBalancerSG
+      SecurityGroupIngress:
+        - FromPort: 9090
+          IpProtocol: tcp
+          CidrIp: !Ref PrivateSubnet1ID
+          ToPort: 9090
+        - FromPort: 9090
+          IpProtocol: tcp
+          CidrIp: !Ref PrivateSubnet2ID
+          ToPort: 9090
+  BoomiSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: "Boomi Molecule high-level SG"
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: BoomiSG
+      SecurityGroupIngress:
+        - FromPort: 22
+          IpProtocol: tcp
+          SourceSecurityGroupId: !Ref BastionSecurityGroupID
+          ToPort: 22
+        - FromPort: 22
+          IpProtocol: tcp
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+          ToPort: 22
+        - FromPort: 9090
+          IpProtocol: tcp
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+          ToPort: 9090
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !Ref PrivateSubnet1ID
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !Ref PrivateSubnet2ID
+  BoomiUnicastSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Boomi-Unicast
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: Boomi-Unicast-SG
+      SecurityGroupIngress:
+        - FromPort: -1
+          IpProtocol: 'tcp'
+          SourceSecurityGroupId: !Ref BoomiSecurityGroup
+          ToPort: -1
+  MoleculeSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: moleculeSG
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: MoleculeSG
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: -1
+          ToPort: -1
+          SourceSecurityGroupId: !Ref BoomiSecurityGroup
+  MountTargetSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: MountTargetSecurityGroup
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: MountTargetSecurityGroup
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref PrivateSubnet1ID
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref PrivateSubnet2ID
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !Ref PrivateSubnet1ID
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          CidrIp: !Ref PrivateSubnet2ID
+      SecurityGroupEgress:
+        - IpProtocol: 'tcp'
+          CidrIp: 0.0.0.0/0
+  MountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFilesystem
+      SubnetId: !Ref PrivateSubnet1ID
+      SecurityGroups:
+        - !Ref MountTargetSecurityGroup
+  MountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFilesystem
+      SubnetId: !Ref PrivateSubnet2ID
+      SecurityGroups:
+        - !Ref "MountTargetSecurityGroup"
+  KMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: key-default-1
+        Statement:
+          - Sid: Allow administration of the key
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - 'kms:*'
+            Resource: '*'
+  HeadMolecule:
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: "PT15M"
+    DependsOn: EFSFilesystem
+    Type: "AWS::EC2::Instance"
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          head_molecule:
+            - nfs_and_java_path
+            - download_and_install_atom
+            - java_symlink
+            - start_atom
+          molecule_workers:
+            - nfs_and_java_path
+            - java_symlink
+            - start_atom
+        nfs_and_java_path:
+          files:
+            /tmp/efs_mount_config.sh:
+              content: !Sub |
+                CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+                echo "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com:/ ${MoleculeSharedDir} nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
+                mount -a
+              mode: '000644'
+              owner: 'root'
+              group: 'root'
+          packages:
+            yum:
+              amazon-efs-utils: []
+          commands:
+            010_create_dirs:
+              command:
+                - !Sub "mkdir -p ${MoleculeLocalPath}"
+                - !Sub "mkdir -p ${MoleculeSharedDir}"
+                - !Sub "chown ec2-user:ec2-user ${MoleculeLocalPath} ${MoleculeLocalPath}"
+            015_set_java_path_in_ec2user:
+              command:
+                - echo JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64 /home/ec2-user/.bash_profile
+                - echo "export PATH=$JAVA_HOME/bin:$PATH >> /home/ec2-user/.bash_profile"
+            020_mount_nfs:
+              command:
+                - /tmp/efs_mount_config.sh
+        java_symlink:
+          commands:
+            010_create_symlink:
+              command: !Sub "ln -sf ${MoleculeSharedDir}/${MoleculeInstanceName}/jre/bin/java /usr/bin/java"
+        start_atom:
+          commands:
+            010_start_atom:
+              command:
+                - !Sub "${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/bin/atom stop"
+                - !Sub "sudo -u ec2-user bash -c '${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/bin/atom start"
+        download_and_install_atom:
+          files:
+            /tmp/molecule_install.sh:
+              source: https://platform.boomi.com/atom/molecule_install64.sh
+              mode: '000644'
+              owner: 'root'
+              group: 'root'
+            /tmp/molecule_set_cluster_properties.sh:
+              content: !Sub |
+                LOCAL_IVP4=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+                echo com.boomi.container.cloudlet.initialHosts=${!LOCAL_IVP4}[7800] >> ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/conf/container.properties
+                echo com.boomi.container.cloudlet.clusterConfig=UNICAST >> ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/conf/container.properties
+              mode: '000644'
+              owner: 'root'
+              group: 'root'
+          commands:
+            010_install_atom:
+              command:
+                - !Sub "sudo ec2-user bash -c /tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -BoomiPassword=${BoomiPassword} -VatomName=${MoleculeInstanceName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
+            020_set_cluster_properties:
+              command:
+                - /tmp/molecule_set_cluster_properties.sh
+            030_cleanup_scripts:
+              command:
+                - rm /tmp/molecule_set_cluster_properties.sh
+                - rm /tmp/molecule_install.sh
+    Properties:
+      ImageId: !FindInMap
+        - AWSAMIRegionMap
+        - !Ref "AWS::Region"
+        - AMZNLINUXHVM
+      InstanceType: !Ref HeadMoleculeInstanceType
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref BoomiSecurityGroup
+            - !Ref BoomiUnicastSG
+            - !Ref MoleculeSecurityGroup
+          AssociatePublicIpAddress: false
+          DeviceIndex: '0'
+          DeleteOnTermination: true
+          SubnetId: !Ref PrivateSubnet1ID
+      BlockDeviceMappings:
+        - DeviceName: "/dev/xvda"
+          Ebs:
+            VolumeType: "gp2"
+            DeleteOnTermination: true
+            VolumeSize: !Ref MoleculeEBSVolume
+      KeyName: !Ref KeyPairName
+      Tags:
+        - Value: HeadMolecule
+          Key: Name
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y python-setuptools
+          yum install -y wget
+          mkdir -p /opt/aws/bin
+          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource HeadMolecule --region ${AWS::Region} -c head_molecule
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource HeadMolecule --region ${AWS::Region}
+  MoleculeNode1:
+    DependsOn:
+      - HeadMolecule
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap
+        - AWSAMIRegionMap
+        - !Ref AWS::Region
+        - AMZNLINUXHVM
+      InstanceType: !Ref NodeInstanceType
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref BoomiSecurityGroup
+            - !Ref BoomiUnicastSG
+            - !Ref MoleculeSecurityGroup
+          AssociatePublicIpAddress: false
+          DeviceIndex: '0'
+          DeleteOnTermination: true
+          SubnetId: !Ref PrivateSubnet2ID
+      BlockDeviceMappings:
+        - DeviceName: "/dev/xvda"
+          Ebs:
+            VolumeType: "gp2"
+            DeleteOnTermination: true
+            VolumeSize: !Ref MoleculeEBSVolume
+      KeyName: !Ref KeyPairName
+      UserData:
+        Fn::Base64: !Sub |
+           #!/bin/bash
+           yum install -y python-setuptools
+           yum install -y wget
+           mkdir -p /opt/aws/bin
+           wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+           easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
+           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource HeadMolecule --region ${AWS::Region} -c molecule_workers
+           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
+        Tags:
+          - Value: Molecule1
+            Key: Name
+  MoleculeNode2:
+    DependsOn: HeadMolecule
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap
+       - AWSAMIRegionMap
+       - !Ref AWS::Region
+       - AMZNLINUXHVM
+      InstanceType: !Ref NodeInstanceType
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref BoomiSecurityGroup
+            - !Ref BoomiUnicastSG
+            - !Ref MoleculeSecurityGroup
+          AssociatePublicIpAddress: false
+          DeviceIndex: '0'
+          DeleteOnTermination: true
+          SubnetId: !Ref PrivateSubnet1ID
+      BlockDeviceMappings:
+       - DeviceName: "/dev/xvda"
+         Ebs:
+          VolumeType: "gp2"
+          DeleteOnTermination: true
+          VolumeSize: !Ref MoleculeEBSVolume
+      KeyName: !Ref KeyPairName
+      Tags:
+        - Value: Molecule2
+          Key: Name
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y python-setuptools
+          yum install -y wget
+          mkdir -p /opt/aws/bin
+          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource HeadMolecule --region ${AWS::Region} -c molecule_workers
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
+
+  MoleculeNode3:
+    DependsOn: HeadMolecule
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: !FindInMap
+       - AWSAMIRegionMap
+       - !Ref AWS::Region
+       - AMZNLINUXHVM
+      InstanceType: !Ref NodeInstanceType
+      NetworkInterfaces:
+        - GroupSet:
+            - !Ref BoomiSecurityGroup
+            - !Ref BoomiUnicastSG
+            - !Ref MoleculeSecurityGroup
+          AssociatePublicIpAddress: false
+          DeviceIndex: '0'
+          DeleteOnTermination: true
+          SubnetId: !Ref PrivateSubnet2ID
+      BlockDeviceMappings:
+       - DeviceName: "/dev/xvda"
+         Ebs:
+          VolumeType: "gp2"
+          DeleteOnTermination: true
+          VolumeSize: !Ref MoleculeEBSVolume
+      KeyName: !Ref KeyPairName
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          yum install -y python-setuptools
+          yum install -y wget
+          mkdir -p /opt/aws/bin
+          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource HeadMolecule --region ${AWS::Region} -c molecule_workers
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
+      Tags:
+        - Value: Molecule3
+          Key: Name
+  ElasticLoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      Subnets:
+        - !Ref PublicSubnet1ID
+        - !Ref PublicSubnet2ID
+      CrossZone: true
+      Listeners:
+      - LoadBalancerPort: '9090'
+        InstancePort: '9090'
+        Protocol: TCP
+      HealthCheck:
+        Target: TCP:22
+        HealthyThreshold: '3'
+        UnhealthyThreshold: '5'
+        Interval: '30'
+        Timeout: '5'
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+      Instances:
+        - !Ref HeadMolecule
+        - !Ref MoleculeNode1
+        - !Ref MoleculeNode2
+        - !Ref MoleculeNode3
+  EFSFilesystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: !Ref Encryption
+      PerformanceMode: !Ref PerformanceMode
+      ProvisionedThroughputInMibps: !Ref ProvisionedThroughput
+      ThroughputMode: !Ref ThroughputMode
+      KmsKeyId: !GetAtt
+        - KMSKey
+        - Arn
+Outputs:
+  VPC:
+    Description: The VPC
+    Value: !Ref VPCID

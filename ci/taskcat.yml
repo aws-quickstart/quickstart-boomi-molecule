@@ -1,6 +1,6 @@
 global:
-  owner: andglenn@amazon.com
-  qsname: molecule-temp
+  owner: quickstart@amazon.com
+  qsname: quickstart-boomi-molecule
   regions:
     - us-east-2
 tests:

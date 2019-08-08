@@ -1,11 +1,15 @@
 [
     {
-        "ParameterKey":"Vusername",
+        "ParameterKey":"BoomiUsername",
         "ParameterValue":"seanwilliams2857@gmail.com"
     },
     {
-        "ParameterKey":"Vpassword",
+        "ParameterKey":"BoomiPassword",
         "ParameterValue":"chesterbrook"
+    },
+    {
+        "ParameterKey":"BoomiAccountID",
+        "ParameterValue":"aws-XKO5OZ"
     },
     {
         "ParameterKey":"KeyPairName",
