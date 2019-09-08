@@ -21,7 +21,6 @@ Metadata:
       - Label:
           default: "Boomi Atom Node Sizing"
         Parameters:
-          - HeadMoleculeInstanceType
           - NodeInstanceType
       - Label:
           default: "Dell Boomi Molecule Configuration"
@@ -190,7 +189,7 @@ Parameters:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
       uppercase letters, hyphens (-), and forward slash (/).
-    Default: quickstart-boomi-atom/
+    Default: quickstart-boomi-molecule/
     Description: S3 key prefix for the Quick Start assets. Quick Start key prefix
       can include numbers, lowercase letters, uppercase letters, hyphens (-), and
       forward slash (/).
@@ -221,49 +220,27 @@ Resources:
       Parameters:
         BastionAMIOS: 'Amazon-Linux-HVM'
         KeyPairName: !Ref 'KeyPairName'
-        PublicSubnet1ID: !GetAtt
-          - VPCStack
-          - Outputs.PublicSubnet1ID
-        PublicSubnet2ID: !GetAtt
-          - VPCStack
-          - Outputs.PublicSubnet2ID
+        PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
+        PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
         QSS3BucketName: !Ref QSS3BucketName
         QSS3KeyPrefix: !Sub "${QSS3KeyPrefix}submodules/quickstart-linux-bastion/"
         RemoteAccessCIDR: !Ref RemoteAccessCIDR
-        VPCID: !GetAtt
-          - VPCStack
-          - Outputs.VPCID
+        VPCID: !GetAtt VPCStack.Outputs.VPCID
   MoleculeStack:
       Type: AWS::CloudFormation::Stack
       Properties:
         TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/boomi-molecule.template.yaml'
         Parameters:
-          PublicSubnet1ID: !GetAtt
-            - VPCStack
-            - Outputs.PublicSubnet1ID
-          PublicSubnet2ID: !GetAtt
-            - VPCStack
-            - Outputs.PublicSubnet2ID
-          PrivateSubnet1ID: !GetAtt
-            - VPCStack
-            - Outputs.PrivateSubnet1ID
-          PrivateSubnet2ID: !GetAtt
-            - VPCStack
-            - Outputs.PrivateSubnet2ID
+          PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
+          PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
+          PrivateSubnet1ID: !GetAtt VPCStack.Outputs.PrivateSubnet1AID
+          PrivateSubnet2ID: !GetAtt VPCStack.Outputs.PrivateSubnet2AID
           BoomiUsername: !Ref BoomiUsername
           BoomiPassword: !Ref BoomiPassword
           BoomiAccountID: !Ref BoomiAccountID
-          BoomiInstallDir: !Ref BoomiInstallDir
-          BastionSecurityGroupID: !GetAtt
-            - BastionStack
-            - Outputs.BastionSecurityGroupID
-          InstanceType: !Ref InstanceType
-          BoomiInstanceVolumeSize: !Ref BoomiInstanceVolumeSize
-          VPCID: !GetAtt
-            - VPCStack
-            - Outputs.VPCID
+          BastionSecurityGroupID: !GetAtt BastionStack.Outputs.BastionSecurityGroupID
+          VPCID: !GetAtt VPCStack.Outputs.VPCID
           KeyPairName: !Ref KeyPairName
-          HeadMoleculeInstanceType: !Ref HeadMoleculeInstanceType
           NodeInstanceType: !Ref NodeInstanceType
           MoleculeEBSVolume: !Ref MoleculeEBSVolume
           MoleculeLocalTemp: !Ref MoleculeLocalTemp

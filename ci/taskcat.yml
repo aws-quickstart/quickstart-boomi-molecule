@@ -2,8 +2,8 @@ global:
   owner: quickstart@amazon.com
   qsname: quickstart-boomi-molecule
   regions:
-    - us-east-2
+    - us-east-1
 tests:
   basic:
     parameter_input: params.json
-    template_file: molecule.yaml
+    template_file: boomi-molecule-master.template.yaml
