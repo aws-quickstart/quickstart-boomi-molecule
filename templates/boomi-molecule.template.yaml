@@ -174,10 +174,10 @@ Resources:
         - Key: Name
           Value: LoadBalancerSG
       SecurityGroupIngress:
-        - FromPort: 9090
+        - FromPort: 9093
           IpProtocol: tcp
           CidrIp: 0.0.0.0/0
-          ToPort: 9090
+          ToPort: 9093
   BoomiSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -195,10 +195,10 @@ Resources:
           IpProtocol: tcp
           SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
           ToPort: 22
-        - FromPort: 9090
+        - FromPort: 9093
           IpProtocol: tcp
           SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
-          ToPort: 9090
+          ToPort: 9093
   BoomiUnicastSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -524,8 +524,8 @@ Resources:
         - !Ref PublicSubnet2ID
       CrossZone: true
       Listeners:
-        - LoadBalancerPort: '9090'
-          InstancePort: '9090'
+        - LoadBalancerPort: '9093'
+          InstancePort: '9093'
           Protocol: TCP
       HealthCheck:
         Target: TCP:22
