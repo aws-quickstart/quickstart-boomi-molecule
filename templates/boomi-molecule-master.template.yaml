@@ -285,8 +285,6 @@ Parameters:
   MoleculeFQDN:
     Type: String
     Default: ""
-    AllowedPattern: "^((\\w+\\.)+\\w+){0,15}$"
-    ConstraintDescription: "Must be a valid domain name."
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
