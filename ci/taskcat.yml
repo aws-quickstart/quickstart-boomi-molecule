@@ -20,3 +20,5 @@ tests:
   quickstart-boomi-molecule:
     parameter_input: params.json
     template_file: boomi-molecule-master.template.yaml
+    regions:
+      - us-east-2
