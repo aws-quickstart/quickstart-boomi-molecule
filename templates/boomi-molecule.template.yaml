@@ -3,11 +3,11 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Molecule.
 Parameters:
   KeyPairName:
-    Description: Keyname for access to EC2 Instances
+    Description: Key name for access to EC2 instances
     Type: AWS::EC2::KeyPair::KeyName
-    ConstraintDescription: Must be the name of an existing Keyname
+    ConstraintDescription: Must be the name of an existing key name
   NodeInstanceType:
-    Description: Boomi Host Instance Type
+    Description: Boomi host instance type
     Type: String
     Default: m5.xlarge
     AllowedValues:
@@ -16,23 +16,28 @@ Parameters:
       - r4.xlarge
       - r5.xlarge
   MoleculeEBSVolume:
-    Description: Boomi Head Molecule Host EBS Volume Size (Can be 1GiB to 16TiB. Size listed in GiB)
+    Description: Boomi head molecule host EBS volume size (Can be 1GiB to 16TiB. size listed in GiB)
     Type: Number
     Default: 100
   MoleculeLocalTemp:
-    Description: Please enter a local Temp Path for your Molecule Install
+    Description: Please enter a local temp path for your molecule install
     Type: String
     Default: /mnt/tmp
   VPCID:
     Type: AWS::EC2::VPC::Id
+    Description: The ID of your existing VPC.
   PublicSubnet1ID:
     Type: AWS::EC2::Subnet::Id
+    Description: The ID of the public subnet in Availability Zone 1 in your existing VPC.
   PublicSubnet2ID:
     Type: AWS::EC2::Subnet::Id
+    Description: The ID of the public subnet in Availability Zone 2 in your existing VPC.
   PrivateSubnet1ID:
     Type: AWS::EC2::Subnet::Id
+    Description: The ID of the private subnet in Availability Zone 1 in your existing VPC.
   PrivateSubnet2ID:
     Type: AWS::EC2::Subnet::Id
+    Description: The ID of the private subnet in Availability Zone 2 in your existing VPC.
   BoomiUsername:
     Description: Please enter your Boomi User Name
     Type: String
@@ -44,6 +49,7 @@ Parameters:
     Description: Please enter your Boomi Account ID
     Type: String
   BastionSecurityGroupID:
+    Description: The ID of the Bastion security group in your existing VPC (e.g., sg-1a2b3c4d).
     Type: AWS::EC2::SecurityGroup::Id
   MoleculeSharedDir:
     Description: Please enter a shared Directory for Molecules
@@ -56,32 +62,36 @@ Parameters:
   MoleculeInstanceName:
     Description: Please enter a name for your Boomi Instance
     Type: String
-    Default: MoleculeNode1
-  Encryption:
+    Default: molecule1
+  EFSEncryption:
     Description: EFS volumes can be encrypted. Please select either "yes" or "no"
     Type: String
     Default: yes
     AllowedValues:
       - yes
       - no
-  PerformanceMode:
+  EFSPerformanceMode:
     Description: Choose a performance mode for your EFS volume
     Type: String
     Default: generalPurpose
     AllowedValues:
       - generalPurpose
       - maxIO
-  ProvisionedThroughput:
+  EFSProvisionedThroughput:
     Description: Select the Provisioned Throughput value for your EFS volume
     Type: Number
     Default: 10
-  ThroughputMode:
+  EFSThroughputMode:
     Description: Select the throughput mode for your EFS Volume
     Type: String
     Default: provisioned
     AllowedValues:
       - provisioned
       - bursting
+  SSLCertificateArn:
+      Description: The SSL Certificate ID used with the Load Balancer
+      Type: String
+      Default: ''
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -94,6 +104,7 @@ Metadata:
           - PublicSubnet2ID
           - PrivateSubnet1ID
           - PrivateSubnet2ID
+          - BastionSecurityGroupID
       -
         Label:
           default: "Amazon EC2 Configuration"
@@ -122,10 +133,58 @@ Metadata:
         Label:
           default: "Amazon EFS Configuration"
         Parameters:
-          - Encryption
-          - PerformanceMode
-          - ThroughputMode
-          - ProvisionedThroughput
+          - EFSEncryption
+          - EFSPerformanceMode
+          - EFSThroughputMode
+          - EFSProvisionedThroughput
+      -
+        Label:
+          default: "SSL Configuration"
+        Parameters:
+          - SSLCertificateArn
+    ParameterLabels:
+      KeyPairName:
+        default: SSH key name
+      PrivateSubnet1ID:
+        default: Private subnet 1 ID
+      PrivateSubnet2ID:
+        default: Private subnet 2 ID
+      PublicSubnet1ID:
+        default: Public subnet 1 ID
+      PublicSubnet2ID:
+        default: Public subnet 2 ID
+      VPCID:
+        default: VPC ID
+      NodeInstanceType:
+        default: Boomi Atom instance type
+      MoleculeEBSVolume:
+        default: Volume size for Boomi instances
+      BoomiAccountID:
+        default: Boomi account ID
+      BoomiUsername:
+        default: Boomi User name
+      BoomiPassword:
+        default: Boomi password
+      MoleculeLocalTemp:
+        default: Molecule local temp directory
+      EFSEncryption:
+        default: EFS encryption
+      EFSPerformanceMode:
+        default: EFS performance mode
+      EFSProvisionedThroughput:
+        default: EFS provisioned throughput
+      EFSThroughputMode:
+        default: EFS throughput mode
+      MoleculeSharedDir:
+        default: Molecule shared directory
+      MoleculeLocalPath:
+        default: Molecule local path
+      MoleculeInstanceName:
+        default: Molecule instance name
+      SSLCertificateArn:
+        default: SSL certificate ARN
+      BastionSecurityGroupID:
+        default: Bastion security group ID
 Mappings:
   AWSAMIRegionMap:
     ap-northeast-1:
@@ -526,7 +585,8 @@ Resources:
       Listeners:
         - LoadBalancerPort: '9093'
           InstancePort: '9093'
-          Protocol: TCP
+          Protocol: https
+          SSLCertificateId: !Ref SSLCertificateArn
       HealthCheck:
         Target: TCP:22
         HealthyThreshold: '3'
@@ -543,10 +603,10 @@ Resources:
   EFSFilesystem:
     Type: AWS::EFS::FileSystem
     Properties:
-      Encrypted: !Ref Encryption
-      PerformanceMode: !Ref PerformanceMode
-      ProvisionedThroughputInMibps: !Ref ProvisionedThroughput
-      ThroughputMode: !Ref ThroughputMode
+      Encrypted: !Ref EFSEncryption
+      PerformanceMode: !Ref EFSPerformanceMode
+      ProvisionedThroughputInMibps: !Ref EFSProvisionedThroughput
+      ThroughputMode: !Ref EFSThroughputMode
       KmsKeyId: !GetAtt
         - KMSKey
         - Arn

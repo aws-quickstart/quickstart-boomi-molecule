@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Atom.
 Metadata:
@@ -40,10 +41,90 @@ Metadata:
       - Label:
           default: "Amazon EFS Configuration"
         Parameters:
-          - Encryption
-          - PerformanceMode
-          - ThroughputMode
-          - ProvisionedThroughput
+          - EFSEncryption
+          - EFSPerformanceMode
+          - EFSThroughputMode
+          - EFSProvisionedThroughput
+      - Label:
+          default: "DNS and SSL Configuration"
+        Parameters:
+          - MoleculeFQDN
+          - HostedZoneID
+          - SSLCertificateArn
+    ParameterLabels:
+      KeyPairName:
+        default: SSH key name
+      PrivateSubnet1CIDR:
+        default: Private subnet 1 CIDR
+      PrivateSubnet2CIDR:
+        default: Private subnet 2 CIDR
+      PublicSubnet1CIDR:
+        default: Public subnet 1 CIDR
+      PublicSubnet2CIDR:
+        default: Public subnet 2 CIDR
+      QSS3BucketName:
+        default: Quick Start S3 bucket name
+      QSS3KeyPrefix:
+        default: Quick Start S3 key prefix
+      RemoteAccessCIDR:
+        default: Allowed external access CIDR (OCP UI)
+      VPCCIDR:
+        default: VPC CIDR
+      BoomiAccountID:
+        default: Boomi account ID
+      BoomiUsername:
+        default: Boomi User name
+      BoomiPassword:
+        default: Boomi password
+      NodeInstanceType:
+        default: Boomi Atom instance type
+      MoleculeEBSVolume:
+        default: Volume size for Boomi instances
+      MoleculeLocalTemp:
+        default: Molecule local temp directory
+      EFSEncryption:
+        default: EFS encryption
+      EFSPerformanceMode:
+        default: EFS performance mode
+      EFSProvisionedThroughput:
+        default: EFS provisioned throughput
+      EFSThroughputMode:
+        default: EFS throughput mode
+      MoleculeSharedDir:
+        default: Molecule shared directory
+      MoleculeLocalPath:
+        default: Molecule local path
+      MoleculeInstanceName:
+        default: Molecule instance name
+      SSLCertificateArn:
+        default: SSL certificate ARN
+      HeadMoleculeInstanceType:
+        default: Head molecule instance type
+      AvailabilityZones:
+        default: Availability zones
+      HostedZoneID:
+        default: Route 53 hosted zone ID
+      MoleculeFQDN:
+        default: Molecule FQDN
+Conditions:
+  GenerateSSL: !And
+    - !Equals [!Ref SSLCertificateArn, '']
+    - !Not [!Equals [!Ref MoleculeFQDN, '']]
+Rules:
+  DomainNamePresentWithHostedID:
+    Assertions:
+      - Assert: !Or
+          - !Equals [!Ref HostedZoneID, '']
+          - !Not [!Equals [!Ref MoleculeFQDN, '']]
+        AssertDescription: "Please specify a 'Domain Name' if you specify 'Route 53 Hosted Zone ID'"
+  GenerateOrProvideSSL:
+    Assertions:
+      - Assert: !Or
+        - !Not [!Equals [!Ref SSLCertificateArn, '']]
+        - !And
+            - !Not [!Equals [!Ref HostedZoneID, '']]
+            - !Not [!Equals [!Ref MoleculeFQDN, '']]
+        AssertDescription: "Using an SSL certificate is enforced. A CertificateArn or a HostedZoneID and MoleculeFQDN mustt be provided."
 Parameters:
   KeyPairName:
     Description: A public/private key pair, which allows you to connect securely to your instance after it launches.
@@ -77,10 +158,6 @@ Parameters:
       - m5.xlarge
       - r4.xlarge
       - r5.xlarge
-  MoleculeEBSVolume:
-     Description: Boomi Head Molecule Host EBS Volume Size (Can be 1GiB to 16TiB. Size listed in GiB)
-     Type: Number
-     Default: 100
   MoleculeLocalTemp:
     Description: Please enter a local Temp Path for your Molecule Install
     Type: String
@@ -97,33 +174,33 @@ Parameters:
     Description: Please enter a name for your Boomi Instance
     Type: String
     Default: molecule1
-  Encryption:
+  EFSEncryption:
     Description: EFS volumes can be encrypted. Please select either "yes" or "no"
     Type: String
     Default: yes
     AllowedValues:
       - yes
       - no
-  PerformanceMode:
+  EFSPerformanceMode:
     Description: Choose a performance mode for your EFS volume
     Type: String
     Default: generalPurpose
     AllowedValues:
       - generalPurpose
       - maxIO
-  ProvisionedThroughput:
+  EFSProvisionedThroughput:
     Description: Select the Provisioned Throughput value for your EFS volume
     Type: Number
     Default: 10
-  ThroughputMode:
-   Description: Select the throughput mode for your EFS Volume
-   Type: String
-   Default: provisioned
-   AllowedValues:
+  EFSThroughputMode:
+    Description: Select the throughput mode for your EFS Volume
+    Type: String
+    Default: provisioned
+    AllowedValues:
      - provisioned
      - bursting
-  BoomiInstanceVolumeSize:
-     Description: The size of the Amazon EBS volume attached to the Atom instance. Size range is 1 GiB - 16 TiB.
+  MoleculeEBSVolume:
+     Description: The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB.
      Type: Number
      Default: 100
   VPCCIDR:
@@ -171,10 +248,6 @@ Parameters:
   BoomiAccountID:
      Description: The Dell Boomi account ID that you want to associate the new Atom with.
      Type: String
-  BoomiInstallDir:
-     Description: The installation directory for Dell Boomi.
-     Type: String
-     Default: /opt/boomi/
   QSS3BucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     ConstraintDescription: Quick Start bucket name can include numbers, lowercase
@@ -200,6 +273,20 @@ Parameters:
     Description: The CIDR IP range that is permitted to access the instances. We recommend
       that you set this value to a trusted IP range.
     Type: String
+  SSLCertificateArn:
+    Description: The ARN of the SSL certificate to use for the load balancer. If not specified, the certificate will be auto-generated when 'DomainName' and 'HostedZoneID' are provided.
+    Type: String
+    Default: ''
+  HostedZoneID:
+    Description: Route 53 Hosted Zone ID of the domain name. Used in conjunction with a 'MoleculeFQDN'.
+    Type: String
+    Default: ''
+    MaxLength: 32
+  MoleculeFQDN:
+    Type: String
+    Default: ""
+    AllowedPattern: "^((\\w+\\.)+\\w+){0,1}$"
+    ConstraintDescription: "Must be a valid domain name."
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
@@ -247,7 +334,30 @@ Resources:
           MoleculeSharedDir: !Ref MoleculeSharedDir
           MoleculeLocalPath: !Ref MoleculeLocalPath
           MoleculeInstanceName: !Ref MoleculeInstanceName
-          Encryption: !Ref Encryption
-          PerformanceMode: !Ref PerformanceMode
-          ProvisionedThroughput: !Ref ProvisionedThroughput
-          ThroughputMode: !Ref ThroughputMode
+          EFSEncryption: !Ref EFSEncryption
+          EFSPerformanceMode: !Ref EFSPerformanceMode
+          EFSProvisionedThroughput: !Ref EFSProvisionedThroughput
+          EFSThroughputMode: !Ref EFSThroughputMode
+          SSLCertificateArn:
+            !If
+            - GenerateSSL
+            - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
+            - !Ref SSLCertificateArn
+  CopyLambdaStack:
+    Condition: GenerateSSL
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/copy-lambdas.template"
+      Parameters:
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3KeyPrefix: !Ref QSS3KeyPrefix
+  ConfigureSSLStack:
+    Condition: GenerateSSL
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/acm-cert-r53-record.template.yaml"
+      Parameters:
+        LambdaZipsBucketName: !GetAtt 'CopyLambdaStack.Outputs.LambdaZipsBucket'
+        QSS3KeyPrefix: !Ref QSS3KeyPrefix
+        DomainName: !Ref MoleculeFQDN
+        HostedZoneID: !Ref HostedZoneID

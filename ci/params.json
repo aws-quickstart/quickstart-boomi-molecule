@@ -26,5 +26,13 @@
     {
         "ParameterKey":"QSS3BucketName",
         "ParameterValue":"$[taskcat_autobucket]"
+    },
+    {
+        "ParameterKey":"MoleculeFQDN",
+        "ParameterValue":"override"
+    },
+    {
+        "ParameterKey": "HostedZoneID",
+        "ParameterValue":"override"
     }
 ]
