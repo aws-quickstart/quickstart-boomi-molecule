@@ -27,17 +27,14 @@ Metadata:
           default: "Dell Boomi Molecule Configuration"
         Parameters:
           - MoleculeInstanceName
+          - HeadMoleculeInstanceType
+          - InstanceType
           - MoleculeLocalPath
           - MoleculeLocalTemp
           - BoomiAccountID
           - BoomiUsername
           - BoomiPassword
           - MoleculeSharedDir
-      - Label:
-         default: "AWS Quick Start configuration"
-        Parameters:
-         - QSS3KeyPrefix
-         - QSS3BucketName
       - Label:
           default: "Amazon EFS Configuration"
         Parameters:
@@ -51,6 +48,11 @@ Metadata:
           - MoleculeFQDN
           - HostedZoneID
           - SSLCertificateArn
+      - Label:
+         default: "AWS Quick Start Configuration"
+        Parameters:
+         - QSS3KeyPrefix
+         - QSS3BucketName
     ParameterLabels:
       KeyPairName:
         default: SSH key name
