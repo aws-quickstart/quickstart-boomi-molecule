@@ -116,7 +116,6 @@ Metadata:
           default: "Boomi Atom Node Sizing"
         Parameters:
           - NodeInstanceType
-          - NodeInstanceType
       -
         Label:
           default: "Dell Boomi Molecule Configuration"

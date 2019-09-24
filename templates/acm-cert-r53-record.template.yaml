@@ -204,7 +204,7 @@
                         "Arn"
                     ]
                 },
-                "Timeout": 300,
+                "Timeout": 900,
                 "Code": {
                     "S3Bucket": {
                         "Ref": "LambdaZipsBucketName"
