@@ -59,7 +59,7 @@ Parameters:
     Description: Please enter a local Path for the Molecule Install
     Type: String
     Default: /opt/molecule/local/
-  MoleculeInstanceName:
+  MoleculeClusterName:
     Description: Please enter a name for your Boomi Instance
     Type: String
     Default: molecule1
@@ -120,7 +120,7 @@ Metadata:
         Label:
           default: "Dell Boomi Molecule Configuration"
         Parameters:
-          - MoleculeInstanceName
+          - MoleculeClusterName
           - MoleculeLocalPath
           - MoleculeLocalTemp
           - BoomiAccountID
@@ -178,8 +178,8 @@ Metadata:
         default: Molecule shared directory
       MoleculeLocalPath:
         default: Molecule local path
-      MoleculeInstanceName:
-        default: Molecule instance name
+      MoleculeClusterName:
+        default: Molecule cluster name
       SSLCertificateArn:
         default: SSL certificate ARN
       BastionSecurityGroupID:
@@ -370,6 +370,7 @@ Resources:
               command: !Sub |
                 mkdir -p ${MoleculeLocalPath}
                 mkdir -p ${MoleculeSharedDir}
+                mkdir -p ${MoleculeLocalTemp}
                 chown ec2-user:ec2-user ${MoleculeLocalPath} ${MoleculeLocalPath}
             015_set_java_path_in_ec2user:
               command: |
@@ -381,18 +382,18 @@ Resources:
         java_symlink:
           commands:
             010_create_symlink:
-              command: !Sub "ln -sf ${MoleculeSharedDir}/${MoleculeInstanceName}/jre/bin/java /usr/bin/java"
+              command: !Sub "ln -sf ${MoleculeSharedDir}/${MoleculeClusterName}/jre/bin/java /usr/bin/java"
         start_atom:
           commands:
             010_start_atom:
               command: !Sub |
-                ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/bin/atom stop
-                sudo -u ec2-user bash -c '${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/bin/atom start'
+                ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/bin/atom stop
+                sudo -u ec2-user bash -c '${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/bin/atom start'
         set_container_id:
           commands:
             010_tell_boomi:
               command: !Sub |
-                container_id=$(grep 'com.boomi.container.id' ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/conf/container.id  | cut -c 24-59)
+                container_id=$(grep 'com.boomi.container.id' ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.id  | cut -c 24-59)
                 chown -R ec2-user:ec2-user ${MoleculeLocalPath}
                 /opt/aws/bin/cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
         download_and_install_atom:
@@ -406,17 +407,17 @@ Resources:
               content: !Sub |
                 #!/bin/bash
                 LOCAL_IVP4=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
-                echo com.boomi.container.cloudlet.initialHosts=${!LOCAL_IVP4}[7800] >> ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/conf/container.properties
-                echo com.boomi.container.cloudlet.clusterConfig=UNICAST >> ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}/conf/container.properties
+                echo com.boomi.container.cloudlet.initialHosts=${!LOCAL_IVP4}[7800] >> ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.properties
+                echo com.boomi.container.cloudlet.clusterConfig=UNICAST >> ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.properties
               mode: '000755'
               owner: 'root'
               group: 'root'
           commands:
             010_install_atom:
               command: !Sub |
-                mkdir -p ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}
-                chown ec2-user:ec2-user ${MoleculeSharedDir}/Molecule_${MoleculeInstanceName}
-                sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -Vpassword=${BoomiPassword} -VatomName=${MoleculeInstanceName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
+                mkdir -p ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}
+                chown ec2-user:ec2-user ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}
+                sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -Vpassword=${BoomiPassword} -VatomName=${MoleculeClusterName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
             020_set_cluster_properties:
               command:
                 - /tmp/molecule_set_cluster_properties.sh
@@ -496,7 +497,7 @@ Resources:
            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
       Tags:
-        - Value: MoleculeNode1
+        - Value: MoleculeNode2
           Key: Name
   MoleculeNode3:
     DependsOn: MoleculeNode1
@@ -524,7 +525,7 @@ Resources:
             VolumeSize: !Ref MoleculeEBSVolume
       KeyName: !Ref KeyPairName
       Tags:
-        - Value: Molecule2
+        - Value: MoleculeNode3
           Key: Name
       UserData:
         Fn::Base64: !Sub |
@@ -572,7 +573,7 @@ Resources:
           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
       Tags:
-        - Value: Molecule3
+        - Value: MoleculeNode4
           Key: Name
   ElasticLoadBalancer:
     Type: AWS::ElasticLoadBalancing::LoadBalancer

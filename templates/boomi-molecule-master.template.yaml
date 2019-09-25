@@ -26,7 +26,7 @@ Metadata:
       - Label:
           default: "Dell Boomi Molecule Configuration"
         Parameters:
-          - MoleculeInstanceName
+          - MoleculeClusterName
           - HeadMoleculeInstanceType
           - InstanceType
           - MoleculeLocalPath
@@ -43,7 +43,7 @@ Metadata:
           - EFSThroughputMode
           - EFSProvisionedThroughput
       - Label:
-          default: "DNS and SSL Configuration"
+          default: "DNS or SSL Configuration"
         Parameters:
           - MoleculeFQDN
           - HostedZoneID
@@ -69,7 +69,7 @@ Metadata:
       QSS3KeyPrefix:
         default: Quick Start S3 key prefix
       RemoteAccessCIDR:
-        default: Allowed external access CIDR (OCP UI)
+        default: Allowed external access CIDR
       VPCCIDR:
         default: VPC CIDR
       BoomiAccountID:
@@ -96,8 +96,8 @@ Metadata:
         default: Molecule shared directory
       MoleculeLocalPath:
         default: Molecule local path
-      MoleculeInstanceName:
-        default: Molecule instance name
+      MoleculeClusterName:
+        default: Molecule cluster name
       SSLCertificateArn:
         default: SSL certificate ARN
       HeadMoleculeInstanceType:
@@ -126,7 +126,7 @@ Rules:
         - !And
             - !Not [!Equals [!Ref HostedZoneID, '']]
             - !Not [!Equals [!Ref MoleculeFQDN, '']]
-        AssertDescription: "Using an SSL certificate is enforced. A CertificateArn or a HostedZoneID and MoleculeFQDN mustt be provided."
+        AssertDescription: "Using an SSL certificate is enforced. A CertificateArn or a HostedZoneID and MoleculeFQDN must be provided."
 Parameters:
   KeyPairName:
     Description: A public/private key pair, which allows you to connect securely to your instance after it launches.
@@ -172,8 +172,8 @@ Parameters:
     Description: Please enter a local Path for the Molecule Install
     Type: String
     Default: /opt/molecule/local/
-  MoleculeInstanceName:
-    Description: Please enter a name for your Boomi Instance
+  MoleculeClusterName:
+    Description: Please enter a name for your Boomi Molecule cluster
     Type: String
     Default: molecule1
   EFSEncryption:
@@ -333,7 +333,7 @@ Resources:
           MoleculeLocalTemp: !Ref MoleculeLocalTemp
           MoleculeSharedDir: !Ref MoleculeSharedDir
           MoleculeLocalPath: !Ref MoleculeLocalPath
-          MoleculeInstanceName: !Ref MoleculeInstanceName
+          MoleculeClusterName: !Ref MoleculeClusterName
           EFSEncryption: !Ref EFSEncryption
           EFSPerformanceMode: !Ref EFSPerformanceMode
           EFSProvisionedThroughput: !Ref EFSProvisionedThroughput
