@@ -113,7 +113,7 @@ Metadata:
           - MoleculeEBSVolume
       -
         Label:
-          default: "Boomi Atom Node Sizing"
+          default: "Boomi Molecule Node Sizing"
         Parameters:
           - NodeInstanceType
       -
@@ -155,7 +155,7 @@ Metadata:
       VPCID:
         default: VPC ID
       NodeInstanceType:
-        default: Boomi Atom instance type
+        default: Molecule node instance type
       MoleculeEBSVolume:
         default: Volume size for Boomi instances
       BoomiAccountID:
