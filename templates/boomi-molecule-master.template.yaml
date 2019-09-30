@@ -1,11 +1,11 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Atom.
+Description: Boomi Molecule Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Boomi Molecule cluster.
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-          default: "Network Configuration"
+          default: "Network configuration"
         Parameters:
           - AvailabilityZones
           - VPCCIDR
@@ -15,16 +15,16 @@ Metadata:
           - PrivateSubnet2CIDR
           - RemoteAccessCIDR
       - Label:
-          default: "Amazon EC2 Configuration"
+          default: "Amazon EC2 configuration"
         Parameters:
           - KeyPairName
           - MoleculeEBSVolume
       - Label:
-          default: "Boomi Molecule Node Sizing"
+          default: "Boomi Molecule node sizing"
         Parameters:
           - NodeInstanceType
       - Label:
-          default: "Dell Boomi Molecule Configuration"
+          default: "Boomi Molecule configuration"
         Parameters:
           - MoleculeClusterName
           - MoleculeLocalPath
@@ -34,20 +34,20 @@ Metadata:
           - BoomiPassword
           - MoleculeSharedDir
       - Label:
-          default: "Amazon EFS Configuration"
+          default: "Amazon EFS configuration"
         Parameters:
           - EFSEncryption
           - EFSPerformanceMode
           - EFSThroughputMode
           - EFSProvisionedThroughput
       - Label:
-          default: "DNS or SSL Configuration"
+          default: "DNS or SSL configuration"
         Parameters:
           - MoleculeFQDN
           - HostedZoneID
           - SSLCertificateArn
       - Label:
-         default: "AWS Quick Start Configuration"
+         default: "AWS Quick Start configuration"
         Parameters:
          - QSS3KeyPrefix
          - QSS3BucketName
@@ -73,7 +73,7 @@ Metadata:
       BoomiAccountID:
         default: Boomi account ID
       BoomiUsername:
-        default: Boomi User name
+        default: Boomi user name
       BoomiPassword:
         default: Boomi password
       NodeInstanceType:
@@ -99,7 +99,7 @@ Metadata:
       SSLCertificateArn:
         default: SSL certificate ARN
       AvailabilityZones:
-        default: Availability zones
+        default: Availability Zones
       HostedZoneID:
         default: Route 53 hosted zone ID
       MoleculeFQDN:
@@ -129,7 +129,7 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: Must be the name of an existing Keyname
   NodeInstanceType:
-    Description: Boomi Host Instance Type
+    Description: The Boomi host instance type.
     Type: String
     Default: m5.xlarge
     AllowedValues:
@@ -138,41 +138,41 @@ Parameters:
       - r4.xlarge
       - r5.xlarge
   MoleculeLocalTemp:
-    Description: Please enter a local Temp Path for your Molecule Install
+    Description: The local temporary path for the Molecule installation.
     Type: String
     Default: /mnt/tmp
   MoleculeSharedDir:
-    Description: Please enter a shared Directory for Molecules
+    Description: A shared directory for the EFS volume that the Molecules will mount.
     Type: String
     Default: /mnt/molecule
   MoleculeLocalPath:
-    Description: Please enter a local Path for the Molecule Install
+    Description: The local Path for the Molecule installation.
     Type: String
     Default: /opt/molecule/local/
   MoleculeClusterName:
-    Description: Please enter a name for your Boomi Molecule cluster
+    Description: The name for your Boomi Molecule cluster.
     Type: String
     Default: molecule1
   EFSEncryption:
-    Description: EFS volumes can be encrypted. Please select either "yes" or "no"
+    Description: EFS volumes can be encrypted. Choose either "yes" or "no".
     Type: String
     Default: yes
     AllowedValues:
       - yes
       - no
   EFSPerformanceMode:
-    Description: Choose a performance mode for your EFS volume
+    Description: The performance mode for the EFS volume.
     Type: String
     Default: generalPurpose
     AllowedValues:
       - generalPurpose
       - maxIO
   EFSProvisionedThroughput:
-    Description: Select the Provisioned Throughput value for your EFS volume
+    Description: The provisioned throughput value for the EFS volume.
     Type: Number
     Default: 10
   EFSThroughputMode:
-    Description: Select the throughput mode for your EFS Volume
+    Description: The throughput mode for the EFS volume.
     Type: String
     Default: provisioned
     AllowedValues:
@@ -218,14 +218,14 @@ Parameters:
       selections is preserved.
     Type: List<AWS::EC2::AvailabilityZone::Name>
   BoomiUsername:
-    Description: The email account associated with the Dell Boomi account.
+    Description: The email account associated with the Boomi account.
     Type: String
   BoomiPassword:
-     Description: The password associated with the Dell Boomi account.
+     Description: The password associated with the Boomi account.
      Type: String
      NoEcho: true
   BoomiAccountID:
-     Description: The Dell Boomi account ID that you want to associate the new Atom with.
+     Description: The Boomi account ID that you want to associate with the new Molecule cluster.
      Type: String
   QSS3BucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -253,17 +253,15 @@ Parameters:
       that you set this value to a trusted IP range.
     Type: String
   SSLCertificateArn:
-    Description: The ARN of the SSL certificate to use for the load balancer. If not specified, the certificate will be auto-generated when 'DomainName' and 'HostedZoneID' are provided.
+    Description: The ARN of the SSL certificate to use for the load balancer. Use 'SSLCertificateArn' if you are not using 'MoleculeFQDN' and 'HostedZoneID'.
     Type: String
-    Default: ''
   HostedZoneID:
     Description: Route 53 Hosted Zone ID of the domain name. Used in conjunction with a 'MoleculeFQDN'.
     Type: String
-    Default: ''
     MaxLength: 32
   MoleculeFQDN:
+    Description: The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL..
     Type: String
-    Default: ""
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
