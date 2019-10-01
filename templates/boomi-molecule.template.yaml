@@ -66,10 +66,10 @@ Parameters:
   EFSEncryption:
     Description: EFS volumes can be encrypted. Choose either "yes" or "no".
     Type: String
-    Default: yes
+    Default: true
     AllowedValues:
-      - yes
-      - no
+      - true
+      - false
   EFSPerformanceMode:
     Description: The performance mode for ther EFS volume.
     Type: String
