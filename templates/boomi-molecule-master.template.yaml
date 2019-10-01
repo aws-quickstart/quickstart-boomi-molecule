@@ -171,6 +171,8 @@ Parameters:
     Description: The provisioned throughput value for the EFS volume.
     Type: Number
     Default: 10
+    MaxValue: 1024
+    ConstraintDescription: "Value must be between 1-1024"
   EFSThroughputMode:
     Description: The throughput mode for the EFS volume.
     Type: String

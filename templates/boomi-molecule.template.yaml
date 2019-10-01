@@ -60,7 +60,7 @@ Parameters:
     Type: String
     Default: /opt/molecule/local/
   MoleculeClusterName:
-    Description: The name for the Boomi Molecule cluster.  
+    Description: The name for the Boomi Molecule cluster.
     Type: String
     Default: molecule1
   EFSEncryption:
@@ -81,6 +81,8 @@ Parameters:
     Description: The provisioned throughput value for the EFS volume.
     Type: Number
     Default: 10
+    MaxValue: 1024
+    ConstraintDescription: "Value must be between 1-1024"
   EFSThroughputMode:
     Description: The throughput mode for the EFS volume.
     Type: String
