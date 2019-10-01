@@ -257,13 +257,16 @@ Parameters:
   SSLCertificateArn:
     Description: The ARN of the SSL certificate to use for the load balancer. Use 'SSLCertificateArn' if you are not using 'MoleculeFQDN' and 'HostedZoneID'.
     Type: String
+    Default: ''
   HostedZoneID:
     Description: Route 53 Hosted Zone ID of the domain name. Used in conjunction with a 'MoleculeFQDN'.
     Type: String
     MaxLength: 32
+    Default: ''
   MoleculeFQDN:
     Description: The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL..
     Type: String
+    Default: ''
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
