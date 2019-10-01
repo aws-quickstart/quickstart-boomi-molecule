@@ -3,11 +3,11 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Molecule.
 Parameters:
   KeyPairName:
-    Description: Key name for access to EC2 instances
+    Description: Key name for access to EC2 instances.
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: Must be the name of an existing key name
   NodeInstanceType:
-    Description: Boomi host instance type
+    Description: The Boomi host instance type.
     Type: String
     Default: m5.xlarge
     AllowedValues:
@@ -16,11 +16,11 @@ Parameters:
       - r4.xlarge
       - r5.xlarge
   MoleculeEBSVolume:
-    Description: Boomi head molecule host EBS volume size (Can be 1GiB to 16TiB. size listed in GiB)
+    Description: The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB (size listed in GiB).
     Type: Number
     Default: 100
   MoleculeLocalTemp:
-    Description: Please enter a local temp path for your molecule install
+    Description: The local temporary path for the Molecule installation.
     Type: String
     Default: /mnt/tmp
   VPCID:
@@ -39,57 +39,57 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
     Description: The ID of the private subnet in Availability Zone 2 in your existing VPC.
   BoomiUsername:
-    Description: Please enter your Boomi User Name
+    Description: The email account associated with the Dell Boomi account.
     Type: String
   BoomiPassword:
-    Description: Please enter your Boomi Account Password
+    Description: The password associated with the Dell Boomi account.
     Type: String
     NoEcho: true
   BoomiAccountID:
-    Description: Please enter your Boomi Account ID
+    Description: The Dell Boomi account ID that you want to associate with the new Molecule cluster.
     Type: String
   BastionSecurityGroupID:
-    Description: The ID of the Bastion security group in your existing VPC (e.g., sg-1a2b3c4d).
+    Description: The ID of the bastion security group in your existing VPC (e.g., sg-1a2b3c4d).
     Type: AWS::EC2::SecurityGroup::Id
   MoleculeSharedDir:
-    Description: Please enter a shared Directory for Molecules
+    Description: A shared directory for Molecules.
     Type: String
     Default: /mnt/molecule
   MoleculeLocalPath:
-    Description: Please enter a local Path for the Molecule Install
+    Description: The local path for the Molecule installation.
     Type: String
     Default: /opt/molecule/local/
   MoleculeClusterName:
-    Description: Please enter a name for your Boomi Instance
+    Description: The name for the Boomi Molecule cluster.  
     Type: String
     Default: molecule1
   EFSEncryption:
-    Description: EFS volumes can be encrypted. Please select either "yes" or "no"
+    Description: EFS volumes can be encrypted. Choose either "yes" or "no".
     Type: String
     Default: yes
     AllowedValues:
       - yes
       - no
   EFSPerformanceMode:
-    Description: Choose a performance mode for your EFS volume
+    Description: The performance mode for ther EFS volume.
     Type: String
     Default: generalPurpose
     AllowedValues:
       - generalPurpose
       - maxIO
   EFSProvisionedThroughput:
-    Description: Select the Provisioned Throughput value for your EFS volume
+    Description: The provisioned throughput value for the EFS volume.
     Type: Number
     Default: 10
   EFSThroughputMode:
-    Description: Select the throughput mode for your EFS Volume
+    Description: The throughput mode for the EFS volume.
     Type: String
     Default: provisioned
     AllowedValues:
       - provisioned
       - bursting
   SSLCertificateArn:
-      Description: The SSL Certificate ID used with the Load Balancer
+      Description: The SSL Certificate ID used with the load balancer.
       Type: String
       Default: ''
 Metadata:
@@ -97,7 +97,7 @@ Metadata:
     ParameterGroups:
       -
         Label:
-          default: "Network Configuration"
+          default: "Network configuration"
         Parameters:
           - VPCID
           - PublicSubnet1ID
@@ -107,18 +107,18 @@ Metadata:
           - BastionSecurityGroupID
       -
         Label:
-          default: "Amazon EC2 Configuration"
+          default: "Amazon EC2 configuration"
         Parameters:
           - KeyPairName
           - MoleculeEBSVolume
       -
         Label:
-          default: "Boomi Molecule Node Sizing"
+          default: "Boomi Molecule node sizing"
         Parameters:
           - NodeInstanceType
       -
         Label:
-          default: "Dell Boomi Molecule Configuration"
+          default: "Boomi Molecule configuration"
         Parameters:
           - MoleculeClusterName
           - MoleculeLocalPath
@@ -130,7 +130,7 @@ Metadata:
 
       -
         Label:
-          default: "Amazon EFS Configuration"
+          default: "Amazon EFS configuration"
         Parameters:
           - EFSEncryption
           - EFSPerformanceMode
@@ -138,7 +138,7 @@ Metadata:
           - EFSProvisionedThroughput
       -
         Label:
-          default: "SSL Configuration"
+          default: "SSL configuration"
         Parameters:
           - SSLCertificateArn
     ParameterLabels:
@@ -161,7 +161,7 @@ Metadata:
       BoomiAccountID:
         default: Boomi account ID
       BoomiUsername:
-        default: Boomi User name
+        default: Boomi user name
       BoomiPassword:
         default: Boomi password
       MoleculeLocalTemp:
