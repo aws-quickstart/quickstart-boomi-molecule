@@ -648,6 +648,7 @@ Resources:
           import boto3
           import cfnresponse
           import urllib3
+          import copy
 
 
           def timeout(event, context):
@@ -695,7 +696,9 @@ Resources:
                       / 1000.00) - 0.5, timeout, args=[event, context])
             timer.start()
 
-            print('Received event: %s' % json.dumps(event))
+            sanitized_event = copy.deepcopy(event)
+            sanitized_event['ResourceProperties']['BoomiPassword'] = "<Redacted>"
+            print('Received event: %s' % json.dumps(sanitized_event))
             status = cfnresponse.SUCCESS
             try:
                 username = event['ResourceProperties']['BoomiUsername']
