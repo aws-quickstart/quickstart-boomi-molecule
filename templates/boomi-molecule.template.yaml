@@ -341,14 +341,17 @@ Resources:
         configSets:
           head_molecule:
             - nfs_and_java_path
+            - hostname_workaround
             - download_and_install_atom
             - java_symlink
             - start_atom
           molecule_workers:
+            - hostname_workaround
             - nfs_and_java_path
             - java_symlink
             - start_atom
           last_molecule:
+            - hostname_workaround
             - nfs_and_java_path
             - java_symlink
             - start_atom
@@ -391,6 +394,13 @@ Resources:
               command: !Sub |
                 ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/bin/atom stop
                 sudo -u ec2-user bash -c '${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/bin/atom start'
+        hostname_workaround:
+          commands:
+            010_set_etc_hosts:
+              command: |
+                local_ip=$(ip addr show dev eth0 | egrep -oi 'inet.*brd' | cut -d '/' -f 1 | awk '{print $2}')
+                local_hostname=$(curl http://169.254.169.254/latest/meta-data/local-hostname)
+                echo "${local_ip} ${local_hostname}" >> /etc/hosts
         set_container_id:
           commands:
             010_tell_boomi:
