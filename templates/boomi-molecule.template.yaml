@@ -90,6 +90,10 @@ Parameters:
     AllowedValues:
       - provisioned
       - bursting
+  LBListenerPort:
+      Type: String
+      Description: The port of the LB Listener.
+      Default: '9093'
   SSLCertificateArn:
       Description: The SSL Certificate ID used with the load balancer.
       Type: String
@@ -128,6 +132,7 @@ Metadata:
           - BoomiAccountID
           - BoomiUsername
           - BoomiPassword
+          - LBListenerPort
           - MoleculeSharedDir
 
       -
@@ -166,6 +171,8 @@ Metadata:
         default: Boomi user name
       BoomiPassword:
         default: Boomi password
+      LBListenerPort:
+        default: Load Balancer listener port
       MoleculeLocalTemp:
         default: Molecule local temp directory
       EFSEncryption:
@@ -595,7 +602,7 @@ Resources:
         - !Ref PublicSubnet2ID
       CrossZone: true
       Listeners:
-        - LoadBalancerPort: '9093'
+        - LoadBalancerPort: !Ref LBListenerPort
           InstancePort: '9093'
           Protocol: https
           SSLCertificateId: !Ref SSLCertificateArn

@@ -33,6 +33,7 @@ Metadata:
           - BoomiUsername
           - BoomiPassword
           - MoleculeSharedDir
+          - LBListenerPort
       - Label:
           default: "Amazon EFS configuration"
         Parameters:
@@ -76,6 +77,8 @@ Metadata:
         default: Boomi user name
       BoomiPassword:
         default: Boomi password
+      LBListenerPort:
+        default: Load Balancer listener port
       NodeInstanceType:
         default: Molecule node type
       MoleculeEBSVolume:
@@ -184,6 +187,10 @@ Parameters:
      Description: The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB.
      Type: Number
      Default: 100
+  LBListenerPort:
+     Type: String
+     Description: The listener port of the Load Balancer.
+     Default: '9093'
   VPCCIDR:
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
     ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
@@ -318,6 +325,7 @@ Resources:
           EFSPerformanceMode: !Ref EFSPerformanceMode
           EFSProvisionedThroughput: !Ref EFSProvisionedThroughput
           EFSThroughputMode: !Ref EFSThroughputMode
+          LBListenerPort: !Ref LBListenerPort
           SSLCertificateArn:
             !If
             - GenerateSSL
