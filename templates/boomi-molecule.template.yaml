@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Boomi Atom Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Dell Boomi Molecule. (qs-1q1tds36n)
+Description: Boomi Atom Installation Script. This stages a Dell Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
 Parameters:
   KeyPairName:
     Description: Key name for access to EC2 instances.
@@ -48,6 +48,9 @@ Parameters:
   BoomiAccountID:
     Description: The Dell Boomi account ID that you want to associate with the new Molecule cluster.
     Type: String
+  EC2SecurityGroupID:
+    Description: The ID of the security group in your existing VPC to provide access to the molecule (e.g., sg-1a2b3c4d)
+    Type: AWS::EC2::SecurityGroup::Id  
   BastionSecurityGroupID:
     Description: The ID of the bastion security group in your existing VPC (e.g., sg-1a2b3c4d).
     Type: AWS::EC2::SecurityGroup::Id
@@ -110,6 +113,7 @@ Metadata:
           - PublicSubnet2ID
           - PrivateSubnet1ID
           - PrivateSubnet2ID
+          - EC2SecurityGroupID
           - BastionSecurityGroupID
       -
         Label:
@@ -191,6 +195,8 @@ Metadata:
         default: Molecule cluster name
       SSLCertificateArn:
         default: SSL certificate ARN
+      EC2SecurityGroupID:
+        default: EC2 Security Group ID
       BastionSecurityGroupID:
         default: Bastion security group ID
 Mappings:
@@ -369,6 +375,10 @@ Resources:
               content: !Sub |
                 #!/bin/bash
                 CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+                local_ip=$(ip addr show dev eth0 | egrep -oi 'inet.*brd' | cut -d '/' -f 1 | awk '{print $2}')
+                zone_dns=$(awk -F"." '{print $1"."$2"."$3".2"}'<<<$local_ip)
+                efs_IP=$(nslookup "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com" ${!zone_dns} | awk '/^Address: /{print $2}')
+                echo "${!efs_IP} ${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com" >> /etc/hosts
                 echo "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com:/ ${MoleculeSharedDir} nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
                 mount -a
               mode: '000755'
@@ -406,8 +416,9 @@ Resources:
             010_set_etc_hosts:
               command: |
                 local_ip=$(ip addr show dev eth0 | egrep -oi 'inet.*brd' | cut -d '/' -f 1 | awk '{print $2}')
+                ip_hostname=$(hostname -s)
                 local_hostname=$(curl http://169.254.169.254/latest/meta-data/local-hostname)
-                echo "${local_ip} ${local_hostname}" >> /etc/hosts
+                echo "${local_ip} ${local_hostname} ${ip_hostname}" >> /etc/hosts
         set_container_id:
           commands:
             010_tell_boomi:
@@ -455,6 +466,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
+            - !Ref EC2SecurityGroupID
           AssociatePublicIpAddress: false
           DeviceIndex: '0'
           DeleteOnTermination: true
