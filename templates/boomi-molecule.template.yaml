@@ -196,7 +196,7 @@ Metadata:
       SSLCertificateArn:
         default: SSL certificate ARN
       EC2SecurityGroupID:
-        default: Molecule Security Group ID
+        default: EC2 Security Group ID
       BastionSecurityGroupID:
         default: Bastion security group ID
 Mappings:
