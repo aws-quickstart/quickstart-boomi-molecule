@@ -50,7 +50,8 @@ Parameters:
     Type: String
   EC2SecurityGroupID:
     Description: The ID of the security group in your existing VPC to provide access to the molecule (e.g., sg-1a2b3c4d)
-    Type: AWS::EC2::SecurityGroup::Id  
+    Type: AWS::EC2::SecurityGroup::Id
+    Default: ''
   BastionSecurityGroupID:
     Description: The ID of the bastion security group in your existing VPC (e.g., sg-1a2b3c4d).
     Type: AWS::EC2::SecurityGroup::Id
@@ -101,6 +102,12 @@ Parameters:
       Description: The SSL Certificate ID used with the load balancer.
       Type: String
       Default: ''
+Conditions:
+  ProvidedSGCondition:
+    !Not
+      - !Equals
+        - !Ref EC2SecurityGroupID
+        - '""'
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -466,10 +473,10 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-            - !Ref EC2SecurityGroupID
-          AssociatePublicIpAddress: false
+            - !If [ProvidedSGCondition, !Ref EC2SecurityGroupID, !Ref 'AWS::NoValue']
+          AssociatePublicIpAddress: true
           DeviceIndex: '0'
-          DeleteOnTermination: true
+          DeleteOnTermination: false
           SubnetId: !Ref PrivateSubnet1ID
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
@@ -506,7 +513,8 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-          AssociatePublicIpAddress: false
+            - !If [ProvidedSGCondition, !Ref EC2SecurityGroupID, !Ref 'AWS::NoValue']
+          AssociatePublicIpAddress: true
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet2ID
@@ -544,6 +552,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
+            - !If [ProvidedSGCondition, !Ref EC2SecurityGroupID, !Ref 'AWS::NoValue']
           AssociatePublicIpAddress: false
           DeviceIndex: '0'
           DeleteOnTermination: true
@@ -579,9 +588,10 @@ Resources:
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
-            - !Ref BoomiSecurityGroup
-            - !Ref BoomiUnicastSG
-            - !Ref MoleculeSecurityGroup
+          - !Ref BoomiSecurityGroup
+          - !Ref BoomiUnicastSG
+          - !Ref MoleculeSecurityGroup
+          - !If [ProvidedSGCondition, !Ref EC2SecurityGroupID, !Ref 'AWS::NoValue']
           AssociatePublicIpAddress: false
           DeviceIndex: '0'
           DeleteOnTermination: true
