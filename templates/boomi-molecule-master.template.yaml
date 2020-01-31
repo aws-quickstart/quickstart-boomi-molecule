@@ -48,10 +48,10 @@ Metadata:
           - HostedZoneID
           - SSLCertificateArn
       - Label:
-         default: "AWS Quick Start configuration"
+          default: "AWS Quick Start configuration"
         Parameters:
-         - QSS3KeyPrefix
-         - QSS3BucketName
+          - QSS3KeyPrefix
+          - QSS3BucketName
     ParameterLabels:
       KeyPairName:
         default: SSH key name
@@ -121,8 +121,8 @@ Rules:
   GenerateOrProvideSSL:
     Assertions:
       - Assert: !Or
-        - !Not [!Equals [!Ref SSLCertificateArn, '']]
-        - !And
+          - !Not [!Equals [!Ref SSLCertificateArn, '']]
+          - !And
             - !Not [!Equals [!Ref HostedZoneID, '']]
             - !Not [!Equals [!Ref MoleculeFQDN, '']]
         AssertDescription: "Using an SSL certificate is enforced. A CertificateArn or a HostedZoneID and MoleculeFQDN must be provided."
@@ -181,16 +181,16 @@ Parameters:
     Type: String
     Default: provisioned
     AllowedValues:
-     - provisioned
-     - bursting
+      - provisioned
+      - bursting
   MoleculeEBSVolume:
-     Description: The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB.
-     Type: Number
-     Default: 100
+    Description: The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB.
+    Type: Number
+    Default: 100
   LBListenerPort:
-     Type: String
-     Description: The listener port of the Load Balancer.
-     Default: '9093'
+    Type: String
+    Description: The listener port of the Load Balancer.
+    Default: '9093'
   VPCCIDR:
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(1[6-9]|2[0-8]))$
     ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
@@ -230,12 +230,12 @@ Parameters:
     Description: The email account associated with the Boomi account.
     Type: String
   BoomiPassword:
-     Description: The password associated with the Boomi account.
-     Type: String
-     NoEcho: true
+    Description: The password associated with the Boomi account.
+    Type: String
+    NoEcho: true
   BoomiAccountID:
-     Description: The Boomi account ID that you want to associate with the new Molecule cluster.
-     Type: String
+    Description: The Boomi account ID that you want to associate with the new Molecule cluster.
+    Type: String
   QSS3BucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
     ConstraintDescription: Quick Start bucket name can include numbers, lowercase
@@ -280,7 +280,7 @@ Resources:
     Properties:
       TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template'
       Parameters:
-        AvailabilityZones: !Join [ ',', !Ref 'AvailabilityZones' ]
+        AvailabilityZones: !Join [',', !Ref 'AvailabilityZones']
         NumberOfAZs: '2'
         VPCCIDR: !Ref VPCCIDR
         PrivateSubnet1ACIDR: !Ref PrivateSubnet1CIDR
@@ -301,36 +301,35 @@ Resources:
         RemoteAccessCIDR: !Ref RemoteAccessCIDR
         VPCID: !GetAtt VPCStack.Outputs.VPCID
   MoleculeStack:
-      Type: AWS::CloudFormation::Stack
-      Properties:
-        TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/boomi-molecule.template.yaml'
-        Parameters:
-          PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
-          PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
-          PrivateSubnet1ID: !GetAtt VPCStack.Outputs.PrivateSubnet1AID
-          PrivateSubnet2ID: !GetAtt VPCStack.Outputs.PrivateSubnet2AID
-          BoomiUsername: !Ref BoomiUsername
-          BoomiPassword: !Ref BoomiPassword
-          BoomiAccountID: !Ref BoomiAccountID
-          BastionSecurityGroupID: !GetAtt BastionStack.Outputs.BastionSecurityGroupID
-          VPCID: !GetAtt VPCStack.Outputs.VPCID
-          KeyPairName: !Ref KeyPairName
-          NodeInstanceType: !Ref NodeInstanceType
-          MoleculeEBSVolume: !Ref MoleculeEBSVolume
-          MoleculeLocalTemp: !Ref MoleculeLocalTemp
-          MoleculeSharedDir: !Ref MoleculeSharedDir
-          MoleculeLocalPath: !Ref MoleculeLocalPath
-          MoleculeClusterName: !Ref MoleculeClusterName
-          EFSEncryption: !Ref EFSEncryption
-          EFSPerformanceMode: !Ref EFSPerformanceMode
-          EFSProvisionedThroughput: !Ref EFSProvisionedThroughput
-          EFSThroughputMode: !Ref EFSThroughputMode
-          LBListenerPort: !Ref LBListenerPort
-          SSLCertificateArn:
-            !If
-            - GenerateSSL
-            - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
-            - !Ref SSLCertificateArn
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub 'https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/boomi-molecule.template.yaml'
+      Parameters:
+        PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
+        PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
+        PrivateSubnet1ID: !GetAtt VPCStack.Outputs.PrivateSubnet1AID
+        PrivateSubnet2ID: !GetAtt VPCStack.Outputs.PrivateSubnet2AID
+        BoomiUsername: !Ref BoomiUsername
+        BoomiPassword: !Ref BoomiPassword
+        BoomiAccountID: !Ref BoomiAccountID
+        BastionSecurityGroupID: !GetAtt BastionStack.Outputs.BastionSecurityGroupID
+        VPCID: !GetAtt VPCStack.Outputs.VPCID
+        KeyPairName: !Ref KeyPairName
+        NodeInstanceType: !Ref NodeInstanceType
+        MoleculeEBSVolume: !Ref MoleculeEBSVolume
+        MoleculeLocalTemp: !Ref MoleculeLocalTemp
+        MoleculeSharedDir: !Ref MoleculeSharedDir
+        MoleculeLocalPath: !Ref MoleculeLocalPath
+        MoleculeClusterName: !Ref MoleculeClusterName
+        EFSEncryption: !Ref EFSEncryption
+        EFSPerformanceMode: !Ref EFSPerformanceMode
+        EFSProvisionedThroughput: !Ref EFSProvisionedThroughput
+        EFSThroughputMode: !Ref EFSThroughputMode
+        LBListenerPort: !Ref LBListenerPort
+        SSLCertificateArn: !If
+          - GenerateSSL
+          - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
+          - !Ref SSLCertificateArn
   CopyLambdaStack:
     Condition: GenerateSSL
     Type: AWS::CloudFormation::Stack
