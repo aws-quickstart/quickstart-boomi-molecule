@@ -484,7 +484,7 @@ Resources:
           yum install -y python-setuptools
           yum install -y wget
           mkdir -p /opt/aws/bin
-          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
           easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
@@ -521,7 +521,7 @@ Resources:
            yum install -y python-setuptools
            yum install -y wget
            mkdir -p /opt/aws/bin
-           wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+           wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
            easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
@@ -563,7 +563,7 @@ Resources:
           yum install -y python-setuptools
           yum install -y wget
           mkdir -p /opt/aws/bin
-          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
           easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
@@ -599,7 +599,7 @@ Resources:
           yum install -y python-setuptools
           yum install -y wget
           mkdir -p /opt/aws/bin
-          wget https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
           easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
