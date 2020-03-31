@@ -466,7 +466,7 @@ Resources:
             - !Ref BastionSecurityGroupID
           AssociatePublicIpAddress: true
           DeviceIndex: '0'
-          DeleteOnTermination: false
+          DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet1ID
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
