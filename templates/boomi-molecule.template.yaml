@@ -440,10 +440,12 @@ Resources:
               owner: 'root'
               group: 'root'
           commands:
-            010_install_atom:
+            010_create_dirs_and_perms:
               command: !Sub |
                 mkdir -p ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}
                 chown ec2-user:ec2-user ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}
+            011_install_atom:
+              command: !Sub |
                 sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -Vpassword=${BoomiPassword} -VatomName=${MoleculeClusterName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
             020_set_cluster_properties:
               command:
@@ -464,7 +466,6 @@ Resources:
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
             - !Ref BastionSecurityGroupID
-          AssociatePublicIpAddress: true
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet1ID
@@ -504,7 +505,6 @@ Resources:
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
             - !Ref BastionSecurityGroupID
-          AssociatePublicIpAddress: true
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet2ID
@@ -543,7 +543,6 @@ Resources:
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
             - !Ref BastionSecurityGroupID
-          AssociatePublicIpAddress: false
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet1ID
@@ -582,7 +581,6 @@ Resources:
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
             - !Ref BastionSecurityGroupID
-          AssociatePublicIpAddress: false
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet2ID
