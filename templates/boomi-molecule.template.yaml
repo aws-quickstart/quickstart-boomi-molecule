@@ -372,9 +372,11 @@ Resources:
               content: !Sub |
                 #!/bin/bash
                 CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
-                local_ip=$(ip addr show dev eth0 | egrep -oi 'inet.*brd' | cut -d '/' -f 1 | awk '{print $2}')
-                zone_dns=$(awk -F"." '{print $1"."$2"."$3".2"}'<<<$local_ip)
-                efs_IP=$(nslookup "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com" ${!zone_dns} | awk '/^Address: /{print $2}')
+                eth0_mac=$(ip link show dev eth0 | grep -i 'ether' | awk '{print $2}')
+                VPC_CIDR=$(curl -s "http://169.254.169.254/latest/meta-data/network/interfaces/macs/${!eth0_mac}/vpc-ipv4-cidr-block")
+                zone_dns=$(awk -F"." '{print $1"."$2"."$3".2"}'<<<$VPC_CIDR)
+                efs_IP=$(dig +short ${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com @${!zone_dns})
+                if [ -z ${!efs_IP} ]; then exit 1; fi
                 echo "${!efs_IP} ${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com" >> /etc/hosts
                 echo "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com:/ ${MoleculeSharedDir} nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
                 mount -a
