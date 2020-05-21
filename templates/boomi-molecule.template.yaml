@@ -62,6 +62,7 @@ Parameters:
   MoleculeClusterName:
     Description: The name for the Boomi Molecule cluster.
     Type: String
+    AllowedPattern: "[a-zA-Z0-9_]*"
     Default: molecule1
   EFSEncryption:
     Description: EFS volumes can be encrypted. Choose either "yes" or "no".
