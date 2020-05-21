@@ -199,41 +199,55 @@ Metadata:
 Mappings:
   AWSAMIRegionMap:
     ap-northeast-1:
-      AMZNLINUXHVM: ami-02ddf94e5edc8e904
+      AMZNLINUXHVM: ami-0318ecd6d05daa212
     ap-northeast-2:
-      AMZNLINUXHVM: ami-0ecd78c22823e02ef
+      AMZNLINUXHVM: ami-09391a0ad9f9243b6
     ap-south-1:
-      AMZNLINUXHVM: ami-05695932c5299858a
+      AMZNLINUXHVM: ami-04b2519c83e2a7ea5
     ap-southeast-1:
-      AMZNLINUXHVM: ami-043afc2b8b6cfba5c
+      AMZNLINUXHVM: ami-0dff4318d85149d5d
     ap-southeast-2:
-      AMZNLINUXHVM: ami-01393ce9a3ca55d67
+      AMZNLINUXHVM: ami-050e1ec030abb8dde
     ca-central-1:
-      AMZNLINUXHVM: ami-0fa94ecf2fef3420b
+      AMZNLINUXHVM: ami-021321e9bc16d5186
     eu-central-1:
-      AMZNLINUXHVM: ami-0ba441bdd9e494102
+      AMZNLINUXHVM: ami-03ab4e8f1d88ce614
     eu-west-1:
-      AMZNLINUXHVM: ami-0e61341fa75fcaa18
+      AMZNLINUXHVM: ami-00890f614e48ce866
     eu-west-2:
-      AMZNLINUXHVM: ami-050b8344d77081f4b
+      AMZNLINUXHVM: ami-0596aab74a1ce3983
     eu-west-3:
-      AMZNLINUXHVM: ami-053418e626d0549fc
+      AMZNLINUXHVM: ami-06cba15121418cdcb
     sa-east-1:
-      AMZNLINUXHVM: ami-05b7dbc290217250d
+      AMZNLINUXHVM: ami-03e1e4abf50e14ded
     us-east-1:
-      AMZNLINUXHVM: ami-0e2ff28bfb72a4e45
+      AMZNLINUXHVM: ami-0915e09cc7ceee3ab
     us-east-2:
-      AMZNLINUXHVM: ami-0998bf58313ab53da
+      AMZNLINUXHVM: ami-097834fcb3081f51a
     us-west-1:
-      AMZNLINUXHVM: ami-021bb9f371690f97a
+      AMZNLINUXHVM: ami-0027eed75be6f3bf4
     us-west-2:
-      AMZNLINUXHVM: ami-079f731edfe27c29c
+      AMZNLINUXHVM: ami-01f08ef3e76b957e5
     eu-north-1:
-      AMZNLINUXHVM: ami-01a7a49829bda9d79
-    # ap-east-1:
-    #   AMZNLINUXHVM: slkjfslkdf
+      AMZNLINUXHVM: ami-0c5254b956817b326
+    ap-east-1:
+      AMZNLINUXHVM: ami-c86e28b9
+    me-south-1:
+      AMZNLINUXHVM: ami-02a841b5a224a1caf
+    af-south-1:
+      AMZNLINUXHVM: ami-0c6b5f01298bd1a1e
+    eu-south-1:
+      AMZNLINUXHVM: ami-0c747453f89f809cd
     ap-northeast-3:
-      AMZNLINUXHVM: ami-070b2e2b6cf47b7ba
+      AMZNLINUXHVM: ami-0252739447e42355f
+    us-gov-east-1:
+      AMZNLINUXHVM: ami-51ef0320
+    us-gov-west-1:
+      AMZNLINUXHVM: ami-f5e4d294
+    cn-north-1:
+      AMZNLINUXHVM: ami-04b1196830276cd1f
+    cn-northwest-1:
+      AMZNLINUXHVM: ami-0bae393f70322bed6
 Resources:
   LoadBalancerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
