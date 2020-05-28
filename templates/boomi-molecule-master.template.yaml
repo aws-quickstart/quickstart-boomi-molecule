@@ -2,6 +2,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Molecule Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Boomi Molecule cluster. (qs-1q1tds34t)
 Metadata:
+  Documentation:
+    EntrypointName: "Launch into a new VPC"
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -136,6 +138,20 @@ Rules:
             - !Not [!Equals [!Ref HostedZoneID, '']]
             - !Not [!Equals [!Ref MoleculeFQDN, '']]
         AssertDescription: "Using an SSL certificate is enforced. A CertificateArn or a HostedZoneID and MoleculeFQDN must be provided."
+  PasswordOrMFAToken:
+    Assertions:
+      - Assert: !Or
+            - !And
+              - !Equals [!Ref BoomiPassword, '']
+              - !And
+                - !Not [!Equals [!Ref BoomiMFAInstallToken, '']]
+                - !Not [!Equals [!Ref BoomiMFAAPIToken, '']]
+            - !And
+              - !Not [!Equals [!Ref BoomiPassword, '']]
+              - !And
+                - !Equals [!Ref BoomiMFAInstallToken, '']
+                - !Equals [!Ref BoomiMFAAPIToken, '']
+        AssertionDescription: You must supply either a password *or* an MFA installation and API token.
 Parameters:
   QSS3BucketRegion:
     Default: 'us-east-1'

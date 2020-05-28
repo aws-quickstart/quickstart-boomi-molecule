@@ -1,6 +1,9 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Atom Installation Script. This stages a Dell Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
+Metadata:
+  Documentation:
+    EntrypointName: "Launch into an existing VPC"
 Parameters:
   KeyPairName:
     Description: Key name for access to EC2 instances.
@@ -266,6 +269,21 @@ Mappings:
       AMZNLINUXHVM: ami-04b1196830276cd1f
     cn-northwest-1:
       AMZNLINUXHVM: ami-0bae393f70322bed6
+Rules:
+  PasswordOrMFAToken:
+    Assertions:
+      - Assert: !Or
+            - !And
+              - !Equals [!Ref BoomiPassword, '']
+              - !And
+                - !Not [!Equals [!Ref BoomiMFAInstallToken, '']]
+                - !Not [!Equals [!Ref BoomiMFAAPIToken, '']]
+            - !And
+              - !Not [!Equals [!Ref BoomiPassword, '']]
+              - !And
+                - !Equals [!Ref BoomiMFAInstallToken, '']
+                - !Equals [!Ref BoomiMFAAPIToken, '']
+        AssertionDescription: You must supply either a password *or* an MFA installation and API token.
 Conditions:
   InstallTokenProvided: !And
     - !Not [!Equals [!Ref BoomiMFAInstallToken, '']]
