@@ -55,8 +55,8 @@ Metadata:
           default: AWS Quick Start configuration
         Parameters:
           - QSS3BucketName
-          - QSS3KeyPrefix
           - QSS3BucketRegion
+          - QSS3KeyPrefix
     ParameterLabels:
       KeyPairName:
         default: SSH key name
@@ -70,6 +70,8 @@ Metadata:
         default: Public subnet 2 CIDR
       QSS3BucketName:
         default: Quick Start S3 bucket name
+      QSS3BucketRegion:
+        default: Quick Start S3 bucket region
       QSS3KeyPrefix:
         default: Quick Start S3 key prefix
       RemoteAccessCIDR:
@@ -116,8 +118,6 @@ Metadata:
         default: Route 53 hosted zone ID
       MoleculeFQDN:
         default: Molecule FQDN
-      QSS3BucketRegion:
-        default: Quick Start S3 bucket region
 Conditions:
   GenerateSSL: !And
     - !Equals [!Ref SSLCertificateArn, '']
@@ -390,17 +390,6 @@ Resources:
           - GenerateSSL
           - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
           - !Ref SSLCertificateArn
-#  CopyLambdaStack:
-#    Condition: GenerateSSL
-#    Type: AWS::CloudFormation::Stack
-#    Properties:
-#      TemplateURL: !Sub
-#        - "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/copy-lambdas.template"
-#        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
-#          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-#      Parameters:
-#        QSS3BucketName: !Ref QSS3BucketName
-#        QSS3KeyPrefix: !Ref QSS3KeyPrefix
   ConfigureSSLStack:
     Condition: GenerateSSL
     Type: AWS::CloudFormation::Stack
