@@ -283,7 +283,7 @@ Rules:
               - !And
                 - !Equals [!Ref BoomiMFAInstallToken, '']
                 - !Equals [!Ref BoomiMFAAPIToken, '']
-        AssertionDescription: You must supply either a password *or* an MFA installation and API token.
+        AssertDescription: You must supply either a password *or* an MFA installation and API token.
 Conditions:
   InstallTokenProvided: !And
     - !Not [!Equals [!Ref BoomiMFAInstallToken, '']]
@@ -664,31 +664,47 @@ Resources:
       Tags:
         - Value: MoleculeNode4
           Key: Name
-  ElasticLoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
+
+  # ALB Target Group
+  ELBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
+      HealthCheckPort: '9093'
+      HealthCheckProtocol: HTTPS
+      Port: 9093
+      Protocol: HTTPS
+      TargetType: instance
+      Targets:
+        - Id: !Ref MoleculeNode1
+        - Id: !Ref MoleculeNode2
+        - Id: !Ref MoleculeNode3
+        - Id: !Ref MoleculeNode4
+      VpcId: !Ref VPCID
+
+# ALB Listener
+  ELBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      Certificates:
+        - CertificateArn: !Ref SSLCertificateArn
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ELBTargetGroup
+      LoadBalancerArn: !Ref ElasticLoadBalancer
+      Port: !Ref LBListenerPort
+      Protocol: HTTPS
+
+# ALB
+  ElasticLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Type: application
       Subnets:
         - !Ref PublicSubnet1ID
         - !Ref PublicSubnet2ID
-      CrossZone: true
-      Listeners:
-        - LoadBalancerPort: !Ref LBListenerPort
-          InstancePort: '9093'
-          Protocol: https
-          SSLCertificateId: !Ref SSLCertificateArn
-      HealthCheck:
-        Target: TCP:22
-        HealthyThreshold: '3'
-        UnhealthyThreshold: '5'
-        Interval: '30'
-        Timeout: '5'
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
-      Instances:
-        - !Ref MoleculeNode1
-        - !Ref MoleculeNode2
-        - !Ref MoleculeNode3
-        - !Ref MoleculeNode4
+
   EFSFilesystem:
     Type: AWS::EFS::FileSystem
     Properties:

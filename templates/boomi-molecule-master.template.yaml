@@ -55,8 +55,8 @@ Metadata:
           default: AWS Quick Start configuration
         Parameters:
           - QSS3BucketName
-          - QSS3KeyPrefix
           - QSS3BucketRegion
+          - QSS3KeyPrefix
     ParameterLabels:
       KeyPairName:
         default: SSH key name
@@ -70,6 +70,8 @@ Metadata:
         default: Public subnet 2 CIDR
       QSS3BucketName:
         default: Quick Start S3 bucket name
+      QSS3BucketRegion:
+        default: Quick Start S3 bucket region
       QSS3KeyPrefix:
         default: Quick Start S3 key prefix
       RemoteAccessCIDR:
@@ -116,8 +118,6 @@ Metadata:
         default: Route 53 hosted zone ID
       MoleculeFQDN:
         default: Molecule FQDN
-      QSS3BucketRegion:
-        default: Quick Start S3 bucket region
 Conditions:
   GenerateSSL: !And
     - !Equals [!Ref SSLCertificateArn, '']
@@ -153,10 +153,6 @@ Rules:
                 - !Equals [!Ref BoomiMFAAPIToken, '']
         AssertionDescription: You must supply either a password *or* an MFA installation and API token.
 Parameters:
-  QSS3BucketRegion:
-    Default: 'us-east-1'
-    Description: "The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value."
-    Type: String
   KeyPairName:
     Description: A public/private key pair, which allows you to connect securely to your instance after it launches.
     Type: AWS::EC2::KeyPair::KeyName
@@ -287,6 +283,10 @@ Parameters:
       numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start
       or end with a hyphen (-).
     Type: String
+  QSS3BucketRegion:
+    Default: 'us-east-1'
+    Description: "The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value."
+    Type: String
   QSS3KeyPrefix:
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
@@ -390,27 +390,17 @@ Resources:
           - GenerateSSL
           - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
           - !Ref SSLCertificateArn
-  CopyLambdaStack:
-    Condition: GenerateSSL
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: !Sub
-        - "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/copy-lambdas.template"
-        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
-          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-      Parameters:
-        QSS3BucketName: !Ref QSS3BucketName
-        QSS3KeyPrefix: !Ref QSS3KeyPrefix
   ConfigureSSLStack:
     Condition: GenerateSSL
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/acm-cert-r53-record.template.yaml"
+        - "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-acm-certificate/templates/quickstart-aws-acm-certificate.template.yml"
         - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
       Parameters:
-        LambdaZipsBucketName: !GetAtt 'CopyLambdaStack.Outputs.LambdaZipsBucket'
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3BucketRegion: !Ref QSS3BucketRegion
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
         DomainName: !Ref MoleculeFQDN
         HostedZoneID: !Ref HostedZoneID
