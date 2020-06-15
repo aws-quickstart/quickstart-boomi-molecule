@@ -101,7 +101,7 @@ Parameters:
   EFSThroughputMode:
     Description: The throughput mode for the EFS volume.
     Type: String
-    Default: provisioned
+    Default: bursting
     AllowedValues:
       - provisioned
       - bursting
