@@ -797,6 +797,31 @@ Resources:
               http = urllib3.PoolManager()
               resp = http.request('DELETE', API_URL, headers=headers)
 
+          def verify_boomi_access(username, password, account):
+              API_URL = f"https://api.boomi.com/api/rest/v1/{account}/Account/{atom_id}"
+              headers = {'Content-Type':'application/json', 'Accept':'application/json'}
+              headers.update(urllib3.util.make_headers(basic_auth = f"{username}:{password}"))
+              resp = http.request('GET', API_URL, headers=headers)
+              jsonresp = resp.json()
+              boomistatus = (jsonresp["status"])
+              boomistd = (jsonresp["licensing"]["standard"]["purchased"])
+              boomismbiz = (jsonresp["licensing"]["smallBusiness"]["purchased"])
+              boomient = (jsonresp["licensing"]["enterprise"]["purchased"])
+              boomipartner = (jsonresp["licensing"]["tradingPartner"]["purchased"])
+              boomistdused = (jsonresp["licensing"]["standard"]["used"])
+              boomismbizused = (jsonresp["licensing"]["smallBusiness"]["used"])
+              boomientused = (jsonresp["licensing"]["enterprise"]["used"])
+              boomipartnerused = (jsonresp["licensing"]["tradingPartner"]["used"])
+              if boomistatus == "active":
+                  print( "Account active" )
+              else:
+                  logging.error('Exception: Boomi account is inactive')
+                  status = cfnresponse.FAILED
+              if boomient > boomientused:
+                  print( "License available" )
+              else:
+                  logging.error('Exception: No enterprise license available')
+                  status = cfnresponse.FAILED
 
           def handler(event, context):
             # make sure we send a failure to CloudFormation if the function
@@ -817,6 +842,7 @@ Resources:
                 container_id = pull_container_id(event['ResourceProperties']['WaitHandleData'])
                 http_port = event['ResourceProperties']['HttpPort']
                 if event['RequestType'] == 'Create':
+                    def verify_boomi_access(username, password, account_id)
                     register_elb_with_atom(username, password, account_id, f"{elb_fqdn}:{http_port}", http_port, container_id)
                 elif event['RequestType'] == 'Delete':
                     delete_atom_from_boomi_platform(username, password, account_id, container_id)
