@@ -101,7 +101,7 @@ Parameters:
   EFSThroughputMode:
     Description: The throughput mode for the EFS volume.
     Type: String
-    Default: provisioned
+    Default: bursting
     AllowedValues:
       - provisioned
       - bursting
@@ -288,6 +288,8 @@ Conditions:
   InstallTokenProvided: !And
     - !Not [!Equals [!Ref BoomiMFAInstallToken, '']]
     - !Not [!Equals [!Ref BoomiMFAAPIToken, '']]
+  EFSProvisionedThroughput: !Equals [!Ref EFSThroughputMode, 'provisioned']
+  EFSBurstingThroughput: !Equals [!Ref EFSThroughputMode, 'bursting']
 Resources:
   LoadBalancerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -365,14 +367,14 @@ Resources:
   MountTarget1:
     Type: AWS::EFS::MountTarget
     Properties:
-      FileSystemId: !Ref EFSFilesystem
+      FileSystemId: !If [EFSProvisionedThroughput, !Ref EFSFilesystemProvisioned, !Ref EFSFilesystemBursting]
       SubnetId: !Ref PrivateSubnet1ID
       SecurityGroups:
         - !Ref MountTargetSecurityGroup
   MountTarget2:
     Type: AWS::EFS::MountTarget
     Properties:
-      FileSystemId: !Ref EFSFilesystem
+      FileSystemId: !If [EFSProvisionedThroughput, !Ref EFSFilesystemProvisioned, !Ref EFSFilesystemBursting]
       SubnetId: !Ref PrivateSubnet2ID
       SecurityGroups:
         - !Ref "MountTargetSecurityGroup"
@@ -396,7 +398,6 @@ Resources:
         Count: 1
         Timeout: "PT15M"
     DependsOn:
-      - EFSFilesystem
       - MountTarget1
       - MountTarget2
     Type: "AWS::EC2::Instance"
@@ -423,17 +424,24 @@ Resources:
         nfs_and_java_path:
           files:
             /tmp/efs_mount_config.sh:
-              content: !Sub |
-                #!/bin/bash
-                CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
-                eth0_mac=$(ip link show dev eth0 | grep -i 'ether' | awk '{print $2}')
-                VPC_CIDR=$(curl -s "http://169.254.169.254/latest/meta-data/network/interfaces/macs/${!eth0_mac}/vpc-ipv4-cidr-block")
-                zone_dns=$(awk -F"." '{print $1"."$2"."$3".2"}'<<<$VPC_CIDR)
-                efs_IP=$(dig +short ${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com @${!zone_dns})
-                if [ -z ${!efs_IP} ]; then exit 1; fi
-                echo "${!efs_IP} ${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com" >> /etc/hosts
-                echo "${!CURRENT_AZ}.${EFSFilesystem}.efs.${AWS::Region}.amazonaws.com:/ ${MoleculeSharedDir} nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
-                mount -a
+              content: 
+                !Sub 
+                - |
+                  #!/bin/bash
+                  CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+                  eth0_mac=$(ip link show dev eth0 | grep -i 'ether' | awk '{print $2}')
+                  VPC_CIDR=$(curl -s "http://169.254.169.254/latest/meta-data/network/interfaces/macs/${!eth0_mac}/vpc-ipv4-cidr-block")
+                  zone_dns=$(awk -F"." '{print $1"."$2"."$3".2"}'<<<$VPC_CIDR)
+                  efs_IP=$(dig +short ${!CURRENT_AZ}.${FilesystemID}.efs.${AWS::Region}.amazonaws.com @${!zone_dns})
+                  if [ -z ${!efs_IP} ]; then exit 1; fi
+                  echo "${!efs_IP} ${!CURRENT_AZ}.${FilesystemID}.efs.${AWS::Region}.amazonaws.com" >> /etc/hosts
+                  echo "${!CURRENT_AZ}.${FilesystemID}.efs.${AWS::Region}.amazonaws.com:/ ${MoleculeSharedDir} nfs4 defaults,vers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
+                  mount -a
+                - FilesystemID:
+                    !If
+                    - EFSProvisionedThroughput
+                    - !Ref EFSFilesystemProvisioned
+                    - !Ref EFSFilesystemBursting
               mode: '000755'
               owner: 'root'
               group: 'root'
@@ -705,12 +713,23 @@ Resources:
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
 
-  EFSFilesystem:
+  EFSFilesystemProvisioned:
     Type: AWS::EFS::FileSystem
+    Condition: EFSProvisionedThroughput
     Properties:
       Encrypted: !Ref EFSEncryption
       PerformanceMode: !Ref EFSPerformanceMode
       ProvisionedThroughputInMibps: !Ref EFSProvisionedThroughput
+      ThroughputMode: !Ref EFSThroughputMode
+      KmsKeyId: !GetAtt
+        - KMSKey
+        - Arn
+  EFSFilesystemBursting:
+    Type: AWS::EFS::FileSystem
+    Condition: EFSBurstingThroughput
+    Properties:
+      Encrypted: !Ref EFSEncryption
+      PerformanceMode: !Ref EFSPerformanceMode
       ThroughputMode: !Ref EFSThroughputMode
       KmsKeyId: !GetAtt
         - KMSKey
@@ -723,6 +742,91 @@ Resources:
       Handle: !Ref 'Node4WaitHandle'
       Timeout: "1800"
       Count: 1
+  BoomiVerifyLicense:
+    Type: Custom::BoomiVerifyLicense
+    Properties:
+      ServiceToken: !GetAtt 'BoomiVerifyLicenseFunction.Arn'
+      BoomiUsername: !If
+        - InstallTokenProvided
+        - !Sub "BOOMI_TOKEN.${BoomiUsername}"
+        - !Ref "BoomiUsername"
+      BoomiPassword: !If
+        - InstallTokenProvided
+        - !Ref "BoomiMFAAPIToken"
+        - !Ref "BoomiPassword"
+      BoomiAccountID: !Ref "BoomiAccountID"
+  BoomiVerifyLicenseFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: Verifies account has available molecule licenses.
+      Handler: index.handler
+      Runtime: python3.7
+      Role: !GetAtt 'BoomiAPIRole.Arn'
+      Timeout: 240
+      Code:
+        ZipFile: |
+          import json
+          import logging
+          import threading
+          import boto3
+          import cfnresponse
+          import urllib3
+          import copy
+          from botocore.vendored import requests
+
+          def timeout(event, context):
+            logging.error('Execution is about to time out, sending failure response to CloudFormation')
+            cfnresponse.send(event, context, cfnresponse.FAILED, {}, None)
+          def pull_container_id(whdata):
+            whraw = json.loads(whdata)
+            for k,v in whraw.items():
+              if 'container_id' in v:
+                cidraw = json.loads(v)
+                container_id = cidraw['container_id']
+                return container_id
+          def verify_boomi_access(username, password, account):
+              headers = {'Content-Type':'application/json', 'Accept':'application/json'}
+              headers.update(urllib3.util.make_headers(basic_auth = f"{username}:{password}"))
+              API_URL = f"https://api.boomi.com/api/rest/v1/{account}/Account/{account}"
+              resp = requests.get(API_URL, headers=headers)
+              jsonresp = resp.json()
+              boomistatus = (jsonresp["status"])
+              boomient = (jsonresp["licensing"]["enterprise"]["purchased"])
+              boomientused = (jsonresp["licensing"]["enterprise"]["used"])
+              if boomistatus == "active":
+                  print( "Account active" )
+              else:
+                  logging.error('Exception: Boomi account is inactive')
+                  status = cfnresponse.FAILED
+              if boomient > boomientused:
+                  print( "License available" )
+              else:
+                  logging.error('Exception: No enterprise license available')
+                  status = cfnresponse.FAILED
+
+          def handler(event, context):
+            # make sure we send a failure to CloudFormation if the function
+            # is going to timeout
+            timer = threading.Timer((context.get_remaining_time_in_millis()
+                      / 1000.00) - 0.5, timeout, args=[event, context])
+            timer.start()
+            sanitized_event = copy.deepcopy(event)
+            sanitized_event['ResourceProperties']['BoomiPassword'] = "<Redacted>"
+            print('Received event: %s' % json.dumps(sanitized_event))
+            status = cfnresponse.SUCCESS
+            try:
+                username = event['ResourceProperties']['BoomiUsername']
+                password = event['ResourceProperties']['BoomiPassword']
+                account_id = event['ResourceProperties']['BoomiAccountID']
+                if event['RequestType'] == 'Create':
+                    verify_boomi_access(username, password, account_id)
+
+            except Exception as e:
+                logging.error('Exception: %s' % e, exc_info=True)
+                status = cfnresponse.FAILED
+            finally:
+                timer.cancel()
+                cfnresponse.send(event, context, status, {}, None)
   BoomiAPI:
     DependsOn:
       - MoleculeNode4
@@ -796,7 +900,6 @@ Resources:
               headers.update(urllib3.util.make_headers(basic_auth = f"{username}:{password}"))
               http = urllib3.PoolManager()
               resp = http.request('DELETE', API_URL, headers=headers)
-
 
           def handler(event, context):
             # make sure we send a failure to CloudFormation if the function
