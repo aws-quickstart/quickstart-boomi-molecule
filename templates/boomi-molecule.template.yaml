@@ -390,7 +390,7 @@ Resources:
                 mkdir -p ${MoleculeLocalPath}
                 mkdir -p ${MoleculeSharedDir}
                 mkdir -p ${MoleculeLocalTemp}
-                chown ec2-user:ec2-user ${MoleculeLocalPath} ${MoleculeLocalPath}
+                chown ec2-user:ec2-user ${MoleculeLocalPath} ${MoleculeLocalTemp}
             015_set_java_path_in_ec2user:
               command: |
                 echo JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64 /home/ec2-user/.bash_profile
