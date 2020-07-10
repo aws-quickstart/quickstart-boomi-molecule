@@ -220,55 +220,55 @@ Metadata:
 Mappings:
   AWSAMIRegionMap:
     ap-northeast-1:
-      AMZNLINUXHVM: ami-06ad9296e6cf1e3cf2
+      AMZNLINUX2HVM: ami-06ad9296e6cf1e3cf2
     ap-northeast-2:
-      AMZNLINUXHVM: ami-0e92198843e11ccee
+      AMZNLINUX2HVM: ami-0e92198843e11ccee
     ap-south-1:
-      AMZNLINUXHVM: ami-0732b62d310b80e97
+      AMZNLINUX2HVM: ami-0732b62d310b80e97
     ap-southeast-1:
-      AMZNLINUXHVM: ami-0adbe59da7d24a349
+      AMZNLINUX2HVM: ami-0adbe59da7d24a349
     ap-southeast-2:
-      AMZNLINUXHVM: ami-0a58e22c727337c51
+      AMZNLINUX2HVM: ami-0a58e22c727337c51
     ca-central-1:
-      AMZNLINUXHVM: ami-05de9e98f3bef5e8a
+      AMZNLINUX2HVM: ami-05de9e98f3bef5e8a
     eu-central-1:
-      AMZNLINUXHVM: ami-00edb93a4d68784e3
+      AMZNLINUX2HVM: ami-00edb93a4d68784e3
     eu-west-1:
-      AMZNLINUXHVM: ami-0c3e74fa87d2a4227
+      AMZNLINUX2HVM: ami-0c3e74fa87d2a4227
     eu-west-2:
-      AMZNLINUXHVM: ami-04122be15033aa7ec
+      AMZNLINUX2HVM: ami-04122be15033aa7ec
     eu-west-3:
-      AMZNLINUXHVM: ami-0bfddfb1ccc3a6993
+      AMZNLINUX2HVM: ami-0bfddfb1ccc3a6993
     sa-east-1:
-      AMZNLINUXHVM: ami-081a078e835a9f751
+      AMZNLINUX2HVM: ami-081a078e835a9f751
     us-east-1:
-      AMZNLINUXHVM: ami-08f3d892de259504d
+      AMZNLINUX2HVM: ami-08f3d892de259504d
     us-east-2:
-      AMZNLINUXHVM: ami-016b213e65284e9c9
+      AMZNLINUX2HVM: ami-016b213e65284e9c9
     us-west-1:
-      AMZNLINUXHVM: ami-01311df3780ebd33e
+      AMZNLINUX2HVM: ami-01311df3780ebd33e
     us-west-2:
-      AMZNLINUXHVM: ami-0b1e2eeb33ce3d66f
+      AMZNLINUX2HVM: ami-0b1e2eeb33ce3d66f
     eu-north-1:
-      AMZNLINUXHVM: ami-07d2cd50077a70430
+      AMZNLINUX2HVM: ami-07d2cd50077a70430
     ap-east-1:
-      AMZNLINUXHVM: ami-c85919b9
+      AMZNLINUX2HVM: ami-c85919b9
     me-south-1:
-      AMZNLINUXHVM: ami-07f5fe2b1e463e06a
+      AMZNLINUX2HVM: ami-07f5fe2b1e463e06a
     af-south-1:
-      AMZNLINUXHVM: ami-08b08c0713ffd89ef
+      AMZNLINUX2HVM: ami-08b08c0713ffd89ef
     eu-south-1:
-      AMZNLINUXHVM: ami-01ce136ac703e9899
+      AMZNLINUX2HVM: ami-01ce136ac703e9899
     ap-northeast-3:
-      AMZNLINUXHVM: ami-0eed4f60edb4a77f8
+      AMZNLINUX2HVM: ami-0eed4f60edb4a77f8
     us-gov-east-1:
-      AMZNLINUXHVM: ami-9a033cfb
+      AMZNLINUX2HVM: ami-9a033cfb
     us-gov-west-1:
-      AMZNLINUXHVM: ami-a2729dde
+      AMZNLINUX2HVM: ami-a2729dde
     cn-north-1:
-      AMZNLINUXHVM: ami-0aec3e46a106ca42d
+      AMZNLINUX2HVM: ami-0aec3e46a106ca42d
     cn-northwest-1:
-      AMZNLINUXHVM: ami-05a85395c8ff37b18
+      AMZNLINUX2HVM: ami-05a85395c8ff37b18
 Rules:
   PasswordOrMFAToken:
     Assertions:
@@ -526,7 +526,7 @@ Resources:
       ImageId: !FindInMap
         - AWSAMIRegionMap
         - !Ref "AWS::Region"
-        - AMZNLINUXHVM
+        - AMZNLINUX2HVM
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
@@ -565,7 +565,7 @@ Resources:
       ImageId: !FindInMap
         - AWSAMIRegionMap
         - !Ref AWS::Region
-        - AMZNLINUXHVM
+        - AMZNLINUX2HVM
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
@@ -603,7 +603,7 @@ Resources:
       ImageId: !FindInMap
         - AWSAMIRegionMap
         - !Ref AWS::Region
-        - AMZNLINUXHVM
+        - AMZNLINUX2HVM
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
@@ -641,7 +641,7 @@ Resources:
       ImageId: !FindInMap
         - AWSAMIRegionMap
         - !Ref AWS::Region
-        - AMZNLINUXHVM
+        - AMZNLINUX2HVM
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
