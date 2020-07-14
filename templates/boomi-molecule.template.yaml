@@ -486,7 +486,7 @@ Resources:
               command: !Sub |
                 container_id=$(grep 'com.boomi.container.id' ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.id  | cut -c 24-59)
                 chown -R ec2-user:ec2-user ${MoleculeLocalPath}
-                /opt/aws/bin/cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
+                /opt/aws/bin/sudo cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
         download_and_install_atom:
           files:
             /tmp/molecule_install.sh:
@@ -550,13 +550,19 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          yum install -y python-setuptools
-          yum install -y wget
-          mkdir -p /opt/aws/bin
-          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
-          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
+          if [ $UID -eq 0 ]; then
+            sudo chmod 777 "$0"
+            exec su ec2-user "$0"
+          fi
+          export PATH=$PATH:/usr/local/bin
+          sudo yum install git -y || apt-get install -y git || zypper -n install git
+          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
+          cd /quickstart-linux-utilities
+          source quickstart-cfn-tools.source
+          qs_update-os
+          qs_aws-cfn-bootstrap
+          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
+          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
   MoleculeNode2:
     DependsOn:
       - MoleculeNode1
@@ -585,14 +591,20 @@ Resources:
       KeyName: !Ref KeyPairName
       UserData:
         Fn::Base64: !Sub |
-           #!/bin/bash
-           yum install -y python-setuptools
-           yum install -y wget
-           mkdir -p /opt/aws/bin
-           wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
-           easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
-           /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
-           /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
+          #!/bin/bash
+          if [ $UID -eq 0 ]; then
+            sudo chmod 777 "$0"
+            exec su ec2-user "$0"
+          fi
+          export PATH=$PATH:/usr/local/bin
+          sudo yum install git -y || apt-get install -y git || zypper -n install git
+          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
+          cd /quickstart-linux-utilities
+          source quickstart-cfn-tools.source
+          qs_update-os
+          qs_aws-cfn-bootstrap
+          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
+          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
       Tags:
         - Value: MoleculeNode2
           Key: Name
@@ -627,13 +639,19 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          yum install -y python-setuptools
-          yum install -y wget
-          mkdir -p /opt/aws/bin
-          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
-          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
+          if [ $UID -eq 0 ]; then
+            sudo chmod 777 "$0"
+            exec su ec2-user "$0"
+          fi
+          export PATH=$PATH:/usr/local/bin
+          sudo yum install git -y || apt-get install -y git || zypper -n install git
+          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
+          cd /quickstart-linux-utilities
+          source quickstart-cfn-tools.source
+          qs_update-os
+          qs_aws-cfn-bootstrap
+          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
+          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
   MoleculeNode4:
     DependsOn: MoleculeNode1
     Type: "AWS::EC2::Instance"
@@ -662,13 +680,19 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          yum install -y python-setuptools
-          yum install -y wget
-          mkdir -p /opt/aws/bin
-          wget http://cloudformation-examples.s3.us-east-1.amazonaws.com/aws-cfn-bootstrap-latest.tar.gz
-          easy_install --script-dir /opt/aws/bin aws-cfn-bootstrap-latest.tar.gz
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
-          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
+          if [ $UID -eq 0 ]; then
+            sudo chmod 777 "$0"
+            exec su ec2-user "$0"
+          fi
+          export PATH=$PATH:/usr/local/bin
+          sudo yum install git -y || apt-get install -y git || zypper -n install git
+          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
+          cd /quickstart-linux-utilities
+          source quickstart-cfn-tools.source
+          qs_update-os
+          qs_aws-cfn-bootstrap
+          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
+          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
       Tags:
         - Value: MoleculeNode4
           Key: Name
