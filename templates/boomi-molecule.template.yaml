@@ -486,7 +486,7 @@ Resources:
               command: !Sub |
                 container_id=$(grep 'com.boomi.container.id' ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.id  | cut -c 24-59)
                 chown -R ec2-user:ec2-user ${MoleculeLocalPath}
-                /opt/aws/bin/sudo cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
+                sudo cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
         download_and_install_atom:
           files:
             /tmp/molecule_install.sh:
