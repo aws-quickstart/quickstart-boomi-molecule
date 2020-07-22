@@ -5,26 +5,25 @@ AWS Cloud.
 // Replace this example diagram with your own. Send us your source PowerPoint file. Be sure to follow our guidelines here : http://(we should include these points on our contributors giude)
 [#architecture1]
 .Quick Start architecture for _{partner-product-name}_ on AWS
-[link=images/architecture_diagram.png]
-image::../images/architecture_diagram.png[Architecture,width=648,height=439]
+Deploying this Quick Start for a new virtual private cloud (VPC) with *default parameters* builds the following Dell Boomi environment in the AWS Cloud.
 
-As shown in Figure 1, the Quick Start sets up the following:
+image:./images/image2.png[image,width=648,height=430]
+
+*Figure 1: Quick Start architecture for Dell Boomi on AWS*
+
+The Quick Start sets up the following:
 
 * A highly available architecture that spans two Availability Zones.*
-* A VPC configured with public and private subnets, according to AWS
-best practices, to provide you with your own virtual network on AWS.*
+* A VPC configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.*
+* A Application Load Balancer.
+* In the public subnets:
 
-In the public subnets:
+* Managed NAT gateways to allow outbound internet access for resources in the private subnets.*
+* A Linux bastion host in an Auto Scaling group to allow inbound Secure Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in public and private subnets, with Amazon CloudWatch for monitoring.
 
-* Managed network address translation (NAT) gateways to allow outbound
-internet access for resources in the private subnets.*
-* A Linux bastion host in an Auto Scaling group to allow inbound Secure
-Shell (SSH) access to EC2 instances in public and private subnets.*
+* In the private subnets:
 
-In the private subnets:
-// Add bullet points for any additional components that are included in the deployment. Make sure that the additional components are also represented in the architecture diagram.
-* <describe any additional components>.
+* Four Amazon EC2 instances with the Dell Boomi Molecule software installed, two in each Availability Zone.
+* Amazon Elastic File System (Amazon EFS) deployed in the Region. Two Amazon EFS mount points are created also, one in each Availability Zone.
 
-*The template that deploys the Quick Start into an existing VPC skips
-the components marked by asterisks and prompts you for your existing VPC
-configuration.
+*** The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.
