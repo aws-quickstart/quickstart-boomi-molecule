@@ -1,0 +1,14 @@
+:quickstart-project-name: quickstart-boomi-molecule
+:partner-product-name: Molecule
+:partner-company-name: Dell Boomi
+:doc-month: July
+:doc-year: 2020
+//:partner-contributors: John Doe and Jane Doe - {partner-company-name}
+:quickstart-contributors: Ryan Vanderwerf - Partner Solutions Architect, Sean Williams - Partner Solutions Architect, Andrew Glenn - Partner Solutions Architect, Dave May - Partner Solutions Architect
+:deployment_time: 1 hour
+:default_deployment_region: us-east-1
+// Uncomment these two attributes if you are leveraging
+// - an AWS Marketplace listing.
+// Additional content will be auto-generated based on these attributes.
+// :marketplace_subscription:
+// :marketplace_listing_url: https://example.com/
