@@ -797,7 +797,7 @@ table p {
 <li><a href="#_performance_monitoring">Performance monitoring</a></li>
 <li><a href="#_creating_an_installation_token">Creating an Installation Token</a></li>
 <li><a href="#_creating_an_api_token">Creating an API Token</a></li>
-<li><a href="#_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</a></li>
+<li><a href="#_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</a></li>
 </ul>
 </li>
 <li><a href="#_faq">FAQ</a></li>
@@ -929,7 +929,7 @@ AWS Cloud.</p>
 <p>Deploying this Quick Start for a new virtual private cloud (VPC) with <strong>default parameters</strong> builds the following Dell Boomi environment in the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image2.png" alt="image" width="648" height="430"></span></p>
+<p><span class="image"><img src="images/image2.png" alt="image" width="648" height="430"></span></p>
 </div>
 <div class="paragraph">
 <p><strong>Figure 1: Quick Start architecture for Dell Boomi on AWS</strong></p>
@@ -950,30 +950,34 @@ AWS Cloud.</p>
 </li>
 <li>
 <p>In the public subnets:</p>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p>Managed NAT gateways to allow outbound internet access for resources in the private subnets.*</p>
 </li>
 <li>
 <p>A Linux bastion host in an Auto Scaling group to allow inbound Secure Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in public and private subnets, with Amazon CloudWatch for monitoring.</p>
 </li>
+</ul>
+</div>
+</li>
 <li>
 <p>In the private subnets:</p>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p>Four Amazon EC2 instances with the Dell Boomi Molecule software installed, two in each Availability Zone.</p>
 </li>
 <li>
 <p>Amazon Elastic File System (Amazon EFS) deployed in the Region. Two Amazon EFS mount points are created also, one in each Availability Zone.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</p>
 </li>
 </ul>
 </div>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>\* The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</p>
 </div>
 </div>
 </div>
@@ -1887,7 +1891,7 @@ Region', and 'Quick Start S3 key prefix', unless you are customizing the Quick S
 <p>To view the Molecule in the Dell Boomi AtomSphere platform, log in to your Dell Boomi <a href="https://platform.boomi.com/"><em>account</em></a>, navigate to the <strong>Manage</strong> drop-down menu, and choose <strong>Atom Management</strong>. The newly created Amazon EC2 instance Molecule cluster will be displayed.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image3.png" alt="image" width="648" height="293"></span></p>
+<p><span class="image"><img src="images/image3.png" alt="image" width="648" height="293"></span></p>
 </div>
 <div class="paragraph">
 <p><strong>Figure 2: Dell Boomi Dashboard with an unattached AWS-managed Molecule cluster</strong></p>
@@ -1932,10 +1936,10 @@ Region', and 'Quick Start S3 key prefix', unless you are customizing the Quick S
 <p>Go to Integration → Build → Create → Atom Runtime → Molecule</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image5.png" alt="image" width="462" height="187"></span>Next expand ‘Security Options’.</p>
+<p><span class="image"><img src="images/image5.png" alt="image" width="462" height="187"></span>Next expand ‘Security Options’.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image6.png" alt="image" width="402" height="319"></span></p>
+<p><span class="image"><img src="images/image6.png" alt="image" width="402" height="319"></span></p>
 </div>
 <div class="paragraph">
 <p>Now you can generate the installation token. You can specify up to 24 hours duration for the token before it expires.</p>
@@ -1950,17 +1954,17 @@ Region', and 'Quick Start S3 key prefix', unless you are customizing the Quick S
 <p>Click on Integration → My User Settings → AtomSphere API Tokens and select ‘Add New Token’.</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image7.png" alt="image" width="576" height="135"></span></p>
+<p><span class="image"><img src="images/image7.png" alt="image" width="576" height="135"></span></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="images/images/image9.png" alt="image" width="370" height="219"></span></p>
+<p><span class="image"><img src="images/image9.png" alt="image" width="370" height="219"></span></p>
 </div>
 <div class="paragraph">
 <p>Provide a unique name for the token then click ‘Generate Token’.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</h3>
+<h3 id="_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</h3>
 
 </div>
 </div>
@@ -2039,7 +2043,7 @@ and to share your customizations with others.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-22 17:24:25 UTC
+Last updated 2020-07-22 17:36:40 UTC
 </div>
 </div>
 </body>
