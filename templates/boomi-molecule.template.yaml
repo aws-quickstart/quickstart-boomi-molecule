@@ -1,9 +1,6 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: Boomi Atom Installation Script. This stages a Dell Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
-Metadata:
-  Documentation:
-    EntrypointName: "Launch into an existing VPC"
 Parameters:
   KeyPairName:
     Description: Key name for access to EC2 instances.
@@ -114,6 +111,8 @@ Parameters:
     Type: String
     Default: ''
 Metadata:
+  Documentation:
+    EntrypointName: "Launch into an existing VPC"
   AWS::CloudFormation::Interface:
     ParameterGroups:
       -
