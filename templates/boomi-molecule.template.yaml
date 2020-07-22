@@ -111,7 +111,7 @@ Parameters:
     Type: String
     Default: ''
 Metadata:
-  Documentation:
+  QuickStartDocumentation:
     EntrypointName: "Launch into an existing VPC"
   AWS::CloudFormation::Interface:
     ParameterGroups:
