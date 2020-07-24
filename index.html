@@ -780,6 +780,7 @@ table p {
 <li><a href="#_specialized_knowledge">Specialized knowledge</a></li>
 <li><a href="#_aws_account">AWS account</a></li>
 <li><a href="#_technical_requirements">Technical requirements</a></li>
+<li><a href="#_authentication">Authentication</a></li>
 </ul>
 </li>
 <li><a href="#_deployment_steps">Deployment steps</a>
@@ -797,7 +798,6 @@ table p {
 <li><a href="#_performance_monitoring">Performance monitoring</a></li>
 <li><a href="#_creating_an_installation_token">Creating an Installation Token</a></li>
 <li><a href="#_creating_an_api_token">Creating an API Token</a></li>
-<li><a href="#_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</a></li>
 </ul>
 </li>
 <li><a href="#_faq">FAQ</a></li>
@@ -1179,7 +1179,8 @@ Certain regions are available on an opt-in basis. Refer to the AWS Documentation
 <div class="sect3">
 <h4 id="_prepare_your_dell_boomi_account">Prepare your Dell Boomi account</h4>
 <div class="paragraph">
-<p>Ensure your Dell Boomi account has at least one available Enterprise Molecule license.</p>
+<p>Ensure your Dell Boomi account has at least one available Enterprise Molecule license.
+Ensure you have valid Account ID, Installation Token, API Key or Username/Password.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1200,6 +1201,25 @@ Certain regions are available on an opt-in basis. Refer to the AWS Documentation
 <div class="paragraph">
 <p>The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Molecule settings, as discussed later in this guide.</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_authentication">Authentication</h3>
+<div class="paragraph">
+<p>In addition to the two deployment options, there are two authentication options for deployment.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy with Account ID, Username, API Key and Installation Token</p>
+</li>
+<li>
+<p>Deploy with authorized Account ID, Username and Password (Not MFA compatible)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You will need to choose one method or the other. If you are unsure of how to create an Installation Token or and API Token/Key, see the bottom of the document for steps or contact your administrator.</p>
 </div>
 </div>
 </div>
@@ -1962,10 +1982,12 @@ Region', and 'Quick Start S3 key prefix', unless you are customizing the Quick S
 <div class="paragraph">
 <p>Provide a unique name for the token then click ‘Generate Token’.</p>
 </div>
+<div class="paragraph">
+<p><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span></p>
 </div>
-<div class="sect2">
-<h3 id="_copy_your_token_key_value_to_a_safe_place_if_you_lose_it_you_will_have_to_generate_a_new_token_and_revoke_the_old_one"><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</h3>
-
+<div class="paragraph">
+<p>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</p>
+</div>
 </div>
 </div>
 </div>
@@ -2043,7 +2065,7 @@ and to share your customizations with others.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-22 20:57:19 UTC
+Last updated 2020-07-24 20:23:23 UTC
 </div>
 </div>
 </body>
