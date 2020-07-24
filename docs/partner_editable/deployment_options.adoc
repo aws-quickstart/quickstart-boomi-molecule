@@ -6,3 +6,13 @@ This Quick Start provides two deployment options:
 * *Deploy {partner-product-name} into an existing VPC*. This option provisions {partner-product-name} in your existing AWS infrastructure.
 
 The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and {partner-product-name} settings, as discussed later in this guide.
+
+=== Authentication
+
+In addition to the two deployment options, there are two authentication options for deployment.
+
+** Deploy with Account ID, Username, API Key and Installation Token
+
+** Deploy with authorized Account ID, Username and Password (Not MFA compatible)
+
+You will need to choose one method or the other. If you are unsure of how to create an Installation Token or and API Token/Key, see the bottom of the document for steps or contact your administrator.
