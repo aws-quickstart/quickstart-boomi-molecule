@@ -1,0 +1,60 @@
+// Add steps as necessary for accessing the software, post-configuration, and testing. Don’t include full usage instructions for your software, but add links to your product documentation for that information.
+//Should any sections not be applicable, remove them
+
+== Test the deployment
+To view the Molecule in the Dell Boomi AtomSphere platform, log in to your Dell Boomi https://platform.boomi.com/[_account_], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
+
+image:./image3.png[image,width=648,height=293]
+
+*Figure 2: Dell Boomi Dashboard with an unattached AWS-managed Molecule cluster*
+
+You can then attach the Molecules to any environment you have staged and deploy workloads to that Molecule cluster. By Default the molecule you deployed will be under ‘Unattached Atoms’. When you click on ‘Atom Information’ you will see an option to attach it to an environment.
+
+//== Best practices for using {partner-product-name} on AWS
+// Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
+
+//_Add any best practices for using the software._
+
+== Security
+This Quick Start deploys a bastion host and a Dell Boomi Molecule cluster into an AWS VPC. The bastion host is the only means of accessing the Dell Boomi Molecule cluster at a command-line level. The Dell Boomi Molecule cluster is deployed into private subnets and cannot be reached through the internet. The Boomi Molecule cluster communicates through a NAT Gateway for updates and patches, and it communicates through the public-facing Classic Load Balancer to communicate with the Dell Boomi AtomSphere platform.
+
+== Other useful information
+//Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
+
+=== Performance monitoring
+
+Monitoring the CPU, network, and Amazon Elastic Block Store (Amazon EBS) performance of your AWS Dell Boomi Molecule cluster is done through CloudWatch metrics.
+
+CPU and network performance are measured in utilization, network in and out, network packets in and out, and system status checks.
+
+Amazon EBS volume performance is measured in read and write throughput, average read and write size, read and write bandwidth, read and write latency, and volume idle time.
+
+Amazon EFS reports metrics to CloudWatch and can be monitored there. Metrics include client connections, data read and data write bytes, and IO percent limits.
+
+=== Creating an Installation Token
+
+You can create an installation token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an installation token:
+
+Go to Integration → Build → Create → Atom Runtime → Molecule
+
+image:./image5.png[image,width=462,height=187]Next expand ‘Security Options’.
+
+image:./image6.png[image,width=402,height=319]
+
+Now you can generate the installation token. You can specify up to 24 hours duration for the token before it expires.
+
+=== Creating an API Token
+
+You can create an long-lived API token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an user API token:
+
+Click on Integration → My User Settings → AtomSphere API Tokens and select ‘Add New Token’.
+
+image:./image7.png[image,width=576,height=135]
+
+image:./image9.png[image,width=370,height=219]
+
+Provide a unique name for the token then click ‘Generate Token’.
+
+image:./image10.png[image,width=314,height=183]
+
+Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.
