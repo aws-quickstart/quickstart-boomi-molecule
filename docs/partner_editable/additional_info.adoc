@@ -7,7 +7,7 @@ To view the Molecule in the Dell Boomi AtomSphere platform, log in to your https
 [#AddInfo1]
 .Dell Boomi Dashboard with an unattached AWS-managed Molecule Cluster
 [link=images/image3.png]
-image:./image3.png[image,width=648,height=293]
+image::../images/image3.png[image,width=648,height=293]
 
 You can then attach the Molecules to any environment you have staged and deploy workloads to that Molecule cluster. By Default the molecule you deployed will be under ‘Unattached Atoms’. When you click on ‘Atom Information’ you will see an option to attach it to an environment.
 
@@ -44,7 +44,10 @@ Administrators can create an installation token without having to share login cr
 . In the *Token Valid for* field, select the length of time the token is valid (30 minutes to 24 hours).
 . Click *Generate Token*.
 
-image:./image6.png[image,width=402,height=319]
+[#AddInfo2]
+.Molecule Setup
+[link=images/image6.png]
+image::../images/image6.png[image,width=402,height=319]
 
 === Creating an API Token
 
@@ -57,12 +60,18 @@ Administrators can create a long-lived API token without having to share login c
 [start=3]
 . Enter a unique name for the token.
 
-image:./image9.png[image,width=370,height=219]
+[#AddInfo3]
+.New AtomSphere API Token
+[link=images/image9.png]
+image::../images/image9.png[image,width=370,height=219]
 
 [start=4]
 . Click *Generate Token*.
 . Choose *Copy* to copy the token string to the clipboard without exiting. When you are ready to exit, click *Copy to Clipboard & Close* to copy the token string and exit the dialog. 
 
-image:./image10.png[image,width=314,height=183]
+[#AddInfo4]
+.Copying the token string
+[link=images/image9.png]
+image::../images/image10.png[image,width=370,height=219]
 
 Copy the token key value to a secure location. It is recommended that you treat tokens with the same level of security as you would a password. If you lose it, you will have to generate a new token and revoke the old one.
