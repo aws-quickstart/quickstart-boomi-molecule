@@ -6,8 +6,10 @@ AWS Cloud.
 
 Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following Dell Boomi environment in the AWS Cloud.
 
+[#architecture1]
+.Quick Start architecture for _{partner-product-name}_ on AWS
+[link=images/image2.png]
 image:./image2.png[image,width=648,height=430]
-Figure 1: Quick Start architecture for Dell Boomi on AWS
 
 The Quick Start sets up the following:
 
