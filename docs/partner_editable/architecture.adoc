@@ -9,7 +9,7 @@ Deploying this Quick Start for a new virtual private cloud (VPC) with default pa
 [#architecture1]
 .Quick Start architecture for _{partner-product-name}_ on AWS
 [link=images/image2.png]
-image:./image2.png[image,width=648,height=430]
+image::../images/image2.png[image,width=648,height=430]
 
 The Quick Start sets up the following:
 
