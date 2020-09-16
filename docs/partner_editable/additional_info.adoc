@@ -4,8 +4,7 @@
 == Test the deployment
 To view the Molecule in the Dell Boomi AtomSphere platform, log in to your https://platform.boomi.com/[Dell Boomi account], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
 
-:xrefstyle: short
-[#image3]
+[#AddInfo1]
 .Dell Boomi Dashboard with an unattached AWS-managed Molecule Cluster
 [link=images/image3.png]
 image:./image3.png[image,width=648,height=293]
