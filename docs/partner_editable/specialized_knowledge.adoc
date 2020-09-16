@@ -6,8 +6,6 @@ This Quick Start assumes familiarity with basic concepts of networking, bastion 
 If you are an administrator, see the following sections of this guide for help creating an installation token and API token:
 
 * link:#_creating_an_installation_token[Creating an installation token]
-* link:#_creating_an_API_token[Creating an API token]
+* link:#_creating_an_api_token[Creating an API token]
 
-NOTE: This Quick Start follows the patterns for Unattended Dell Boomi Molecule deployments found in the Dell Boomi documentation. See http://help.boomi.com/atomsphere/GUID-27BDD6B1-E6BD-48C9-8C6D-EC1B2CA60316.html[Unattended installation of an Atom, Molecule, or Atom Cloud^]
-
-This deployment guide also requires a moderate level of familiarity with AWS services. If you’re new to AWS, visit the https://aws.amazon.com/getting-started/[Getting Started Resource Center^] and the https://aws.amazon.com/training/[AWS Training and Certification website^] for materials and programs that can help you develop the skills to design, deploy, and operate your infrastructure and applications on the AWS Cloud.
+NOTE: This Quick Start follows the patterns for Unattended Dell Boomi Molecule deployments found in the Dell Boomi documentation. See http://help.boomi.com/atomsphere/GUID-27BDD6B1-E6BD-48C9-8C6D-EC1B2CA60316.html[Unattended installation of an Atom, Molecule, or Atom Cloud^].
