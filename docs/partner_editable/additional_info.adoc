@@ -32,7 +32,7 @@ Amazon EBS volume performance is measured in read and write throughput, average 
 
 Amazon EFS reports metrics to CloudWatch and can be monitored there. Metrics include client connections, data read and data write bytes, and IO percent limits.
 
-=== Creating an Installation Token
+=== Creating an installation token
 
 Administrators can create an installation token without having to share login credentials for an Atom/Molecule installation. To create an installation token, do the following:
 
@@ -49,7 +49,7 @@ Administrators can create an installation token without having to share login cr
 [link=images/image6.png]
 image::../images/image6.png[image,width=402,height=319]
 
-=== Creating an API Token
+=== Creating an API token
 
 Administrators can create a long-lived API token without having to share login credentials for an Atom/Molecule installation. To create an user API token, do the following:
 
