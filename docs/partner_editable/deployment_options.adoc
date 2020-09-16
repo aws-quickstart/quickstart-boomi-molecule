@@ -11,8 +11,8 @@ The Quick Start provides separate templates for these options. It also lets you 
 
 In addition to the two deployment options, there are two authentication options for deployment.
 
-** Deploy with Account ID, Username, API Key and Installation Token
+** Deploy with Account ID, Username, API Key, and Installation Token
 
-** Deploy with authorized Account ID, Username and Password (Not MFA compatible)
+** Deploy with authorized Account ID, Username, and Password (Not MFA compatible)
 
-You will need to choose one method or the other. If you are unsure of how to create an Installation Token or and API Token/Key, see the bottom of the document for steps or contact your administrator.
+You will need to choose one method or the other. If you are unsure of how to create an Installation Token or API Token/Key, see link:#_creating_an_installation_token[Creating an Installation Token] in this guide for steps or contact your administrator.

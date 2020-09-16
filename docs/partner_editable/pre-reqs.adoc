@@ -3,4 +3,4 @@
 ==== Prepare your {partner-company-name} account
 
 Ensure your Dell Boomi account has at least one available Enterprise Molecule license.
-Ensure you have valid Account ID, Installation Token, API Key or Username/Password.
+Ensure you have a valid Account ID, Installation Token, API Key, or Username/Password.
