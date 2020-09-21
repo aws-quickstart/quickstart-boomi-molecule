@@ -796,27 +796,14 @@ a img {
 <li><a href="#_specialized_knowledge">Specialized knowledge</a></li>
 <li><a href="#_aws_account">AWS account</a></li>
 <li><a href="#_technical_requirements">Technical requirements</a></li>
-<li><a href="#_authentication">Authentication</a></li>
 </ul>
 </li>
 <li><a href="#_deployment_steps">Deployment steps</a>
 <ul class="sectlevel2">
-<li><a href="#_sign_in_to_your_aws_account">Sign in to your AWS account</a></li>
-<li><a href="#_launch_the_quick_start">Launch the Quick Start</a></li>
-<li><a href="#_launch_into_a_new_vpc">Launch into a new VPC</a></li>
 <li><a href="#_launch_into_an_existing_vpc">Launch into an existing VPC</a></li>
+<li><a href="#_launch_into_a_new_vpc">Launch into a new VPC</a></li>
 </ul>
 </li>
-<li><a href="#_test_the_deployment">Test the deployment</a></li>
-<li><a href="#_security">Security</a></li>
-<li><a href="#_other_useful_information">Other useful information</a>
-<ul class="sectlevel2">
-<li><a href="#_performance_monitoring">Performance monitoring</a></li>
-<li><a href="#_creating_an_installation_token">Creating an Installation Token</a></li>
-<li><a href="#_creating_an_api_token">Creating an API Token</a></li>
-</ul>
-</li>
-<li><a href="#_faq">FAQ</a></li>
 <li><a href="#_send_us_feedback">Send us feedback</a></li>
 <li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
 <li><a href="#_github_repository">GitHub repository</a>
@@ -837,11 +824,24 @@ a img {
 <img src="https://aws-quickstart.s3.amazonaws.com/quickstart-boomi-molecule/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="QS" width="80" height="80">
 </div>
 </div>
-<div class="paragraph text-center">
+<h3 id="_draft_document_unofficial_guidance" class="discrete text-center">DRAFT DOCUMENT / UNOFFICIAL GUIDANCE</h3>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/__settings</em>.adoc</code></strong>_</p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph text-center">
 <p><strong>July, 2020</strong><br>
 <em>Ryan Vanderwerf - Partner Solutions Architect, Sean Williams - Partner Solutions Architect, Andrew Glenn - Partner Solutions Architect, Dave May - Partner Solutions Architect</em></p>
-</div>
-<div class="admonitionblock tip text-left">
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
@@ -863,11 +863,23 @@ report bugs, or submit feature ideas for this Quick Start.
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/overview_target_and_usage.adoc</code></strong></em></p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start reference deployment guide provides step-by-step instructions for deploying Molecule on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Dell Boomi Molecule cluster on AWS and administer it through the <a href="https://platform.boomi.com/"><em>Dell Boomi AtomSphere platform</em></a>.</p>
-</div>
+<p>This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Dell Boomi Molecule cluster on AWS and administer it through the <a href="https://platform.boomi.com/" target="_blank" rel="noopener">Dell Boomi AtomSphere platform</a>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -888,11 +900,23 @@ collaborated with AWS on the content of the Quick Start.
 <h2 id="_molecule_on_aws">Molecule on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/product_description.adoc</code></strong></em></p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Dell Boomi service is a minimal-code, cloud-based iPaaS that enables customers to design, deploy, manage, and govern all of their data across their hybrid and software as a service (SaaS) applications by connecting and integrating external application data with AWS services such as Amazon Simple Storage Service (Amazon S3), Amazon Simple Notification Service (Amazon SNS), Amazon Relational Database Service (Amazon RDS), and Amazon Redshift using Dell Boomi’s point-and-click graphical interface.</p>
 </div>
 <div class="paragraph">
 <p>The Dell Boomi Molecule is a single-tenant, clustered runtime that runs separately from the platform, enabling multiple processes to run concurrently. The enterprise-grade version of a Boomi Atom runtime, the Boomi Molecule can be deployed across multiple servers to enhance load balancing and ensure high availability for mission-critical integration processes.</p>
-</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -927,27 +951,47 @@ After you deploy the Quick Start, enable the <a href="https://docs.aws.amazon.co
 <h2 id="_software_licenses">Software licenses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This deployment requires a Dell Boomi Molecule Enterprise license.</p>
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/licenses.adoc</code></strong></em></p>
 </div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This deployment requires a Dell Boomi Molecule Enterprise license.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_architecture">Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/architecture.adoc</code></strong></em></p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Deploying this Quick Start for a new virtual private cloud (VPC) with
-<strong>default parameters</strong> builds the following <em>Molecule</em> environment in the
+default parameters builds the following Molecule environment in the
 AWS Cloud.</p>
 </div>
-<div id="architecture1" class="paragraph">
-<div class="title">Quick Start architecture for <em>Molecule</em> on AWS</div>
-<p>Deploying this Quick Start for a new virtual private cloud (VPC) with <strong>default parameters</strong> builds the following Dell Boomi environment in the AWS Cloud.</p>
-</div>
 <div class="paragraph">
-<p><span class="image"><img src="images/image2.png" alt="image" width="648" height="430"></span></p>
+<p>Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following Dell Boomi environment in the AWS Cloud.</p>
 </div>
-<div class="paragraph">
-<p><strong>Figure 1: Quick Start architecture for Dell Boomi on AWS</strong></p>
+<div id="architecture1" class="imageblock">
+<div class="content">
+<a class="image" href="images/image2.png"><img src="images/image2.png" alt="image" width="648" height="430"></a>
+</div>
+<div class="title">Figure 1. Quick Start architecture for <em>Molecule</em> on AWS</div>
 </div>
 <div class="paragraph">
 <p>The Quick Start sets up the following:</p>
@@ -992,8 +1036,11 @@ AWS Cloud.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>\* The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</p>
-</div>
+<p>*The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -1011,11 +1058,45 @@ deploy, and operate your infrastructure and applications on the AWS
 Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start assumes familiarity with basic concepts of networking, bastion hosts, volume sizing, and compute performance. It also assumes familiarity with the Dell Boomi variables that are required when deploying a Molecule cluster. These variables include Molecule Name, Local Path, Local Temp Path, Account Id, Account Name, and Account Password. If you don’t have have an Account Name or Password, you can enter an installation token provided by your system administrator into the ‘Boomi MFA install token’ field. If you are an administrator, see the ‘Create an Installation Token’ section in this guide. You will also need an API Token with this installation method. See the steps later in the document on how to create both of these. This Quick Start follows the patterns for Unattended Dell Boomi Molecule deployments found in the <a href="http://help.boomi.com/atomsphere/GUID-27BDD6B1-E6BD-48C9-8C6D-EC1B2CA60316.html"><em>Dell Boomi User Guide</em></a>.</p>
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/specialized_knowledge.adoc</code></strong></em></p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This Quick Start assumes familiarity with basic concepts of networking, bastion hosts, volume sizing, and compute performance. It also assumes familiarity with the Dell Boomi variables that are required when deploying a Molecule cluster. These variables include Molecule Name, Local Path, Local Temp Path, Account Id, Account Name, and Account Password. If you don’t have have an Account Name or Password, you can enter an installation token provided by your system administrator into the <strong>Boomi MFA install token</strong> field.</p>
 </div>
 <div class="paragraph">
-<p>This deployment guide also requires a moderate level of familiarity with AWS services. If you’re new to AWS, visit the <a href="https://aws.amazon.com/getting-started/"><em>Getting Started Resource Center</em></a> and the <a href="https://aws.amazon.com/training/"><em>AWS Training and Certification website</em></a> for materials and programs that can help you develop the skills to design, deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
+<p>If you are an administrator, see the following sections of this guide for help creating an installation token and API token:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#_creating_an_installation_token">Creating an installation token</a></p>
+</li>
+<li>
+<p><a href="#_creating_an_api_token">Creating an API token</a></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This Quick Start follows the patterns for Unattended Dell Boomi Molecule deployments found in the Dell Boomi documentation. See <a href="http://help.boomi.com/atomsphere/GUID-27BDD6B1-E6BD-48C9-8C6D-EC1B2CA60316.html" target="_blank" rel="noopener">Unattended installation of an Atom, Molecule, or Atom Cloud</a>.
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_aws_account">AWS account</h3>
@@ -1036,6 +1117,10 @@ Cloud.</p>
 <div class="paragraph">
 <p>If necessary, request <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">service quota increases</a> for the following resources. You might need to request increases if your existing deployment currently uses these resources, and this Quick Start deployment could result in exceeding the default quotas. The <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">Service Quotas console</a> displays your usage and quotas for some aspects of some services. For more information, see the <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html" target="_blank" rel="noopener">AWS documentation</a>.</p>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/service_limits.adoc</code></strong></em></p>
+</div>
+<div id="preview_mode">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1091,8 +1176,13 @@ Cloud.</p>
 </tbody>
 </table>
 </div>
+</div>
 <div class="sect3">
 <h4 id="_supported_regions">Supported Regions</h4>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/regions.adoc</code></strong></em></p>
+</div>
+<div id="preview_mode">
 <div class="ulist">
 <ul>
 <li>
@@ -1157,6 +1247,7 @@ Cloud.</p>
 </li>
 </ul>
 </div>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1172,6 +1263,13 @@ Certain Regions are available on an opt-in basis. Refer to the AWS Documentation
 </div>
 <div class="sect3">
 <h4 id="_ec2_key_pairs">EC2 key pairs</h4>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><em>This section is conditional on EC2 instances being used in the Cloudformation Templates</em></p>
+</div>
+</div>
+</div>
 <div class="paragraph">
 <p>Make sure that at least one <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank" rel="noopener">Amazon EC2 key pair</a> exists in your AWS account in the Region where you plan to deploy the Quick Start. Make note of the key pair name. You need it during deployment. To create a key pair, follow the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank" rel="noopener">instructions in the AWS documentation</a>.</p>
 </div>
@@ -1187,17 +1285,38 @@ Certain Regions are available on an opt-in basis. Refer to the AWS Documentation
 <div class="paragraph">
 <p>The <em>AdministratorAccess</em> managed policy within IAM provides sufficient permissions, although your organization may choose to use a custom policy with more restrictions.</p>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/pre-reqs.adoc</code></strong></em></p>
 </div>
-<div class="sect3">
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="sect3">
 <h4 id="_prepare_your_dell_boomi_account">Prepare your Dell Boomi account</h4>
 <div class="paragraph">
 <p>Ensure your Dell Boomi account has at least one available Enterprise Molecule license.
-Ensure you have valid Account ID, Installation Token, API Key or Username/Password.</p>
+Ensure you have a valid Account ID, Installation Token, API Key, or Username/Password.</p>
 </div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_deployment_options">Deployment options</h4>
 <div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deployment_options.adoc</code></strong></em></p>
+</div>
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start provides two deployment options:</p>
 </div>
 <div class="ulist">
@@ -1213,8 +1332,6 @@ Ensure you have valid Account ID, Installation Token, API Key or Username/Passwo
 <div class="paragraph">
 <p>The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Molecule settings, as discussed later in this guide.</p>
 </div>
-</div>
-</div>
 <div class="sect2">
 <h3 id="_authentication">Authentication</h3>
 <div class="paragraph">
@@ -1223,15 +1340,20 @@ Ensure you have valid Account ID, Installation Token, API Key or Username/Passwo
 <div class="ulist">
 <ul>
 <li>
-<p>Deploy with Account ID, Username, API Key and Installation Token</p>
+<p>Deploy with Account ID, Username, API Key, and Installation Token</p>
 </li>
 <li>
-<p>Deploy with authorized Account ID, Username and Password (Not MFA compatible)</p>
+<p>Deploy with authorized Account ID, Username, and Password (Not MFA compatible)</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>You will need to choose one method or the other. If you are unsure of how to create an Installation Token or and API Token/Key, see the bottom of the document for steps or contact your administrator.</p>
+<p>You will need to choose one method or the other. If you are unsure of how to create an Installation Token or API Token/Key, see <a href="#_creating_an_installation_token">Creating an Installation Token</a> in this guide for steps or contact your administrator.</p>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -1239,8 +1361,14 @@ Ensure you have valid Account ID, Installation Token, API Key or Username/Passwo
 <div class="sect1">
 <h2 id="_deployment_steps">Deployment steps</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_sign_in_to_your_aws_account">Sign in to your AWS account</h3>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deploy_steps.adoc</code></strong></em></p>
+</div>
+<div id="preview_mode" class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>=== Sign in to your AWS account</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1251,9 +1379,9 @@ Ensure you have valid Account ID, Installation Token, API Key or Username/Passwo
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>=== Launch the Quick Start</p>
 </div>
-<div class="sect2">
-<h3 id="_launch_the_quick_start">Launch the Quick Start</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1299,7 +1427,7 @@ If you’re deploying Molecule into an existing VPC, make sure that your VPC has
 </table>
 </div>
 <div class="paragraph">
-<p>Also, make sure that the domain name option in the DHCP options is configured as explained in the <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html" target="_blank" rel="noopener">Amazon VPC documentation</a>. You provide your VPC settings when you launch the Quick Start.</p>
+<p>Also, make sure that the domain name option in the DHCP options is configured, as explained in <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html" target="_blank" rel="noopener">DHCP options sets</a>. You provide your VPC settings when you launch the Quick Start.</p>
 </div>
 <div class="paragraph">
 <p>Each deployment takes about 1 hour to complete.</p>
@@ -1321,6 +1449,8 @@ If you’re deploying Molecule into an existing VPC, make sure that your VPC has
 </li>
 </ol>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p>In the following tables, parameters are listed by category and described separately for the deployment options. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
 </div>
@@ -1337,11 +1467,259 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="_launch_into_an_existing_vpc">Launch into an existing VPC</h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Network configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VPC ID
+(<code>VPCID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of your existing VPC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 1 ID
+(<code>PublicSubnet1ID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 1 in your existing VPC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 2 ID
+(<code>PublicSubnet2ID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 2 in your existing VPC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 1 ID
+(<code>PrivateSubnet1ID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the private subnet in Availability Zone 1 in your existing VPC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 2 ID
+(<code>PrivateSubnet2ID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the private subnet in Availability Zone 2 in your existing VPC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bastion security group ID
+(<code>BastionSecurityGroupID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Amazon EC2 configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSH key name
+(<code>KeyPairName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key name for access to EC2 instances.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Volume size for Boomi instances
+(<code>MoleculeEBSVolume</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>100</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB (size listed in GiB).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Boomi Molecule node sizing</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule node instance type
+(<code>NodeInstanceType</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m5.xlarge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Boomi host instance type.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Boomi Molecule configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule cluster name
+(<code>MoleculeClusterName</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>molecule1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name for the Boomi Molecule cluster.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule local path
+(<code>MoleculeLocalPath</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/opt/molecule/local/</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The local path for the Molecule installation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule local temp directory
+(<code>MoleculeLocalTemp</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/mnt/tmp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The local temporary path for the Molecule installation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi account ID
+(<code>BoomiAccountID</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Dell Boomi account ID that you want to associate with the new Molecule cluster.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi user name
+(<code>BoomiUsername</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The email account associated with the Dell Boomi account.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi password
+(<code>BoomiPassword</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password associated with the Dell Boomi account.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA install token
+(<code>BoomiMFAInstallToken</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA API token
+(<code>BoomiMFAAPIToken</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load Balancer listener port
+(<code>LBListenerPort</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>9093</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The port of the LB Listener.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule shared directory
+(<code>MoleculeSharedDir</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/mnt/molecule</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A shared directory for Molecules.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Amazon EFS configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EFS encryption
+(<code>EFSEncryption</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EFS volumes can be encrypted. Choose either "yes" or "no".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EFS performance mode
+(<code>EFSPerformanceMode</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>generalPurpose</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The performance mode for the EFS volume.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EFS throughput mode
+(<code>EFSThroughputMode</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bursting</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The throughput mode for the EFS volume.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EFS provisioned throughput
+(<code>EFSProvisionedThroughput</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The provisioned throughput value for the EFS volume.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. SSL configuration</caption>
+<colgroup>
+<col style="width: 16%;">
+<col style="width: 11%;">
+<col style="width: 73%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter label (name)</th>
+<th class="tableblock halign-left valign-top">Default value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSL certificate ARN
+(<code>SSLCertificateArn</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SSL Certificate ID used with the load balancer.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_launch_into_a_new_vpc">Launch into a new VPC</h3>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Network configuration</caption>
+<caption class="title">Table 7. Network configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1400,7 +1778,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Amazon EC2 configuration</caption>
+<caption class="title">Table 8. Amazon EC2 configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1429,7 +1807,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Boomi Molecule node sizing</caption>
+<caption class="title">Table 9. Boomi Molecule node sizing</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1452,7 +1830,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Boomi Molecule configuration</caption>
+<caption class="title">Table 10. Boomi Molecule configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1506,13 +1884,13 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA install token
 (<code>BoomiMFAInstallToken</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA API token
 (<code>BoomiMFAAPIToken</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Molecule shared directory
@@ -1529,7 +1907,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Amazon EFS configuration</caption>
+<caption class="title">Table 11. Amazon EFS configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1570,7 +1948,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. DNS or SSL configuration</caption>
+<caption class="title">Table 12. DNS or SSL configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1588,7 +1966,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <td class="tableblock halign-left valign-top"><p class="tableblock">Molecule FQDN
 (<code>MoleculeFQDN</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL..</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Route 53 hosted zone ID
@@ -1605,7 +1983,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. AWS Quick Start configuration</caption>
+<caption class="title">Table 13. AWS Quick Start configuration</caption>
 <colgroup>
 <col style="width: 16%;">
 <col style="width: 11%;">
@@ -1639,255 +2017,6 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_launch_into_an_existing_vpc">Launch into an existing VPC</h3>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Network configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VPC ID
-(<code>VPCID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of your existing VPC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 1 ID
-(<code>PublicSubnet1ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 1 in your existing VPC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 2 ID
-(<code>PublicSubnet2ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 2 in your existing VPC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 1 ID
-(<code>PrivateSubnet1ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the private subnet in Availability Zone 1 in your existing VPC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 2 ID
-(<code>PrivateSubnet2ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the private subnet in Availability Zone 2 in your existing VPC.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bastion security group ID
-(<code>BastionSecurityGroupID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the bastion security group in your existing VPC. Used to provide access to the molecule. (e.g., sg-1a2b3c4d).</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Amazon EC2 configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SSH key name
-(<code>KeyPairName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Key name for access to EC2 instances.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Volume size for Boomi instances
-(<code>MoleculeEBSVolume</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>100</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The size of the Amazon EBS volume attached to the Molecule instances. Size range is 1 GiB - 16 TiB (size listed in GiB).</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Boomi Molecule node sizing</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule node instance type
-(<code>NodeInstanceType</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>m5.xlarge</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Boomi host instance type.</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Boomi Molecule configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule cluster name
-(<code>MoleculeClusterName</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>molecule1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name for the Boomi Molecule cluster.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule local path
-(<code>MoleculeLocalPath</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/opt/molecule/local/</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The local path for the Molecule installation.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule local temp directory
-(<code>MoleculeLocalTemp</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/mnt/tmp</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The local temporary path for the Molecule installation.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi account ID
-(<code>BoomiAccountID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Dell Boomi account ID that you want to associate with the new Molecule cluster.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi user name
-(<code>BoomiUsername</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The email account associated with the Dell Boomi account.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi password
-(<code>BoomiPassword</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password associated with the Dell Boomi account.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA install token
-(<code>BoomiMFAInstallToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA API token
-(<code>BoomiMFAAPIToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Load Balancer listener port
-(<code>LBListenerPort</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>9093</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The port of the LB Listener.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Molecule shared directory
-(<code>MoleculeSharedDir</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/mnt/molecule</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A shared directory for Molecules.</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Amazon EFS configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EFS encryption
-(<code>EFSEncryption</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>True</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EFS volumes can be encrypted. Choose either "yes" or "no".</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EFS performance mode
-(<code>EFSPerformanceMode</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>generalPurpose</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The performance mode for ther EFS volume.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EFS throughput mode
-(<code>EFSThroughputMode</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bursting</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The throughput mode for the EFS volume.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EFS provisioned throughput
-(<code>EFSProvisionedThroughput</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The provisioned throughput value for the EFS volume.</p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. SSL configuration</caption>
-<colgroup>
-<col style="width: 16%;">
-<col style="width: 11%;">
-<col style="width: 73%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter label (name)</th>
-<th class="tableblock halign-left valign-top">Default value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SSL certificate ARN
-(<code>SSLCertificateArn</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The SSL Certificate ID used with the load balancer.</p></td>
-</tr>
-</tbody>
-</table>
 <div class="olist arabic">
 <ol class="arabic" start="5">
 <li>
@@ -1911,22 +2040,28 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <div class="content">
 <a class="image" href="images/cfn_outputs.png"><img src="images/cfn_outputs.png" alt="cfn_outputs" width="648" height="439"></a>
 </div>
-<div class="title">Figure 1. Molecule outputs after successful deployment</div>
+<div class="title">Figure 2. Molecule outputs after successful deployment</div>
 </div>
+<div class="paragraph">
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/additional_info.adoc</code></strong></em></p>
 </div>
-</div>
-</div>
-<div class="sect1">
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="sect1">
 <h2 id="_test_the_deployment">Test the deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To view the Molecule in the Dell Boomi AtomSphere platform, log in to your Dell Boomi <a href="https://platform.boomi.com/"><em>account</em></a>, navigate to the <strong>Manage</strong> drop-down menu, and choose <strong>Atom Management</strong>. The newly created Amazon EC2 instance Molecule cluster will be displayed.</p>
+<p>To view the Molecule in the Dell Boomi AtomSphere platform, log in to your <a href="https://platform.boomi.com/" target="_blank" rel="noopener">Dell Boomi account</a>, navigate to the <strong>Manage</strong> drop-down menu, and choose <strong>Atom Management</strong>. The newly created Amazon EC2 instance Molecule cluster will be displayed.</p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="images/image3.png" alt="image" width="648" height="293"></span></p>
+<div id="AddInfo1" class="imageblock">
+<div class="content">
+<a class="image" href="images/image3.png"><img src="images/image3.png" alt="image" width="648" height="293"></a>
 </div>
-<div class="paragraph">
-<p><strong>Figure 2: Dell Boomi Dashboard with an unattached AWS-managed Molecule cluster</strong></p>
+<div class="title">Figure 3. Dell Boomi Dashboard with an unattached AWS-managed Molecule Cluster</div>
 </div>
 <div class="paragraph">
 <p>You can then attach the Molecules to any environment you have staged and deploy workloads to that Molecule cluster. By Default the molecule you deployed will be under ‘Unattached Atoms’. When you click on ‘Atom Information’ you will see an option to attach it to an environment.</p>
@@ -1960,50 +2095,108 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_an_installation_token">Creating an Installation Token</h3>
+<h3 id="_creating_an_installation_token">Creating an installation token</h3>
 <div class="paragraph">
-<p>You can create an installation token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an installation token:</p>
+<p>Administrators can create an installation token without having to share login credentials for an Atom/Molecule installation. To create an installation token, do the following:</p>
 </div>
-<div class="paragraph">
-<p>Go to Integration → Build → Create → Atom Runtime → Molecule</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <strong>Manage &gt; Atom Management</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>+New &gt; Molecule</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Build</strong> page, choose the <strong>Welcome</strong> tab.</p>
+</li>
+<li>
+<p>Under the <strong>Create</strong> heading, choose <strong>Molecule</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>Security Options</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Token Valid for</strong> field, select the length of time the token is valid (30 minutes to 24 hours).</p>
+</li>
+<li>
+<p>Click <strong>Generate Token</strong>.</p>
+</li>
+</ol>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="images/image5.png" alt="image" width="462" height="187"></span>Next expand ‘Security Options’.</p>
+<div id="AddInfo2" class="imageblock">
+<div class="content">
+<a class="image" href="images/image6.png"><img src="images/image6.png" alt="image" width="402" height="319"></a>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="images/image6.png" alt="image" width="402" height="319"></span></p>
-</div>
-<div class="paragraph">
-<p>Now you can generate the installation token. You can specify up to 24 hours duration for the token before it expires.</p>
+<div class="title">Figure 4. Molecule Setup</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_an_api_token">Creating an API Token</h3>
+<h3 id="_creating_an_api_token">Creating an API token</h3>
 <div class="paragraph">
-<p>You can create an long-lived API token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an user API token:</p>
+<p>Administrators can create a long-lived API token without having to share login credentials for an Atom/Molecule installation. To create an user API token, do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose <strong>Settings &gt; Account Information and Setup</strong>.</p>
+</li>
+<li>
+<p>Choose the <strong>AtomSphere API Tokens</strong> tab.</p>
+</li>
+<li>
+<p>Choose <strong>Add New Token</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>Enter a unique name for the token.</p>
+</li>
+</ol>
+</div>
+<div id="AddInfo3" class="imageblock">
+<div class="content">
+<a class="image" href="images/image9.png"><img src="images/image9.png" alt="image" width="370" height="219"></a>
+</div>
+<div class="title">Figure 5. New AtomSphere API Token</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>Click <strong>Generate Token</strong>.</p>
+</li>
+<li>
+<p>Choose <strong>Copy</strong> to copy the token string to the clipboard without exiting. When you are ready to exit, click <strong>Copy to Clipboard &amp; Close</strong> to copy the token string and exit the dialog.</p>
+</li>
+</ol>
+</div>
+<div id="AddInfo4" class="imageblock">
+<div class="content">
+<a class="image" href="images/image10.png"><img src="images/image10.png" alt="image" width="370" height="219"></a>
+</div>
+<div class="title">Figure 6. Copying the token string</div>
 </div>
 <div class="paragraph">
-<p>Click on Integration → My User Settings → AtomSphere API Tokens and select ‘Add New Token’.</p>
+<p>Copy the token key value to a secure location. It is recommended that you treat tokens with the same level of security as you would a password. If you lose it, you will have to generate a new token and revoke the old one.</p>
 </div>
+</div>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p><span class="image"><img src="images/image7.png" alt="image" width="576" height="135"></span></p>
+<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/faq_troubleshooting.adoc</code></strong></em></p>
 </div>
-<div class="paragraph">
-<p><span class="image"><img src="images/image9.png" alt="image" width="370" height="219"></span></p>
-</div>
-<div class="paragraph">
-<p>Provide a unique name for the token then click ‘Generate Token’.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="images/image10.png" alt="image" width="314" height="183"></span></p>
-</div>
-<div class="paragraph">
-<p>Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
+<table id="preview_mode" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="sect1">
 <h2 id="_faq">FAQ</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2031,7 +2224,13 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 <p><strong>Q.</strong> I encountered a size limitation error when I deployed the AWS CloudFormation templates.</p>
 </div>
 <div class="paragraph">
-<p><strong>A.</strong> We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see the <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html" target="_blank" rel="noopener">AWS documentation</a>.</p>
+<p><strong>A.</strong> We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html" target="_blank" rel="noopener">AWS CloudFormation quotas</a>.</p>
+</div>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -2077,7 +2276,7 @@ and to share your customizations with others.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-03 05:15:44 UTC
+Last updated 2020-09-21 18:43:31 UTC
 </div>
 </div>
 </body>

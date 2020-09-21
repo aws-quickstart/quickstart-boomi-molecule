@@ -2,11 +2,12 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-To view the Molecule in the Dell Boomi AtomSphere platform, log in to your Dell Boomi https://platform.boomi.com/[_account_], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
+To view the Molecule in the Dell Boomi AtomSphere platform, log in to your https://platform.boomi.com/[Dell Boomi account^], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
 
-image:./image3.png[image,width=648,height=293]
-
-*Figure 2: Dell Boomi Dashboard with an unattached AWS-managed Molecule cluster*
+[#AddInfo1]
+.Dell Boomi Dashboard with an unattached AWS-managed Molecule Cluster
+[link=images/image3.png]
+image::../images/image3.png[image,width=648,height=293]
 
 You can then attach the Molecules to any environment you have staged and deploy workloads to that Molecule cluster. By Default the molecule you deployed will be under ‘Unattached Atoms’. When you click on ‘Atom Information’ you will see an option to attach it to an environment.
 
@@ -31,30 +32,46 @@ Amazon EBS volume performance is measured in read and write throughput, average 
 
 Amazon EFS reports metrics to CloudWatch and can be monitored there. Metrics include client connections, data read and data write bytes, and IO percent limits.
 
-=== Creating an Installation Token
+=== Creating an installation token
 
-You can create an installation token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an installation token:
+Administrators can create an installation token without having to share login credentials for an Atom/Molecule installation. To create an installation token, do the following:
 
-Go to Integration → Build → Create → Atom Runtime → Molecule
+. Go to *Manage > Atom Management*.
+. Choose *+New > Molecule*.
+. On the *Build* page, choose the *Welcome* tab.
+. Under the *Create* heading, choose *Molecule*.
+. Choose *Security Options*.
+. In the *Token Valid for* field, select the length of time the token is valid (30 minutes to 24 hours).
+. Click *Generate Token*.
 
-image:./image5.png[image,width=462,height=187]Next expand ‘Security Options’.
+[#AddInfo2]
+.Molecule Setup
+[link=images/image6.png]
+image::../images/image6.png[image,width=402,height=319]
 
-image:./image6.png[image,width=402,height=319]
+=== Creating an API token
 
-Now you can generate the installation token. You can specify up to 24 hours duration for the token before it expires.
+Administrators can create a long-lived API token without having to share login credentials for an Atom/Molecule installation. To create an user API token, do the following:
 
-=== Creating an API Token
+. Choose *Settings > Account Information and Setup*.
+. Choose the *AtomSphere API Tokens* tab.
+. Choose *Add New Token*.
 
-You can create an long-lived API token without having to share your login credentials for an Atom/Molecule installation. If you are an administrator, follow the steps below to create an user API token:
+[start=3]
+. Enter a unique name for the token.
 
-Click on Integration → My User Settings → AtomSphere API Tokens and select ‘Add New Token’.
+[#AddInfo3]
+.New AtomSphere API Token
+[link=images/image9.png]
+image::../images/image9.png[image,width=370,height=219]
 
-image:./image7.png[image,width=576,height=135]
+[start=4]
+. Click *Generate Token*.
+. Choose *Copy* to copy the token string to the clipboard without exiting. When you are ready to exit, click *Copy to Clipboard & Close* to copy the token string and exit the dialog. 
 
-image:./image9.png[image,width=370,height=219]
+[#AddInfo4]
+.Copying the token string
+[link=images/image10.png]
+image::../images/image10.png[image,width=370,height=219]
 
-Provide a unique name for the token then click ‘Generate Token’.
-
-image:./image10.png[image,width=314,height=183]
-
-Copy your token key value to a safe place. If you lose it, you will have to generate a new token and revoke the old one.
+Copy the token key value to a secure location. It is recommended that you treat tokens with the same level of security as you would a password. If you lose it, you will have to generate a new token and revoke the old one.
