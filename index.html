@@ -768,14 +768,14 @@ a img {
     border: 1px solid #A4A4A4;
 }
 
-#preview_mode {
+.preview_mode {
 	border-color:#e0e0dc;
 	-webkit-box-shadow:0 1px 4px #e0e0dc;
 	box-shadow:0 1px 4px #e0e0dc;
   background:#ffffb3;
   padding-bottom: 2rem;
 }
-#preview_mode .tableblock {
+.preview_mode .tableblock {
   background:#ffffb3;
 }
 </style>
@@ -796,21 +796,31 @@ a img {
 <li><a href="#_specialized_knowledge">Specialized knowledge</a></li>
 <li><a href="#_aws_account">AWS account</a></li>
 <li><a href="#_technical_requirements">Technical requirements</a></li>
+<li><a href="#_authentication">Authentication</a></li>
 </ul>
 </li>
 <li><a href="#_deployment_steps">Deployment steps</a>
 <ul class="sectlevel2">
+<li><a href="#_sign_in_to_your_aws_account">Sign in to your AWS account</a></li>
+<li><a href="#_launch_the_quick_start">Launch the Quick Start</a></li>
 <li><a href="#_launch_into_an_existing_vpc">Launch into an existing VPC</a></li>
 <li><a href="#_launch_into_a_new_vpc">Launch into a new VPC</a></li>
 </ul>
 </li>
-<li><a href="#_send_us_feedback">Send us feedback</a></li>
-<li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
-<li><a href="#_github_repository">GitHub repository</a>
-<ul class="sectlevel3">
-<li><a href="#_notices">Notices</a></li>
+<li><a href="#_test_the_deployment">Test the deployment</a></li>
+<li><a href="#_security">Security</a></li>
+<li><a href="#_other_useful_information">Other useful information</a>
+<ul class="sectlevel2">
+<li><a href="#_performance_monitoring">Performance monitoring</a></li>
+<li><a href="#_creating_an_installation_token">Creating an installation token</a></li>
+<li><a href="#_creating_an_api_token">Creating an API token</a></li>
 </ul>
 </li>
+<li><a href="#_faq">FAQ</a></li>
+<li><a href="#_send_us_feedback">Send us feedback</a></li>
+<li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
+<li><a href="#_github_repository">GitHub repository</a></li>
+<li><a href="#_notices">Notices</a></li>
 </ul>
 </div>
 </div>
@@ -821,27 +831,14 @@ a img {
 <h2 id="_quick_start_reference_deployment" class="discrete text-left text-center">Quick Start Reference Deployment</h2>
 <div class="imageblock text-center">
 <div class="content">
-<img src="https://aws-quickstart.s3.amazonaws.com/quickstart-boomi-molecule/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="QS" width="80" height="80">
+<img src="images/aws-quickstart-graphic.png" alt="QS" width="80" height="80">
 </div>
 </div>
-<h3 id="_draft_document_unofficial_guidance" class="discrete text-center">DRAFT DOCUMENT / UNOFFICIAL GUIDANCE</h3>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/__settings</em>.adoc</code></strong>_</p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph text-center">
+<div class="paragraph text-center">
 <p><strong>July, 2020</strong><br>
 <em>Ryan Vanderwerf - Partner Solutions Architect, Sean Williams - Partner Solutions Architect, Andrew Glenn - Partner Solutions Architect, Dave May - Partner Solutions Architect</em></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="admonitionblock tip">
+</div>
+<div class="admonitionblock tip text-left">
 <table>
 <tr>
 <td class="icon">
@@ -863,23 +860,11 @@ report bugs, or submit feature ideas for this Quick Start.
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/overview_target_and_usage.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start reference deployment guide provides step-by-step instructions for deploying Molecule on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
 <p>This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Dell Boomi Molecule cluster on AWS and administer it through the <a href="https://platform.boomi.com/" target="_blank" rel="noopener">Dell Boomi AtomSphere platform</a>.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -900,23 +885,11 @@ collaborated with AWS on the content of the Quick Start.
 <h2 id="_molecule_on_aws">Molecule on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/product_description.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Dell Boomi service is a minimal-code, cloud-based iPaaS that enables customers to design, deploy, manage, and govern all of their data across their hybrid and software as a service (SaaS) applications by connecting and integrating external application data with AWS services such as Amazon Simple Storage Service (Amazon S3), Amazon Simple Notification Service (Amazon SNS), Amazon Relational Database Service (Amazon RDS), and Amazon Redshift using Dell Boomi’s point-and-click graphical interface.</p>
 </div>
 <div class="paragraph">
 <p>The Dell Boomi Molecule is a single-tenant, clustered runtime that runs separately from the platform, enabling multiple processes to run concurrently. The enterprise-grade version of a Boomi Atom runtime, the Boomi Molecule can be deployed across multiple servers to enhance load balancing and ensure high availability for mission-critical integration processes.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -951,35 +924,14 @@ After you deploy the Quick Start, enable the <a href="https://docs.aws.amazon.co
 <h2 id="_software_licenses">Software licenses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/licenses.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This deployment requires a Dell Boomi Molecule Enterprise license.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_architecture">Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/architecture.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Deploying this Quick Start for a new virtual private cloud (VPC) with
 default parameters builds the following Molecule environment in the
 AWS Cloud.</p>
@@ -1037,10 +989,7 @@ AWS Cloud.</p>
 </div>
 <div class="paragraph">
 <p>*The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1058,15 +1007,6 @@ deploy, and operate your infrastructure and applications on the AWS
 Cloud.</p>
 </div>
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/specialized_knowledge.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start assumes familiarity with basic concepts of networking, bastion hosts, volume sizing, and compute performance. It also assumes familiarity with the Dell Boomi variables that are required when deploying a Molecule cluster. These variables include Molecule Name, Local Path, Local Temp Path, Account Id, Account Name, and Account Password. If you don’t have have an Account Name or Password, you can enter an installation token provided by your system administrator into the <strong>Boomi MFA install token</strong> field.</p>
 </div>
 <div class="paragraph">
@@ -1093,10 +1033,7 @@ This Quick Start follows the patterns for Unattended Dell Boomi Molecule deploym
 </td>
 </tr>
 </table>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_aws_account">AWS account</h3>
@@ -1117,10 +1054,6 @@ This Quick Start follows the patterns for Unattended Dell Boomi Molecule deploym
 <div class="paragraph">
 <p>If necessary, request <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">service quota increases</a> for the following resources. You might need to request increases if your existing deployment currently uses these resources, and this Quick Start deployment could result in exceeding the default quotas. The <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">Service Quotas console</a> displays your usage and quotas for some aspects of some services. For more information, see the <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html" target="_blank" rel="noopener">AWS documentation</a>.</p>
 </div>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/service_limits.adoc</code></strong></em></p>
-</div>
-<div id="preview_mode">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1176,13 +1109,8 @@ This Quick Start follows the patterns for Unattended Dell Boomi Molecule deploym
 </tbody>
 </table>
 </div>
-</div>
 <div class="sect3">
 <h4 id="_supported_regions">Supported Regions</h4>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/regions.adoc</code></strong></em></p>
-</div>
-<div id="preview_mode">
 <div class="ulist">
 <ul>
 <li>
@@ -1247,7 +1175,6 @@ This Quick Start follows the patterns for Unattended Dell Boomi Molecule deploym
 </li>
 </ul>
 </div>
-</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1263,13 +1190,6 @@ Certain Regions are available on an opt-in basis. Refer to the AWS Documentation
 </div>
 <div class="sect3">
 <h4 id="_ec2_key_pairs">EC2 key pairs</h4>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p><em>This section is conditional on EC2 instances being used in the Cloudformation Templates</em></p>
-</div>
-</div>
-</div>
 <div class="paragraph">
 <p>Make sure that at least one <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank" rel="noopener">Amazon EC2 key pair</a> exists in your AWS account in the Region where you plan to deploy the Quick Start. Make note of the key pair name. You need it during deployment. To create a key pair, follow the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank" rel="noopener">instructions in the AWS documentation</a>.</p>
 </div>
@@ -1285,38 +1205,17 @@ Certain Regions are available on an opt-in basis. Refer to the AWS Documentation
 <div class="paragraph">
 <p>The <em>AdministratorAccess</em> managed policy within IAM provides sufficient permissions, although your organization may choose to use a custom policy with more restrictions.</p>
 </div>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/pre-reqs.adoc</code></strong></em></p>
 </div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="sect3">
+<div class="sect3">
 <h4 id="_prepare_your_dell_boomi_account">Prepare your Dell Boomi account</h4>
 <div class="paragraph">
 <p>Ensure your Dell Boomi account has at least one available Enterprise Molecule license.
 Ensure you have a valid Account ID, Installation Token, API Key, or Username/Password.</p>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect3">
 <h4 id="_deployment_options">Deployment options</h4>
 <div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deployment_options.adoc</code></strong></em></p>
-</div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>This Quick Start provides two deployment options:</p>
 </div>
 <div class="ulist">
@@ -1331,6 +1230,8 @@ Ensure you have a valid Account ID, Installation Token, API Key, or Username/Pas
 </div>
 <div class="paragraph">
 <p>The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Molecule settings, as discussed later in this guide.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_authentication">Authentication</h3>
@@ -1350,25 +1251,14 @@ Ensure you have a valid Account ID, Installation Token, API Key, or Username/Pas
 <div class="paragraph">
 <p>You will need to choose one method or the other. If you are unsure of how to create an Installation Token or API Token/Key, see <a href="#_creating_an_installation_token">Creating an Installation Token</a> in this guide for steps or contact your administrator.</p>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_deployment_steps">Deployment steps</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/deploy_steps.adoc</code></strong></em></p>
-</div>
-<div id="preview_mode" class="openblock">
-<div class="content">
-<div class="paragraph">
-<p>=== Sign in to your AWS account</p>
-</div>
+<div class="sect2">
+<h3 id="_sign_in_to_your_aws_account">Sign in to your AWS account</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1379,9 +1269,9 @@ Ensure you have a valid Account ID, Installation Token, API Key, or Username/Pas
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>=== Launch the Quick Start</p>
 </div>
+<div class="sect2">
+<h3 id="_launch_the_quick_start">Launch the Quick Start</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1449,8 +1339,6 @@ If you’re deploying Molecule into an existing VPC, make sure that your VPC has
 </li>
 </ol>
 </div>
-</div>
-</div>
 <div class="paragraph">
 <p>In the following tables, parameters are listed by category and described separately for the deployment options. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
 </div>
@@ -1466,6 +1354,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </td>
 </tr>
 </table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_launch_into_an_existing_vpc">Launch into an existing VPC</h3>
@@ -1622,19 +1511,19 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi password
 (<code>BoomiPassword</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The password associated with the Dell Boomi account.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA install token
 (<code>BoomiMFAInstallToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA API token
 (<code>BoomiMFAAPIToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
@@ -1710,7 +1599,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SSL certificate ARN
 (<code>SSLCertificateArn</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The SSL Certificate ID used with the load balancer.</p></td>
 </tr>
 </tbody>
@@ -1883,13 +1772,13 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA install token
 (<code>BoomiMFAInstallToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An MFA installation token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Boomi MFA API token
 (<code>BoomiMFAAPIToken</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An MFA API token generated by your Dell Boomi Administrator.</p></td>
 </tr>
 <tr>
@@ -1965,19 +1854,19 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Molecule FQDN
 (<code>MoleculeFQDN</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Route 53 hosted zone ID
 (<code>HostedZoneID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Route 53 Hosted Zone ID of the domain name. Used in conjunction with a 'MoleculeFQDN'.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SSL certificate ARN
 (<code>SSLCertificateArn</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The ARN of the SSL certificate to use for the load balancer. Use 'SSLCertificateArn' if you are not using 'MoleculeFQDN' and 'HostedZoneID'.</p></td>
 </tr>
 </tbody>
@@ -2042,16 +1931,10 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </div>
 <div class="title">Figure 2. Molecule outputs after successful deployment</div>
 </div>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/additional_info.adoc</code></strong></em></p>
 </div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="sect1">
+</div>
+</div>
+<div class="sect1">
 <h2 id="_test_the_deployment">Test the deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2183,20 +2066,8 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </div>
 </div>
 </div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><em><strong>This portion of the deployment guide is located at <code>docs/partner_editable/faq_troubleshooting.adoc</code></strong></em></p>
 </div>
-<table id="preview_mode" class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="sect1">
+<div class="sect1">
 <h2 id="_faq">FAQ</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2225,12 +2096,6 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 </div>
 <div class="paragraph">
 <p><strong>A.</strong> We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html" target="_blank" rel="noopener">AWS CloudFormation quotas</a>.</p>
-</div>
-</div>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
@@ -2262,8 +2127,11 @@ and to share your customizations with others.</p>
 <div class="paragraph">
 <p>© 2020, Amazon Web Services Inc., or its affiliates, and Dell Boomi. All rights reserved.</p>
 </div>
-<div class="sect3">
-<h4 id="_notices">Notices</h4>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notices">Notices</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This document is provided for informational purposes only. It represents AWS’s current product offerings and practices as of the date of issue of this document, which are subject to change without notice. Customers are responsible for making their own independent assessment of the information in this document and any use of AWS’s products or services, each of which is provided “as is” without warranty of any kind, whether expressed or implied. This document does not create any warranties, representations, contractual commitments, conditions, or assurances from AWS, its affiliates, suppliers, or licensors. The responsibilities and liabilities of AWS to its customers are controlled by AWS agreements, and this document is not part of, nor does it modify, any agreement between AWS and its customers.</p>
 </div>
@@ -2273,10 +2141,9 @@ and to share your customizations with others.</p>
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-21 18:43:31 UTC
+Last updated 2020-09-21 20:42:57 UTC
 </div>
 </div>
 </body>
