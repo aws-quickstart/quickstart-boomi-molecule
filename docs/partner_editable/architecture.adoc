@@ -15,7 +15,7 @@ The Quick Start sets up the following:
 
 * A highly available architecture that spans two Availability Zones.*
 * A VPC configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.*
-* A Application Load Balancer.
+* An Application Load Balancer.
 * In the public subnets:
 
 ** Managed NAT gateways to allow outbound internet access for resources in the private subnets.*
