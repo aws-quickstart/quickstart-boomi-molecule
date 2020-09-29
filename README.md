@@ -14,7 +14,7 @@ You can use the AWS CloudFormation templates included with the Quick Start to de
 
 ![Quick Start architecture for Boomi Molecule on the AWS Cloud](https://d0.awsstatic.com/partner-network/QuickStart/datasheets/boomi-molecule-on-aws-architecture-diagram.png)
 
-For architectural details, best practices, and step-by-step instructions, see the deployment guide for [Boomi Molecule](https://fwd.aws/4M4Px).
+For architectural details, best practices, and step-by-step instructions, see the deployment guide for [Boomi Molecule](https://fwd.aws/EzEev).
 
 To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
 If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/).
