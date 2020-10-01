@@ -42,7 +42,7 @@
 [width="100%",cols="16%,11%,73%",options="header",]
 |===
 |Parameter label (name) |Default value|Description|EFS encryption
-(`EFSEncryption`)|`True`|EFS volumes can be encrypted. Choose either "yes" or "no".|EFS performance mode
+(`EFSEncryption`)|`true`|EFS volumes can be encrypted. Choose either "yes" or "no".|EFS performance mode
 (`EFSPerformanceMode`)|`generalPurpose`|The performance mode for the EFS volume.|EFS throughput mode
 (`EFSThroughputMode`)|`bursting`|The throughput mode for the EFS volume.|EFS provisioned throughput
 (`EFSProvisionedThroughput`)|`10`|The provisioned throughput value for the EFS volume.
