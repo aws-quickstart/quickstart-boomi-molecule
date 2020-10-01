@@ -78,10 +78,10 @@ Parameters:
   EFSEncryption:
     Description: EFS volumes can be encrypted. Choose either "yes" or "no".
     Type: String
-    Default: true
+    Default: 'true'
     AllowedValues:
-      - true
-      - false
+      - 'true'
+      - 'false'
   EFSPerformanceMode:
     Description: The performance mode for the EFS volume.
     Type: String
@@ -420,8 +420,8 @@ Resources:
         nfs_and_java_path:
           files:
             /tmp/efs_mount_config.sh:
-              content: 
-                !Sub 
+              content:
+                !Sub
                 - |
                   #!/bin/bash
                   CURRENT_AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
@@ -510,7 +510,7 @@ Resources:
                 - !Sub |
                     sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -VinstallToken=${BoomiMFAInstallToken} -VatomName=${MoleculeClusterName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
                 - !Sub |
-                    sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -Vpassword=${BoomiPassword} -VatomName=${MoleculeClusterName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
+                    sudo -u ec2-user bash -c "/tmp/molecule_install.sh -q -console -Vusername=${BoomiUsername} -Vpassword=\"${BoomiPassword}\" -VatomName=${MoleculeClusterName} -VaccountId=${BoomiAccountID} -VlocalPath=${MoleculeLocalPath} -VlocalTempPath=${MoleculeLocalTemp} -dir ${MoleculeSharedDir}"
             020_set_cluster_properties:
               command:
                 - /tmp/molecule_set_cluster_properties.sh
