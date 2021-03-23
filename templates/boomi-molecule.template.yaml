@@ -419,6 +419,25 @@ Resources:
             - set_container_id
         nfs_and_java_path:
           files:
+            /tmp/molecule.service:
+              content: !Sub |
+                [Unit]
+                Description=Dell Boomi Molecule Cluster
+                After=network.target
+                RequiresMountsFor=/opt/boomi/Molecule_${MoleculeClusterName}
+                [Service]
+                Type=forking
+                User=root
+                Restart=always
+                ExecStart=/opt/boomi/Molecule_${MoleculeClusterName}/bin/atom start
+                ExecStop=/opt/boomi/Molecule_${MoleculeClusterName}/bin/atom stop
+                ExecReload=/opt/boomi/Molecule_${MoleculeClusterName}/bin/atom restart
+                [Install]
+                WantedBy=multi-user.target
+              mode: "000644"
+              owner: "root"
+              group: "root"
+
             /tmp/efs_mount_config.sh:
               content:
                 !Sub
@@ -515,7 +534,11 @@ Resources:
             020_set_cluster_properties:
               command:
                 - /tmp/molecule_set_cluster_properties.sh
-            030_cleanup_scripts:
+            030_create_service:
+              command: mv /tmp/molecule.service /lib/systemd/system/molecule.service
+            031_enable_service:
+              command: systemctl enable molecule
+            040_cleanup_scripts:
               command: |
                 rm /tmp/molecule_set_cluster_properties.sh
                 rm /tmp/molecule_install.sh
