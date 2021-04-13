@@ -69,10 +69,11 @@ def _generate_install_token(username, password, account_id, token_type, timeout)
         "installType": token_type,
         "durationMinutes": int(timeout)
     }
-    resp = requests.post(API_URL, json=payload)
+    resp = requests.post(API_URL, headers=_headers, json=payload)
     resp.raise_for_status()
+    rj = resp.json()
 
-    return resp['token']
+    return rj['token']
 
 @helper.create
 @helper.update
