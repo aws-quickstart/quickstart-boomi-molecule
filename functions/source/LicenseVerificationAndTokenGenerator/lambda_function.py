@@ -53,11 +53,18 @@ def _verify_required_parameters(parameters):
             raise Exception(f"Not all required parameters have been passed. Need: {str(REQUIRED)}")
     if parameters['TokenType'].upper() not in REQ_TOKEN_TYPES:
         raise Exception(f"Parameter TokenType must be one of: {str(REQ_TOKEN_TYPES)}")
+    if not parameters['BoomiUsername'].startswith("BOOMI_TOKEN."):
+        _r = (
+            parameters['BoomiUsername'],
+            parameters['BoomiPassword'],
+            parameters['BoomiAccountID'], None, None
+        )
+        return _r
     _r = (
         parameters['BoomiUsername'],
         parameters['BoomiPassword'],
         parameters['BoomiAccountID'],
-        parameters['TokenType'],
+        parameters['TokenType'].upper(),
         parameters['TokenTimeout']
     )
     return _r
@@ -69,6 +76,7 @@ def _generate_install_token(username, password, account_id, token_type, timeout)
         "installType": token_type,
         "durationMinutes": int(timeout)
     }
+    logger.info(payload)
     resp = requests.post(API_URL, headers=_headers, json=payload)
     resp.raise_for_status()
     rj = resp.json()
@@ -88,11 +96,10 @@ def auth_and_licensing_logic(event, context):
 
       # Verify licensing
       _verify_boomi_licensing(username, password, account_id)
-
-      # Generate install token
-      token = _generate_install_token(username, password, account_id, token_type, token_timeout)
-
-      helper.Data['InstallToken'] = token
+      if token_type:
+          # Generate install token
+          token = _generate_install_token(username, password, account_id, token_type, token_timeout)
+          helper.Data['InstallToken'] = token
 
 def lambda_handler(event, context):
   # make sure we send a failure to CloudFormation if the function
