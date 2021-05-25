@@ -95,7 +95,9 @@ def auth_and_licensing_logic(event, context):
       username, password, account_id, token_type, token_timeout = _verify_required_parameters(parameters)
 
       # Verify licensing
-      _verify_boomi_licensing(username, password, account_id)
+      # NOTE: Removing as the Boomi APIs don't behave in a way that was previously assumed.
+      # No easy way to accurately determine licensing usage. 2021/05/25
+      #_verify_boomi_licensing(username, password, account_id)
       if token_type:
           # Generate install token
           token = _generate_install_token(username, password, account_id, token_type, token_timeout)
