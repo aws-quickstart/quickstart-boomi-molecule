@@ -37,6 +37,7 @@ Metadata:
           - BoomiMFAAPIToken
           - MoleculeSharedDir
           - LBListenerPort
+          - PrivateALB
       - Label:
           default: "Amazon EFS configuration"
         Parameters:
@@ -115,6 +116,8 @@ Metadata:
         default: Route 53 hosted zone ID
       MoleculeFQDN:
         default: Molecule FQDN
+      PrivateALB:
+        default: Private ALB
 Conditions:
   GenerateSSL: !And
     - !Equals [!Ref SSLCertificateArn, '']
@@ -304,6 +307,13 @@ Parameters:
     Description: The fully qualified domain name for the Boomi Molecule cluster. Use with 'HostedZoneID' if you are not using SSL.
     Type: String
     Default: ''
+  PrivateALB:
+    Default: 'false'
+    Description: "The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'"
+    Type: String
+    AllowedValues:
+      - 'true'
+      - 'false'
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
@@ -380,6 +390,7 @@ Resources:
           - GenerateSSL
           - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
           - !Ref SSLCertificateArn
+        PrivateALB: !Ref PrivateALB
   ConfigureSSLStack:
     Condition: GenerateSSL
     Type: AWS::CloudFormation::Stack

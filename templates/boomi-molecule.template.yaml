@@ -124,6 +124,13 @@ Parameters:
       can include numbers, lowercase letters, uppercase letters, hyphens (-), and
       forward slash (/).
     Type: String
+  PrivateALB:
+    Default: 'false'
+    Description: "The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'"
+    Type: String
+    AllowedValues:
+      - 'true'
+      - 'false'
 Metadata:
   QuickStartDocumentation:
     EntrypointName: "Launch into an existing VPC"
@@ -163,6 +170,7 @@ Metadata:
           - BoomiMFAAPIToken
           - LBListenerPort
           - MoleculeSharedDir
+          - PrivateALB
 
       -
         Label:
@@ -233,6 +241,8 @@ Metadata:
         default: Quick Start S3 bucket name
       QSS3KeyPrefix:
         default: Quick Start S3 key prefix
+      PrivateALB:
+        default: Private ALB
 Mappings:
   AWSAMIRegionMap:
     ap-northeast-1:
@@ -300,6 +310,7 @@ Conditions:
   APITokenProvided: !Not [!Equals [!Ref BoomiMFAAPIToken, '']]
   EFSProvisionedThroughput: !Equals [!Ref EFSThroughputMode, 'provisioned']
   EFSBurstingThroughput: !Equals [!Ref EFSThroughputMode, 'bursting']
+  ALBInPrivateSubnets: !Equals [!Ref PrivateALB, 'true']
 Resources:
   LoadBalancerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -765,9 +776,14 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Type: application
-      Subnets:
-        - !Ref PublicSubnet1ID
-        - !Ref PublicSubnet2ID
+      Subnets: !If
+        - ALBInPrivateSubnets
+        -
+          - !Ref PrivateSubnet1ID
+          - !Ref PrivateSubnet2ID
+        -
+          - !Ref PublicSubnet1ID
+          - !Ref PublicSubnet2ID
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
 
