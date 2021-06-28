@@ -27,11 +27,13 @@ Parameters:
     Type: AWS::EC2::VPC::Id
     Description: The ID of your existing VPC.
   PublicSubnet1ID:
-    Type: AWS::EC2::Subnet::Id
+    Type: String
     Description: The ID of the public subnet in Availability Zone 1 in your existing VPC.
+    Default: ''
   PublicSubnet2ID:
-    Type: AWS::EC2::Subnet::Id
+    Type: String
     Description: The ID of the public subnet in Availability Zone 2 in your existing VPC.
+    Default: ''
   PrivateSubnet1ID:
     Type: AWS::EC2::Subnet::Id
     Description: The ID of the private subnet in Availability Zone 1 in your existing VPC.
@@ -56,7 +58,8 @@ Parameters:
     Type: String
   BastionSecurityGroupID:
     Description: The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).
-    Type: AWS::EC2::SecurityGroup::Id
+    Type: String
+    Default: ''
   MoleculeSharedDir:
     Description: A shared directory for Molecules.
     Type: String
@@ -311,6 +314,7 @@ Conditions:
   EFSProvisionedThroughput: !Equals [!Ref EFSThroughputMode, 'provisioned']
   EFSBurstingThroughput: !Equals [!Ref EFSThroughputMode, 'bursting']
   ALBInPrivateSubnets: !Equals [!Ref PrivateALB, 'true']
+  ALBInPublicSubnets: !Equals [!Ref PrivateALB, 'false']
 Resources:
   LoadBalancerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -334,10 +338,13 @@ Resources:
         - Key: Name
           Value: BoomiSG
       SecurityGroupIngress:
-        - FromPort: 22
-          IpProtocol: tcp
-          SourceSecurityGroupId: !Ref BastionSecurityGroupID
-          ToPort: 22
+        - !If
+          - ALBInPublicSubnets
+          - FromPort: 22
+            IpProtocol: tcp
+            SourceSecurityGroupId: !Ref BastionSecurityGroupID
+            ToPort: 22
+          - !Ref AWS::NoValue
         - FromPort: 22
           IpProtocol: tcp
           SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
@@ -400,19 +407,48 @@ Resources:
       SecurityGroups:
         - !Ref "MountTargetSecurityGroup"
   KMSKey:
-    Type: AWS::KMS::Key
+    Type: 'AWS::KMS::Key'
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyResourceWildcard
+            - EIAMPolicyActionWildcard
+            - EIAMPolicyWildcardResource
+          ignore_reasons:
+            EIAMPolicyResourceWildcard: This is the default KMS key policy."
+            EIAMPolicyActionWildcard: This is the default KMS key policy."
+            EIAMPolicyWildcardResource: Circular dependecy. No AWS::KMS::KeyPolicy resource type exists, so its impossible to restict beyond calling service.
     Properties:
+      Description: >-
+        Used to encrypt/decrypt secure string parameters in AWS Systems manager
+        parameter store
       KeyPolicy:
         Version: 2012-10-17
-        Id: key-default-1
         Statement:
-          - Sid: Allow administration of the key
+          - Sid: Enable IAM User Permissions
             Effect: Allow
             Principal:
-              AWS: !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:root"
-            Action:
-              - 'kms:*'
+              AWS: !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:root
+            Action: kms:*
             Resource: '*'
+          - Sid: AllowUseOfTheKey
+            Effect: Allow
+            Principal:
+              AWS: '*'
+            Action:
+              - kms:Encrypt
+              - kms:Decrypt
+              - kms:ReEncrypt*
+              - kms:GenerateDataKey*
+              - kms:CreateGrant
+              - kms:DescribeKey
+            Resource: '*'
+            Condition:
+              StringEquals:
+                kms:ViaService: !Sub efs.${AWS::Region}.amazonaws.com
+                kms:CallerAccount: !Ref AWS::AccountId
+
   MoleculeNode1:
     CreationPolicy:
       ResourceSignal:
@@ -578,7 +614,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-            - !Ref BastionSecurityGroupID
+            - !If [ALBInPublicSubnets, !Ref BastionSecurityGroupID, !Ref AWS::NoValue]
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet1ID
@@ -623,7 +659,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-            - !Ref BastionSecurityGroupID
+            - !If [ALBInPublicSubnets, !Ref BastionSecurityGroupID, !Ref AWS::NoValue]
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet2ID
@@ -667,7 +703,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-            - !Ref BastionSecurityGroupID
+            - !If [ALBInPublicSubnets, !Ref BastionSecurityGroupID, !Ref AWS::NoValue]
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet1ID
@@ -711,7 +747,7 @@ Resources:
             - !Ref BoomiSecurityGroup
             - !Ref BoomiUnicastSG
             - !Ref MoleculeSecurityGroup
-            - !Ref BastionSecurityGroupID
+            - !If [ALBInPublicSubnets, !Ref BastionSecurityGroupID, !Ref AWS::NoValue]
           DeviceIndex: '0'
           DeleteOnTermination: true
           SubnetId: !Ref PrivateSubnet2ID
@@ -786,6 +822,10 @@ Resources:
           - !Ref PublicSubnet2ID
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
+      Scheme: !If
+      - ALBInPrivateSubnets
+      - internal
+      - internet-facing
 
   EFSFilesystemProvisioned:
     Type: AWS::EFS::FileSystem

@@ -123,6 +123,7 @@ Conditions:
     - !Equals [!Ref SSLCertificateArn, '']
     - !Not [!Equals [!Ref MoleculeFQDN, '']]
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
+  ALBInPublicSubnets: !Equals [!Ref PrivateALB, 'false']
 Rules:
   DomainNamePresentWithHostedID:
     Assertions:
@@ -337,6 +338,14 @@ Resources:
         PrivateSubnet2ACIDR: !Ref PrivateSubnet2CIDR
         PublicSubnet1CIDR: !Ref PublicSubnet1CIDR
         PublicSubnet2CIDR: !Ref PublicSubnet2CIDR
+        # CreatePublicSubnets: !If
+        #   - ALBInPublicSubnets
+        #   - 'true'
+        #   - 'false'
+        # CreateNATGateways: !If
+        #   - ALBInPublicSubnets
+        #   - 'true'
+        #   - 'false'
   BastionStack:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -364,15 +373,24 @@ Resources:
       Parameters:
         QSS3BucketName: !Ref QSS3BucketName
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
-        PublicSubnet1ID: !GetAtt VPCStack.Outputs.PublicSubnet1ID
-        PublicSubnet2ID: !GetAtt VPCStack.Outputs.PublicSubnet2ID
+        PublicSubnet1ID: !If
+        - ALBInPublicSubnets
+        - !GetAtt VPCStack.Outputs.PublicSubnet1ID
+        - !Ref AWS::NoValue
+        PublicSubnet2ID: !If
+        - ALBInPublicSubnets
+        - !GetAtt VPCStack.Outputs.PublicSubnet2ID
+        - !Ref AWS::NoValue
         PrivateSubnet1ID: !GetAtt VPCStack.Outputs.PrivateSubnet1AID
         PrivateSubnet2ID: !GetAtt VPCStack.Outputs.PrivateSubnet2AID
         BoomiUsername: !Ref BoomiUsername
         BoomiPassword: !Ref BoomiPassword
         BoomiAccountID: !Ref BoomiAccountID
         BoomiMFAAPIToken: !Ref BoomiMFAAPIToken
-        BastionSecurityGroupID: !GetAtt BastionStack.Outputs.BastionSecurityGroupID
+        BastionSecurityGroupID: !If
+        - ALBInPublicSubnets
+        - !GetAtt BastionStack.Outputs.BastionSecurityGroupID
+        - !Ref AWS::NoValue
         VPCID: !GetAtt VPCStack.Outputs.VPCID
         KeyPairName: !Ref KeyPairName
         NodeInstanceType: !Ref NodeInstanceType
