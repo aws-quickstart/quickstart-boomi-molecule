@@ -315,6 +315,7 @@ Conditions:
   EFSBurstingThroughput: !Equals [!Ref EFSThroughputMode, 'bursting']
   ALBInPrivateSubnets: !Equals [!Ref PrivateALB, 'true']
   ALBInPublicSubnets: !Equals [!Ref PrivateALB, 'false']
+  UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
 Resources:
   LoadBalancerSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -880,7 +881,10 @@ Resources:
       Role: !GetAtt 'BoomiAPIRole.Arn'
       Timeout: 240
       Code:
-        S3Bucket: !Ref QSS3BucketName
+        S3Bucket: !If
+          - UsingDefaultBucket
+          - !Sub '${QSS3BucketName}-${AWS::Region}'
+          - !Ref QSS3BucketName
         S3Key: !Sub "${QSS3KeyPrefix}functions/packages/LicenseVerificationAndTokenGenerator/lambda.zip"
   BoomiAPI:
     DependsOn:
