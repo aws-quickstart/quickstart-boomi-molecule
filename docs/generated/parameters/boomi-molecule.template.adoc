@@ -4,11 +4,11 @@
 |===
 |Parameter label (name) |Default value|Description|VPC ID
 (`VPCID`)|`**__Requires input__**`|The ID of your existing VPC.|Public subnet 1 ID
-(`PublicSubnet1ID`)|`**__Requires input__**`|The ID of the public subnet in Availability Zone 1 in your existing VPC.|Public subnet 2 ID
-(`PublicSubnet2ID`)|`**__Requires input__**`|The ID of the public subnet in Availability Zone 2 in your existing VPC.|Private subnet 1 ID
+(`PublicSubnet1ID`)|`**__Blank string__**`|The ID of the public subnet in Availability Zone 1 in your existing VPC.|Public subnet 2 ID
+(`PublicSubnet2ID`)|`**__Blank string__**`|The ID of the public subnet in Availability Zone 2 in your existing VPC.|Private subnet 1 ID
 (`PrivateSubnet1ID`)|`**__Requires input__**`|The ID of the private subnet in Availability Zone 1 in your existing VPC.|Private subnet 2 ID
 (`PrivateSubnet2ID`)|`**__Requires input__**`|The ID of the private subnet in Availability Zone 2 in your existing VPC.|Bastion security group ID
-(`BastionSecurityGroupID`)|`**__Requires input__**`|The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).
+(`BastionSecurityGroupID`)|`**__Blank string__**`|The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).
 |===
 .Amazon EC2 configuration
 [width="100%",cols="16%,11%,73%",options="header",]

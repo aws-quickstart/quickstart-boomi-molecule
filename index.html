@@ -855,6 +855,7 @@ p.footer-text a{color:#d7d8d8}
 </ul>
 </li>
 <li><a href="#_faq">FAQ</a></li>
+<li><a href="#_customer_responsibility">Customer responsibility</a></li>
 <li><a href="#_send_us_feedback">Send us feedback</a></li>
 <li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
 <li><a href="#_github_repository">GitHub repository</a></li>
@@ -1406,13 +1407,13 @@ NOTE: Unless you are customizing the Quick Start templates for your own deployme
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 1 ID
 (<code>PublicSubnet1ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 1 in your existing VPC.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 2 ID
 (<code>PublicSubnet2ID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the public subnet in Availability Zone 2 in your existing VPC.</p></td>
 </tr>
 <tr>
@@ -1430,7 +1431,7 @@ NOTE: Unless you are customizing the Quick Start templates for your own deployme
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Bastion security group ID
 (<code>BastionSecurityGroupID</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).</p></td>
 </tr>
 </tbody>
@@ -2136,6 +2137,14 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 </div>
 </div>
 <div class="sect1">
+<h2 id="_customer_responsibility">Customer responsibility</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After you successfully deploy this Quick Start, confirm that your resources and services are updated and configured — including any required patches — to meet your security and other needs. For more information, see the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" target="_blank" rel="noopener">AWS Shared Responsibility Model</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_send_us_feedback">Send us feedback</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -2183,11 +2192,11 @@ and to share your customizations with others.</p>
 </html>
 <!--
 repo commit:
-f334d7a49a23a6a645445cdbe47c07cbfffb6ebf
+e988f7039f71d1f2cb7e867d3c5432cf3cbefc82
 
 submodule config:
- a9d6c5903745c1091793d3cd1f960948919c2c9f docs/boilerplate (heads/main)
+ 81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (heads/main)
  25d1eb874ba356d7c85fda18be239a6b404dd551 submodules/quickstart-aws-acm-certificate (heads/main)
  ffc7af4e59a09dbf52199a3ecf70f3805abeff48 submodules/quickstart-aws-vpc (v1.0-58-gffc7af4)
- 6ba29aa6163c8b95af4d690ce02477b1b89fbaf9 submodules/quickstart-linux-bastion (heads/main)
+ 1633e9bfee39d639916cbd652f6875019ee6fed8 submodules/quickstart-linux-bastion (heads/main)
 -->
