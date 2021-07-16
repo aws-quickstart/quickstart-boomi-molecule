@@ -38,6 +38,7 @@ Metadata:
           - MoleculeSharedDir
           - LBListenerPort
           - PrivateALB
+          - DeployALB
       - Label:
           default: "Amazon EFS configuration"
         Parameters:
@@ -118,6 +119,8 @@ Metadata:
         default: Molecule FQDN
       PrivateALB:
         default: Private ALB
+      DeployALB:
+        default: DeployALB
 Conditions:
   GenerateSSL: !And
     - !Equals [!Ref SSLCertificateArn, '']
@@ -315,6 +318,13 @@ Parameters:
     AllowedValues:
       - 'true'
       - 'false'
+  DeployALB:
+    Default: 'true'
+    Description: "Do you wish to deploy the ALB entirely? Choose either 'true' or 'false'"
+    Type: String
+    AllowedValues:
+      - 'true'
+      - 'false'
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
@@ -409,6 +419,7 @@ Resources:
           - !GetAtt ConfigureSSLStack.Outputs.ACMCertificate
           - !Ref SSLCertificateArn
         PrivateALB: !Ref PrivateALB
+        DeployALB: !Ref DeployALB
   ConfigureSSLStack:
     Condition: GenerateSSL
     Type: AWS::CloudFormation::Stack

@@ -36,7 +36,8 @@
 (`BoomiInstallToken`)|`**__Blank string__**`|A Boomi Install Token generated from within the AtomSphere console.|Load Balancer listener port
 (`LBListenerPort`)|`9093`|The port of the LB Listener.|Molecule shared directory
 (`MoleculeSharedDir`)|`/mnt/molecule`|A shared directory for Molecules.|Private ALB
-(`PrivateALB`)|`false`|The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'
+(`PrivateALB`)|`false`|The ALB can be placed in the Private subnets. 'DeployALB' takes precedence. Choose either 'true' or 'false|DeployALB
+(`DeployALB`)|`true`|Do you wish to deploy the ALB entirely? Choose either 'true' or 'false'
 |===
 .Amazon EFS configuration
 [width="100%",cols="16%,11%,73%",options="header",]

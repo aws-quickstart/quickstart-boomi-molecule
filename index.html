@@ -1561,7 +1561,13 @@ NOTE: Unless you are customizing the Quick Start templates for your own deployme
 <td class="tableblock halign-left valign-top"><p class="tableblock">Private ALB
 (<code>PrivateALB</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ALB can be placed in the Private subnets. 'DeployALB' takes precedence. Choose either 'true' or 'false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DeployALB
+(<code>DeployALB</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Do you wish to deploy the ALB entirely? Choose either 'true' or 'false'</p></td>
 </tr>
 </tbody>
 </table>
@@ -1846,6 +1852,12 @@ NOTE: Unless you are customizing the Quick Start templates for your own deployme
 (<code>PrivateALB</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DeployALB
+(<code>DeployALB</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Do you wish to deploy the ALB entirely? Choose either 'true' or 'false'</p></td>
 </tr>
 </tbody>
 </table>
@@ -2192,7 +2204,7 @@ and to share your customizations with others.</p>
 </html>
 <!--
 repo commit:
-0ccb0c9fc1da8c82ed63a249ad91a5eb1ae05766
+aef2df7580fad5d564cf630e9421f29802087996
 
 submodule config:
  81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (heads/main)
