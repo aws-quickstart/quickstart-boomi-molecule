@@ -129,7 +129,14 @@ Parameters:
     Type: String
   PrivateALB:
     Default: 'false'
-    Description: "The ALB can be placed in the Private subnets. Choose either 'yes' or 'no'"
+    Description: "The ALB can be placed in the Private subnets. 'DeployALB' takes precedence. Choose either 'true' or 'false"
+    Type: String
+    AllowedValues:
+      - 'true'
+      - 'false'
+  DeployALB:
+    Default: 'true'
+    Description: "Do you wish to deploy the ALB entirely? Choose either 'true' or 'false'"
     Type: String
     AllowedValues:
       - 'true'
@@ -174,6 +181,7 @@ Metadata:
           - LBListenerPort
           - MoleculeSharedDir
           - PrivateALB
+          - DeployALB
 
       -
         Label:
@@ -246,6 +254,8 @@ Metadata:
         default: Quick Start S3 key prefix
       PrivateALB:
         default: Private ALB
+      DeployALB:
+        default: DeployALB
 Mappings:
   AWSAMIRegionMap:
     ap-northeast-1:
@@ -316,9 +326,12 @@ Conditions:
   EFSBurstingThroughput: !Equals [!Ref EFSThroughputMode, 'bursting']
   ALBInPrivateSubnets: !Equals [!Ref PrivateALB, 'true']
   ALBInPublicSubnets: !Equals [!Ref PrivateALB, 'false']
+  UsingALB: !Equals [!Ref DeployALB, 'true']
+  UsingALBAndPassword: !And [Condition: UsingALB, Condition: PasswordProvided]
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
 Resources:
   LoadBalancerSecurityGroup:
+    Condition: UsingALB
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: boomi-elb
@@ -347,14 +360,20 @@ Resources:
             SourceSecurityGroupId: !Ref BastionSecurityGroupID
             ToPort: 22
           - !Ref AWS::NoValue
-        - FromPort: 22
-          IpProtocol: tcp
-          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
-          ToPort: 22
-        - FromPort: 9093
-          IpProtocol: tcp
-          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
-          ToPort: 9093
+        - !If
+          - UsingALB
+          - FromPort: 22
+            IpProtocol: tcp
+            SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+            ToPort: 22
+          - !Ref AWS::NoValue
+        - !If
+          - UsingALB
+          - FromPort: 9093
+            IpProtocol: tcp
+            SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+            ToPort: 9093
+          - !Ref AWS::NoValue
   BoomiUnicastSG:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -425,6 +444,7 @@ Resources:
       Description: >-
         Used to encrypt/decrypt secure string parameters in AWS Systems manager
         parameter store
+      EnableKeyRotation: true
       KeyPolicy:
         Version: 2012-10-17
         Statement:
@@ -782,6 +802,7 @@ Resources:
 
   # ALB Target Group
   ELBTargetGroup:
+    Condition: UsingALB
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckPort: '9093'
@@ -798,6 +819,7 @@ Resources:
 
 # ALB Listener
   ELBListener:
+    Condition: UsingALB
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       Certificates:
@@ -811,6 +833,7 @@ Resources:
 
 # ALB
   ElasticLoadBalancer:
+    Condition: UsingALB
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Type: application
@@ -890,7 +913,7 @@ Resources:
           - !Ref QSS3BucketName
         S3Key: !Sub "${QSS3KeyPrefix}functions/packages/LicenseVerificationAndTokenGenerator/lambda.zip"
   BoomiAPI:
-    Condition: PasswordProvided
+    Condition: UsingALBAndPassword
     DependsOn:
       - MoleculeNode4
     Type: Custom::BoomiAPI
@@ -910,7 +933,7 @@ Resources:
       HttpPort: '9093'
   BoomiAPIFunction:
     Type: AWS::Lambda::Function
-    Condition: PasswordProvided
+    Condition: UsingALBAndPassword
     Properties:
       Description: Sends ELB FQDN to Boomi.
       Handler: index.handler
@@ -995,7 +1018,6 @@ Resources:
                 cfnresponse.send(event, context, status, {}, None)
 
   BoomiAPIRole:
-    Condition: PasswordProvided
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
