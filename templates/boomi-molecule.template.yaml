@@ -225,7 +225,7 @@ Metadata:
       BoomiPassword:
         default: Boomi password
       BoomiInstallToken:
-        default: Boomi MFA API token
+        default: Boomi installer token
       LBListenerPort:
         default: Load Balancer listener port
       MoleculeLocalTemp:
