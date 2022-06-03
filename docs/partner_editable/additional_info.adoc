@@ -2,10 +2,10 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-To view the Molecule in the Dell Boomi AtomSphere platform, log in to your https://platform.boomi.com/[Dell Boomi account^], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
+To view the Molecule in the  Boomi AtomSphere platform, log in to your https://platform.boomi.com/[ Boomi account^], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
 
 [#AddInfo1]
-.Dell Boomi Dashboard with an unattached AWS-managed Molecule Cluster
+Boomi Dashboard with an unattached AWS-managed Molecule Cluster
 [link=images/image3.png]
 image::../images/image3.png[image,width=648,height=293]
 
@@ -17,14 +17,14 @@ You can then attach the Molecules to any environment you have staged and deploy 
 //_Add any best practices for using the software._
 
 == Security
-This Quick Start deploys a bastion host and a Dell Boomi Molecule cluster into an AWS VPC. The bastion host is the only means of accessing the Dell Boomi Molecule cluster at a command-line level. The Dell Boomi Molecule cluster is deployed into private subnets and cannot be reached through the internet. The Boomi Molecule cluster communicates through a NAT Gateway for updates and patches, and it communicates through the public-facing Classic Load Balancer to communicate with the Dell Boomi AtomSphere platform.
+This Quick Start deploys a bastion host and a  Boomi Molecule cluster into an AWS VPC. The bastion host is the only means of accessing the Boomi Molecule cluster at a command-line level. The Boomi Molecule cluster is deployed into private subnets and cannot be reached through the internet. The Boomi Molecule cluster communicates through a NAT Gateway for updates and patches, and it communicates through the public-facing Classic Load Balancer to communicate with the  Boomi AtomSphere platform.
 
 == Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
 
 === Performance monitoring
 
-Monitoring the CPU, network, and Amazon Elastic Block Store (Amazon EBS) performance of your AWS Dell Boomi Molecule cluster is done through CloudWatch metrics.
+Monitoring the CPU, network, and Amazon Elastic Block Store (Amazon EBS) performance of your AWS Boomi Molecule cluster is done through CloudWatch metrics.
 
 CPU and network performance are measured in utilization, network in and out, network packets in and out, and system status checks.
 

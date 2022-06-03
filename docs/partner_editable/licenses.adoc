@@ -1,3 +1,3 @@
 // Include details about the license and how they can sign up. If no license is required, clarify that. 
 
-This deployment requires a Dell Boomi Molecule Enterprise license.
+This deployment requires a Boomi Molecule Enterprise license.
