@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Boomi Atom Installation Script. This stages a Dell Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
+Description: Boomi Atom Installation Script. This stages a Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
 Parameters:
   KeyPairName:
     Description: Key name for access to EC2 instances.
@@ -41,10 +41,10 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
     Description: The ID of the private subnet in Availability Zone 2 in your existing VPC.
   BoomiUsername:
-    Description: The email account associated with the Dell Boomi account.
+    Description: The email account associated with the Boomi account.
     Type: String
   BoomiPassword:
-    Description: The password associated with the Dell Boomi account.
+    Description: The password associated with the Boomi account.
     Type: String
     NoEcho: true
     Default: ''
@@ -54,7 +54,7 @@ Parameters:
     NoEcho: true
     Default: ''
   BoomiAccountID:
-    Description: The Dell Boomi account ID that you want to associate with the new Molecule cluster.
+    Description: The Boomi account ID that you want to associate with the new Molecule cluster.
     Type: String
   BastionSecurityGroupID:
     Description: The ID of the bastion security group in your existing VPC. Used to provide access to the molecule (e.g., sg-1a2b3c4d).
@@ -505,7 +505,7 @@ Resources:
             /tmp/molecule.service:
               content: !Sub |
                 [Unit]
-                Description=Dell Boomi Molecule Cluster
+                Description=Boomi Molecule Cluster
                 After=network.target
                 RequiresMountsFor=/opt/boomi/Molecule_${MoleculeClusterName}
                 [Service]
