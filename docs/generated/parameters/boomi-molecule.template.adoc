@@ -30,9 +30,9 @@
 (`MoleculeClusterName`)|`molecule1`|The name for the Boomi Molecule cluster.|Molecule local path
 (`MoleculeLocalPath`)|`/opt/molecule/local/`|The local path for the Molecule installation.|Molecule local temp directory
 (`MoleculeLocalTemp`)|`/mnt/tmp`|The local temporary path for the Molecule installation.|Boomi account ID
-(`BoomiAccountID`)|`**__Requires input__**`|The Dell Boomi account ID that you want to associate with the new Molecule cluster.|Boomi user name
-(`BoomiUsername`)|`**__Requires input__**`|The email account associated with the Dell Boomi account.|Boomi password
-(`BoomiPassword`)|`**__Blank string__**`|The password associated with the Dell Boomi account.|Boomi MFA API token
+(`BoomiAccountID`)|`**__Requires input__**`|The Boomi account ID that you want to associate with the new Molecule cluster.|Boomi user name
+(`BoomiUsername`)|`**__Requires input__**`|The email account associated with the Boomi account.|Boomi password
+(`BoomiPassword`)|`**__Blank string__**`|The password associated with the Boomi account.|Boomi MFA API token
 (`BoomiInstallToken`)|`**__Blank string__**`|A Boomi Install Token generated from within the AtomSphere console.|Load Balancer listener port
 (`LBListenerPort`)|`9093`|The port of the LB Listener.|Molecule shared directory
 (`MoleculeSharedDir`)|`/mnt/molecule`|A shared directory for Molecules.|Private ALB

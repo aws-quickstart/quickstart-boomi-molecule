@@ -4,4 +4,4 @@
 
 This Quick Start reference deployment guide provides step-by-step instructions for deploying {partner-product-name} on the AWS Cloud.
 
-This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Dell Boomi Molecule cluster on AWS and administer it through the https://platform.boomi.com/[Dell Boomi AtomSphere platform^].
+This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Boomi Molecule cluster on AWS and administer it through the https://platform.boomi.com/[Boomi AtomSphere platform^].

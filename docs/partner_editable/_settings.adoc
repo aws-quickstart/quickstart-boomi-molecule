@@ -1,6 +1,6 @@
 :quickstart-project-name: quickstart-boomi-molecule
 :partner-product-name: Molecule
-:partner-company-name: Dell Boomi
+:partner-company-name: Boomi
 :doc-month: September
 :doc-year: 2020
 //:partner-contributors: John Doe and Jane Doe - {partner-company-name}
