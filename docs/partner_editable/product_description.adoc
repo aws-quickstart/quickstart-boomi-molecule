@@ -4,5 +4,5 @@
 
 Boomi service is a minimal-code, cloud-based iPaaS that enables customers to design, deploy, manage, and govern all of their data across their hybrid and software as a service (SaaS) applications by connecting and integrating external application data with AWS services such as Amazon Simple Storage Service (Amazon S3), Amazon Simple Notification Service (Amazon SNS), Amazon Relational Database Service (Amazon RDS), and Amazon Redshift using Boomi’s point-and-click graphical interface.
 
-The  Boomi Molecule is a single-tenant, clustered runtime that runs separately from the platform, enabling multiple processes to run concurrently. The enterprise-grade version of a Boomi Atom runtime, the Boomi Molecule can be deployed across multiple servers to enhance load balancing and ensure high availability for mission-critical integration processes.
+The Boomi Molecule is a single-tenant, clustered runtime that runs separately from the platform, enabling multiple processes to run concurrently. The enterprise-grade version of a Boomi Atom runtime, the Boomi Molecule can be deployed across multiple servers to enhance load balancing and ensure high availability for mission-critical integration processes.
 

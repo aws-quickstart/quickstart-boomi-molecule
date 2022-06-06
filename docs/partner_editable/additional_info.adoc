@@ -2,14 +2,14 @@
 //Should any sections not be applicable, remove them
 
 == Test the deployment
-To view the Molecule in the  Boomi AtomSphere platform, log in to your https://platform.boomi.com/[ Boomi account^], navigate to the *Manage* drop-down menu, and choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster will be displayed.
+To view the Molecule on Boomi AtomSphere, log in to your https://platform.boomi.com/[Boomi account^]. On the *Manage*, choose *Atom Management*. The newly created Amazon EC2 instance Molecule cluster is displayed.
 
 [#AddInfo1]
-Boomi Dashboard with an unattached AWS-managed Molecule Cluster
+Boomi dashboard with an unattached AWS-managed Molecule cluster
 [link=images/image3.png]
 image::../images/image3.png[image,width=648,height=293]
 
-You can then attach the Molecules to any environment you have staged and deploy workloads to that Molecule cluster. By Default the molecule you deployed will be under ‘Unattached Atoms’. When you click on ‘Atom Information’ you will see an option to attach it to an environment.
+You can attach Molecules to any environment you have staged and deploy workloads to that Molecule cluster. On the Boomi dashboard, your deployed Molecule is under *Unattached Atoms*. For more information, refer to https://help.boomi.com/bundle/integration/page/t-atm-Attaching_an_Atom_to_an_Enviro.html[Attaching an Atom to or detaching an Atom from an environment^].
 
 //== Best practices for using {partner-product-name} on AWS
 // Provide post-deployment best practices for using the technology on AWS, including considerations such as migrating data, backups, ensuring high performance, high availability, etc. Link to software documentation for detailed information.
@@ -17,7 +17,7 @@ You can then attach the Molecules to any environment you have staged and deploy 
 //_Add any best practices for using the software._
 
 == Security
-This Quick Start deploys a bastion host and a  Boomi Molecule cluster into an AWS VPC. The bastion host is the only means of accessing the Boomi Molecule cluster at a command-line level. The Boomi Molecule cluster is deployed into private subnets and cannot be reached through the internet. The Boomi Molecule cluster communicates through a NAT Gateway for updates and patches, and it communicates through the public-facing Classic Load Balancer to communicate with the  Boomi AtomSphere platform.
+This Quick Start deploys a bastion host and a Boomi Molecule cluster into an AWS VPC. The bastion host is the only means of accessing the Boomi Molecule cluster at a command-line level. The Boomi Molecule cluster is deployed into private subnets and cannot be reached through the internet. The Boomi Molecule cluster communicates through a NAT Gateway for updates and patches, and it communicates through the public-facing Application Load Balancer to communicate with the  Boomi AtomSphere platform.
 
 == Other useful information
 //Provide any other information of interest to users, especially focusing on areas where AWS or cloud usage differs from on-premises usage.
@@ -36,8 +36,8 @@ Amazon EFS reports metrics to CloudWatch and can be monitored there. Metrics inc
 
 Administrators can create an installation token without having to share login credentials for an Atom/Molecule installation. To create an installation token, do the following:
 
-. Go to *Manage > Atom Management*.
-. Choose *+New > Molecule*.
+. On the *Manage* menu, choose *Atom Management*.
+. Choose *New, Molecule*.
 . On the *Build* page, choose the *Welcome* tab.
 . Under the *Create* heading, choose *Molecule*.
 . Choose *Security Options*.
@@ -53,7 +53,7 @@ image::../images/image6.png[image,width=402,height=319]
 
 Administrators can create a long-lived API token without having to share login credentials for an Atom/Molecule installation. To create an user API token, do the following:
 
-. Choose *Settings > Account Information and Setup*.
+. On the *Settings* menu, choose *Account Information and Setup*.
 . Choose the *AtomSphere API Tokens* tab.
 . Choose *Add New Token*.
 
@@ -66,7 +66,7 @@ Administrators can create a long-lived API token without having to share login c
 image::../images/image9.png[image,width=370,height=219]
 
 [start=4]
-. Click *Generate Token*.
+. Choose *Generate Token*.
 . Choose *Copy* to copy the token string to the clipboard without exiting. When you are ready to exit, click *Copy to Clipboard & Close* to copy the token string and exit the dialog. 
 
 [#AddInfo4]

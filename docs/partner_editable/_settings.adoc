@@ -1,5 +1,5 @@
 :quickstart-project-name: quickstart-boomi-molecule
-:partner-product-name: Molecule
+:partner-product-name: Boomi Molecule
 :partner-company-name: Boomi
 :doc-month: September
 :doc-year: 2020
