@@ -5,7 +5,7 @@ This Quick Start assumes familiarity with basic concepts of networking, bastion 
 
 If you are an administrator, see the following sections of this guide for help creating an installation token and API token:
 
-* link:#_creating_an_installation_token[Creating an installation token]
-* link:#_creating_an_api_token[Creating an API token]
+* link:#_creating_an_installation_token[Creating an installation token^]
+* link:#_creating_an_api_token[Creating an API token^]
 
 NOTE: This Quick Start follows the patterns for Unattended Boomi Molecule deployments found in the Boomi documentation. See http://help.boomi.com/atomsphere/GUID-27BDD6B1-E6BD-48C9-8C6D-EC1B2CA60316.html[Unattended installation of an Atom, Molecule, or Atom Cloud^].

@@ -2,4 +2,4 @@
 
 ==== Prepare your {partner-company-name} account
 
-Ensure that your Boomi account has at least one available Enterprise Molecule license. Ensure that you have a valid account ID, installation token, API Key, or username and password.
+Ensure that your Boomi account has at least one available Enterprise Molecule license. Ensure that you have a valid account ID, installation token, and API Key or username and password.
