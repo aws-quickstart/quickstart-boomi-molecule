@@ -1,0 +1,14 @@
+:quickstart-project-name: quickstart-boomi-molecule
+:quickstart-github-org: aws-quickstart
+:partner-product-name: Boomi Molecule
+:partner-product-short-name: Boomi Molecule
+:partner-company-name: Boomi
+:doc-month: July
+:doc-year: 2022
+//:partner-contributors: John Smith, {partner-company-name}
+// :other-contributors: Akua Mansa, Trek10
+:aws-contributors: Ryan Vanderwerf - Partner Solutions Architect, Sean Williams - Partner Solutions Architect
+:aws-ia-contributors: Andrew Glenn - AWS Integration and Automation team, Dave May - AWS Integration and Automation team
+:deployment_time: 1 hour
+:default_deployment_region: us-east-1
+// :private_repo:

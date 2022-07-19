@@ -1,0 +1,7 @@
+This Quick Start deploys {partner-product-name} on the AWS Cloud. This guide covers the steps necessary to deploy this Quick Start.
+
+This Quick Start is for users who are looking for an integration platform as a service (iPaaS) that can be hosted on AWS. This Quick Start enables you to deploy a Boomi Molecule cluster on AWS and administer it through the https://platform.boomi.com/[Boomi AtomSphere platform^].
+
+// For advanced information about the product, troubleshooting, or additional functionality, refer to the https://{quickstart-github-org}.github.io/{quickstart-project-name}/operational/index.html[Operational Guide^].
+
+// For information about using this Quick Start for migrations, refer to the https://{quickstart-github-org}.github.io/{quickstart-project-name}/migration/index.html[Migration Guide^].
