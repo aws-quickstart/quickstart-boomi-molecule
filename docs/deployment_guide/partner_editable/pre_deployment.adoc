@@ -1,0 +1,7 @@
+//Include any predeployment steps here, such as signing up for a Marketplace AMI or making any changes to a partner account. If there are no predeployment steps, leave this file empty.
+
+== Predeployment steps
+
+=== Prepare your {partner-company-name} account
+
+Ensure that your Boomi account has at least one available Enterprise Molecule license. Ensure that you have a valid account ID, installation token, and API Key or username and password.
