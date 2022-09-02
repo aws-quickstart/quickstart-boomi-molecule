@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: Boomi Atom Installation Script. This stages a Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
 Parameters:
   KeyPairName:
