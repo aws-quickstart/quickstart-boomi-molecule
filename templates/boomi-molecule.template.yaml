@@ -74,7 +74,7 @@ Parameters:
     AllowedPattern: "[a-zA-Z0-9_]*"
     Default: molecule1
   EFSEncryption:
-    Description: EFS volumes can be encrypted. Choose either "yes" or "no".
+    Description: EFS volumes can be encrypted. Choose either "true" or "false".
     Type: String
     Default: 'true'
     AllowedValues:
