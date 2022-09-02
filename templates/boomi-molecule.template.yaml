@@ -855,6 +855,12 @@ Resources:
   EFSFilesystemProvisioned:
     Type: AWS::EFS::FileSystem
     Condition: EFSProvisionedThroughput
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [EFSFilesystemEncryptionEnabled]
+          ignore_reasons:
+            EFSFilesystemEncryptionEnabled: Optional encryption is required.
     Properties:
       Encrypted: !Ref EFSEncryption
       PerformanceMode: !Ref EFSPerformanceMode
@@ -866,6 +872,12 @@ Resources:
   EFSFilesystemBursting:
     Type: AWS::EFS::FileSystem
     Condition: EFSBurstingThroughput
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [EFSFilesystemEncryptionEnabled]
+          ignore_reasons:
+            EFSFilesystemEncryptionEnabled: Optional encryption is required.
     Properties:
       Encrypted: !Ref EFSEncryption
       PerformanceMode: !Ref EFSPerformanceMode
