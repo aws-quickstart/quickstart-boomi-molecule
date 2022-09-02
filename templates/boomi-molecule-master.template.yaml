@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: Boomi Molecule Installation Script. This creates a VPC, Public Subnets and Private Subnets, and stages a Boomi Molecule cluster. (qs-1q1tds34t)
 Metadata:
   QuickStartDocumentation:
