@@ -1,5 +1,5 @@
 ---
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: Boomi Atom Installation Script. This stages a Boomi Molecule in the user selected VPC. (qs-1q1tds36n)
 Parameters:
   KeyPairName:
@@ -74,7 +74,7 @@ Parameters:
     AllowedPattern: "[a-zA-Z0-9_]*"
     Default: molecule1
   EFSEncryption:
-    Description: EFS volumes can be encrypted. Choose either "yes" or "no".
+    Description: EFS volumes can be encrypted. Choose either "true" or "false".
     Type: String
     Default: 'true'
     AllowedValues:
@@ -318,7 +318,7 @@ Rules:
           - !And
             - !Not [!Equals [!Ref BoomiPassword, '']]
             - !Equals [!Ref BoomiInstallToken, '']
-        AssertionDescription: You must supply either a password *or* an MFA installation and API token.
+        AssertionDescription: You must supply either a password *or* an installation token.
 Conditions:
   APITokenProvided: !Not [!Equals [!Ref BoomiInstallToken, '']]
   PasswordProvided: !Equals [!Ref BoomiInstallToken, '']
@@ -584,7 +584,7 @@ Resources:
               command: !Sub |
                 container_id=$(grep 'com.boomi.container.id' ${MoleculeSharedDir}/Molecule_${MoleculeClusterName}/conf/container.id  | cut -c 24-59)
                 chown -R ec2-user:ec2-user ${MoleculeLocalPath}
-                sudo cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
+                sudo /opt/aws/bin/cfn-signal -s true -d "{\"container_id\": \"${!container_id}\"}" '${Node4WaitHandle}'
         download_and_install_atom:
           files:
             /tmp/molecule_install.sh:
@@ -664,8 +664,8 @@ Resources:
           source quickstart-cfn-tools.source
           qs_update-os
           qs_aws-cfn-bootstrap
-          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
-          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
+          sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
+          sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
   MoleculeNode2:
     DependsOn:
       - MoleculeNode1
@@ -706,8 +706,8 @@ Resources:
           source quickstart-cfn-tools.source
           qs_update-os
           qs_aws-cfn-bootstrap
-          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
-          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
+          sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
+          sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
       Tags:
         - Value: MoleculeNode2
           Key: Name
@@ -753,8 +753,8 @@ Resources:
           source quickstart-cfn-tools.source
           qs_update-os
           qs_aws-cfn-bootstrap
-          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
-          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
+          sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
+          sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
   MoleculeNode4:
     DependsOn: MoleculeNode1
     Type: "AWS::EC2::Instance"
@@ -794,8 +794,8 @@ Resources:
           source quickstart-cfn-tools.source
           qs_update-os
           qs_aws-cfn-bootstrap
-          sudo cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
-          sudo cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
+          sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
+          sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
       Tags:
         - Value: MoleculeNode4
           Key: Name
@@ -855,6 +855,12 @@ Resources:
   EFSFilesystemProvisioned:
     Type: AWS::EFS::FileSystem
     Condition: EFSProvisionedThroughput
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [EFSFilesystemEncryptionEnabled]
+          ignore_reasons:
+            EFSFilesystemEncryptionEnabled: Optional encryption is required.
     Properties:
       Encrypted: !Ref EFSEncryption
       PerformanceMode: !Ref EFSPerformanceMode
@@ -866,6 +872,12 @@ Resources:
   EFSFilesystemBursting:
     Type: AWS::EFS::FileSystem
     Condition: EFSBurstingThroughput
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks: [EFSFilesystemEncryptionEnabled]
+          ignore_reasons:
+            EFSFilesystemEncryptionEnabled: Optional encryption is required.
     Properties:
       Encrypted: !Ref EFSEncryption
       PerformanceMode: !Ref EFSPerformanceMode
