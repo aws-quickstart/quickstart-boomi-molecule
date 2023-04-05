@@ -653,17 +653,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          if [ $UID -eq 0 ]; then
-            sudo chmod 777 "$0"
-            exec su ec2-user "$0"
-          fi
-          export PATH=$PATH:/usr/local/bin
-          sudo yum install git -y || apt-get install -y git || zypper -n install git
-          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
-          cd /quickstart-linux-utilities
-          source quickstart-cfn-tools.source
-          qs_update-os
-          qs_aws-cfn-bootstrap
+          sudo yum update -y 
           sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c head_molecule
           sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region}
   MoleculeNode2:
@@ -695,17 +685,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          if [ $UID -eq 0 ]; then
-            sudo chmod 777 "$0"
-            exec su ec2-user "$0"
-          fi
-          export PATH=$PATH:/usr/local/bin
-          sudo yum install git -y || apt-get install -y git || zypper -n install git
-          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
-          cd /quickstart-linux-utilities
-          source quickstart-cfn-tools.source
-          qs_update-os
-          qs_aws-cfn-bootstrap
+          sudo yum update -y 
           sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
           sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode2 --region ${AWS::Region}
       Tags:
@@ -742,17 +722,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          if [ $UID -eq 0 ]; then
-            sudo chmod 777 "$0"
-            exec su ec2-user "$0"
-          fi
-          export PATH=$PATH:/usr/local/bin
-          sudo yum install git -y || apt-get install -y git || zypper -n install git
-          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
-          cd /quickstart-linux-utilities
-          source quickstart-cfn-tools.source
-          qs_update-os
-          qs_aws-cfn-bootstrap
+          sudo yum update -y
           sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c molecule_workers
           sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode3 --region ${AWS::Region}
   MoleculeNode4:
@@ -783,17 +753,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          if [ $UID -eq 0 ]; then
-            sudo chmod 777 "$0"
-            exec su ec2-user "$0"
-          fi
-          export PATH=$PATH:/usr/local/bin
-          sudo yum install git -y || apt-get install -y git || zypper -n install git
-          sudo git clone https://github.com/aws-quickstart/quickstart-linux-utilities.git /quickstart-linux-utilities
-          cd /quickstart-linux-utilities
-          source quickstart-cfn-tools.source
-          qs_update-os
-          qs_aws-cfn-bootstrap
+          sudo yum update -y 
           sudo /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MoleculeNode1 --region ${AWS::Region} -c last_molecule
           sudo /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource MoleculeNode4 --region ${AWS::Region}
       Tags:
