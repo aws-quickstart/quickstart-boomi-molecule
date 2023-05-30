@@ -606,10 +606,7 @@ Resources:
       - MoleculeNode1
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: !FindInMap
-        - AWSAMIRegionMap
-        - !Ref AWS::Region
-        - AMZNLINUX2HVM
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2}}'
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
@@ -640,10 +637,7 @@ Resources:
     DependsOn: MoleculeNode1
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: !FindInMap
-        - AWSAMIRegionMap
-        - !Ref AWS::Region
-        - AMZNLINUX2HVM
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2}}'
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
@@ -674,10 +668,7 @@ Resources:
     DependsOn: MoleculeNode1
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: !FindInMap
-        - AWSAMIRegionMap
-        - !Ref AWS::Region
-        - AMZNLINUX2HVM
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2}}'
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
