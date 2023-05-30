@@ -256,58 +256,6 @@ Metadata:
         default: Private ALB
       DeployALB:
         default: DeployALB
-Mappings:
-  AWSAMIRegionMap:
-    ap-northeast-1:
-      AMZNLINUX2: ami-0ce107ae7af2e92b5
-    ap-northeast-2:
-      AMZNLINUX2: ami-03b42693dc6a7dc35
-    ap-south-1:
-      AMZNLINUX2: ami-0e306788ff2473ccb
-    ap-southeast-1:
-      AMZNLINUX2: ami-015a6758451df3cb9
-    ap-southeast-2:
-      AMZNLINUX2: ami-0f96495a064477ffb
-    ca-central-1:
-      AMZNLINUX2: ami-0c2f25c1f66a1ff4d
-    eu-central-1:
-      AMZNLINUX2: ami-00a205cb8e06c3c4e
-    eu-west-1:
-      AMZNLINUX2: ami-0bb3fad3c0286ebd5
-    eu-west-2:
-      AMZNLINUX2: ami-0a669382ea0feb73a
-    eu-west-3:
-      AMZNLINUX2: ami-0de12f76efe134f2f
-    sa-east-1:
-      AMZNLINUX2: ami-02898a1921d38a50b
-    us-east-1:
-      AMZNLINUX2: ami-0947d2ba12ee1ff75
-    us-east-2:
-      AMZNLINUX2: ami-03657b56516ab7912
-    us-west-1:
-      AMZNLINUX2: ami-0e4035ae3f70c400f
-    us-west-2:
-      AMZNLINUX2: ami-0528a5175983e7f28
-    eu-north-1:
-      AMZNLINUX2: ami-0653812935d0743fe
-    ap-east-1:
-      AMZNLINUX2: ami-814d0ff0
-    me-south-1:
-      AMZNLINUX2: ami-08155c9ee8b845e35
-    af-south-1:
-      AMZNLINUX2: ami-0cec12e29ebe3f0d5
-    eu-south-1:
-      AMZNLINUX2: ami-0759301b88845d121
-    ap-northeast-3:
-      AMZNLINUX2: ami-024125eb5035fd485
-    us-gov-east-1:
-      AMZNLINUX2HVM: ami-9a033cfb
-    us-gov-west-1:
-      AMZNLINUX2HVM: ami-a2729dde
-    cn-north-1:
-      AMZNLINUX2HVM: ami-0aec3e46a106ca42d
-    cn-northwest-1:
-      AMZNLINUX2HVM: ami-05a85395c8ff37b18
 Rules:
   PasswordOrMFAToken:
     Assertions:
@@ -626,10 +574,7 @@ Resources:
                 rm /tmp/molecule_set_cluster_properties.sh
                 rm /tmp/molecule_install.sh
     Properties:
-      ImageId: !FindInMap
-        - AWSAMIRegionMap
-        - !Ref "AWS::Region"
-        - AMZNLINUX2HVM
+      ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2}}'
       InstanceType: !Ref NodeInstanceType
       NetworkInterfaces:
         - GroupSet:
